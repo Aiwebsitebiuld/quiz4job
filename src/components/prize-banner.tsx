@@ -8,8 +8,9 @@ function daysLeftInMonth() {
 }
 
 export function PrizeBanner() {
-  const [days, setDays] = useState(daysLeftInMonth());
+  const [days, setDays] = useState<number | null>(null);
   useEffect(() => {
+    setDays(daysLeftInMonth());
     const id = setInterval(() => setDays(daysLeftInMonth()), 60_000);
     return () => clearInterval(id);
   }, []);
@@ -19,8 +20,8 @@ export function PrizeBanner() {
         <span className="flex items-center gap-1.5">
           <Trophy className="w-4 h-4" /> এই মাসের পুরস্কার: ৳৩,০০০ টাকা!
         </span>
-        <span className="bg-white/20 rounded-full px-2.5 py-0.5 backdrop-blur">
-          দিন বাকি: {days}
+        <span className="bg-white/20 rounded-full px-2.5 py-0.5 backdrop-blur" suppressHydrationWarning>
+          দিন বাকি: {days ?? "—"}
         </span>
         <a href="/prizes" className="underline underline-offset-2 hover:text-gold-light">
           পুরস্কার জিতুন →

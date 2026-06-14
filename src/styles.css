@@ -170,6 +170,20 @@
 @keyframes shimmer {
   to { background-position: -200% 0; }
 }
+
+@keyframes float-up {
+  0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+  10% { opacity: var(--tw-opacity, 0.4); }
+  90% { opacity: var(--tw-opacity, 0.4); }
+  100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+}
+@keyframes pulse-slow {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.1); }
+}
+.animate-float-up { animation: float-up linear infinite; }
+.animate-pulse-slow { animation: pulse-slow 6s ease-in-out infinite; }
+
 @utility text-gradient-prize {
   background-image: linear-gradient(135deg, #F59E0B 0%, #EF4444 50%, #7C3AED 100%);
   -webkit-background-clip: text;
