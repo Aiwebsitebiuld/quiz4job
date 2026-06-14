@@ -123,7 +123,7 @@ function RootShell({ children }: { children: ReactNode }) {
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
-  const hideChrome = ["/login", "/signup", "/forgot-password", "/reset-password"].some(
+  const hideChrome = ["/login", "/signup", "/forgot-password", "/reset-password", "/admin"].some(
     (p) => pathname === p || pathname.startsWith(p + "/")
   );
 
