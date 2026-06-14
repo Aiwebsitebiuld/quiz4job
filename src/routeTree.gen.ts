@@ -38,6 +38,7 @@ import { Route as AdminQuestionsRouteImport } from './routes/admin.questions'
 import { Route as AdminDashboardRouteImport } from './routes/admin.dashboard'
 import { Route as QuizResultSessionIdRouteImport } from './routes/quiz.result.$sessionId'
 import { Route as AdminSubscriptionsVerifiedRouteImport } from './routes/admin.subscriptions.verified'
+import { Route as AdminQuestionsNewRouteImport } from './routes/admin.questions.new'
 
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
@@ -185,6 +186,11 @@ const AdminSubscriptionsVerifiedRoute =
     path: '/verified',
     getParentRoute: () => AdminSubscriptionsRoute,
   } as any)
+const AdminQuestionsNewRoute = AdminQuestionsNewRouteImport.update({
+  id: '/new',
+  path: '/new',
+  getParentRoute: () => AdminQuestionsRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -203,7 +209,7 @@ export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/admin/dashboard': typeof AdminDashboardRoute
-  '/admin/questions': typeof AdminQuestionsRoute
+  '/admin/questions': typeof AdminQuestionsRouteWithChildren
   '/admin/subscriptions': typeof AdminSubscriptionsRouteWithChildren
   '/blog/$slug': typeof BlogSlugRoute
   '/dashboard/history': typeof DashboardHistoryRoute
@@ -214,6 +220,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/': typeof DashboardIndexRoute
   '/jobs/': typeof JobsIndexRoute
   '/quiz/': typeof QuizIndexRoute
+  '/admin/questions/new': typeof AdminQuestionsNewRoute
   '/admin/subscriptions/verified': typeof AdminSubscriptionsVerifiedRoute
   '/quiz/result/$sessionId': typeof QuizResultSessionIdRoute
 }
@@ -233,7 +240,7 @@ export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/admin/dashboard': typeof AdminDashboardRoute
-  '/admin/questions': typeof AdminQuestionsRoute
+  '/admin/questions': typeof AdminQuestionsRouteWithChildren
   '/admin/subscriptions': typeof AdminSubscriptionsRouteWithChildren
   '/blog/$slug': typeof BlogSlugRoute
   '/dashboard/history': typeof DashboardHistoryRoute
@@ -244,6 +251,7 @@ export interface FileRoutesByTo {
   '/dashboard': typeof DashboardIndexRoute
   '/jobs': typeof JobsIndexRoute
   '/quiz': typeof QuizIndexRoute
+  '/admin/questions/new': typeof AdminQuestionsNewRoute
   '/admin/subscriptions/verified': typeof AdminSubscriptionsVerifiedRoute
   '/quiz/result/$sessionId': typeof QuizResultSessionIdRoute
 }
@@ -265,7 +273,7 @@ export interface FileRoutesById {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/admin/dashboard': typeof AdminDashboardRoute
-  '/admin/questions': typeof AdminQuestionsRoute
+  '/admin/questions': typeof AdminQuestionsRouteWithChildren
   '/admin/subscriptions': typeof AdminSubscriptionsRouteWithChildren
   '/blog/$slug': typeof BlogSlugRoute
   '/dashboard/history': typeof DashboardHistoryRoute
@@ -276,6 +284,7 @@ export interface FileRoutesById {
   '/dashboard/': typeof DashboardIndexRoute
   '/jobs/': typeof JobsIndexRoute
   '/quiz/': typeof QuizIndexRoute
+  '/admin/questions/new': typeof AdminQuestionsNewRoute
   '/admin/subscriptions/verified': typeof AdminSubscriptionsVerifiedRoute
   '/quiz/result/$sessionId': typeof QuizResultSessionIdRoute
 }
@@ -309,6 +318,7 @@ export interface FileRouteTypes {
     | '/dashboard/'
     | '/jobs/'
     | '/quiz/'
+    | '/admin/questions/new'
     | '/admin/subscriptions/verified'
     | '/quiz/result/$sessionId'
   fileRoutesByTo: FileRoutesByTo
@@ -339,6 +349,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/jobs'
     | '/quiz'
+    | '/admin/questions/new'
     | '/admin/subscriptions/verified'
     | '/quiz/result/$sessionId'
   id:
@@ -370,6 +381,7 @@ export interface FileRouteTypes {
     | '/dashboard/'
     | '/jobs/'
     | '/quiz/'
+    | '/admin/questions/new'
     | '/admin/subscriptions/verified'
     | '/quiz/result/$sessionId'
   fileRoutesById: FileRoutesById
@@ -606,8 +618,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminSubscriptionsVerifiedRouteImport
       parentRoute: typeof AdminSubscriptionsRoute
     }
+    '/admin/questions/new': {
+      id: '/admin/questions/new'
+      path: '/new'
+      fullPath: '/admin/questions/new'
+      preLoaderRoute: typeof AdminQuestionsNewRouteImport
+      parentRoute: typeof AdminQuestionsRoute
+    }
   }
 }
+
+interface AdminQuestionsRouteChildren {
+  AdminQuestionsNewRoute: typeof AdminQuestionsNewRoute
+}
+
+const AdminQuestionsRouteChildren: AdminQuestionsRouteChildren = {
+  AdminQuestionsNewRoute: AdminQuestionsNewRoute,
+}
+
+const AdminQuestionsRouteWithChildren = AdminQuestionsRoute._addFileChildren(
+  AdminQuestionsRouteChildren,
+)
 
 interface AdminSubscriptionsRouteChildren {
   AdminSubscriptionsVerifiedRoute: typeof AdminSubscriptionsVerifiedRoute
@@ -622,14 +653,14 @@ const AdminSubscriptionsRouteWithChildren =
 
 interface AdminRouteChildren {
   AdminDashboardRoute: typeof AdminDashboardRoute
-  AdminQuestionsRoute: typeof AdminQuestionsRoute
+  AdminQuestionsRoute: typeof AdminQuestionsRouteWithChildren
   AdminSubscriptionsRoute: typeof AdminSubscriptionsRouteWithChildren
   AdminIndexRoute: typeof AdminIndexRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
   AdminDashboardRoute: AdminDashboardRoute,
-  AdminQuestionsRoute: AdminQuestionsRoute,
+  AdminQuestionsRoute: AdminQuestionsRouteWithChildren,
   AdminSubscriptionsRoute: AdminSubscriptionsRouteWithChildren,
   AdminIndexRoute: AdminIndexRoute,
 }
