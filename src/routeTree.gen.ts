@@ -33,6 +33,7 @@ import { Route as QuizSessionIdRouteImport } from './routes/quiz.$sessionId'
 import { Route as JobsSlugRouteImport } from './routes/jobs.$slug'
 import { Route as DashboardHistoryRouteImport } from './routes/dashboard.history'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
+import { Route as AdminSubscriptionsRouteImport } from './routes/admin.subscriptions'
 import { Route as AdminDashboardRouteImport } from './routes/admin.dashboard'
 import { Route as QuizResultSessionIdRouteImport } from './routes/quiz.result.$sessionId'
 
@@ -156,6 +157,11 @@ const BlogSlugRoute = BlogSlugRouteImport.update({
   path: '/blog/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminSubscriptionsRoute = AdminSubscriptionsRouteImport.update({
+  id: '/subscriptions',
+  path: '/subscriptions',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminDashboardRoute = AdminDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -184,6 +190,7 @@ export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/admin/dashboard': typeof AdminDashboardRoute
+  '/admin/subscriptions': typeof AdminSubscriptionsRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/dashboard/history': typeof DashboardHistoryRoute
   '/jobs/$slug': typeof JobsSlugRoute
@@ -211,6 +218,7 @@ export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/admin/dashboard': typeof AdminDashboardRoute
+  '/admin/subscriptions': typeof AdminSubscriptionsRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/dashboard/history': typeof DashboardHistoryRoute
   '/jobs/$slug': typeof JobsSlugRoute
@@ -240,6 +248,7 @@ export interface FileRoutesById {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/admin/dashboard': typeof AdminDashboardRoute
+  '/admin/subscriptions': typeof AdminSubscriptionsRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/dashboard/history': typeof DashboardHistoryRoute
   '/jobs/$slug': typeof JobsSlugRoute
@@ -270,6 +279,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/terms'
     | '/admin/dashboard'
+    | '/admin/subscriptions'
     | '/blog/$slug'
     | '/dashboard/history'
     | '/jobs/$slug'
@@ -297,6 +307,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/terms'
     | '/admin/dashboard'
+    | '/admin/subscriptions'
     | '/blog/$slug'
     | '/dashboard/history'
     | '/jobs/$slug'
@@ -325,6 +336,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/terms'
     | '/admin/dashboard'
+    | '/admin/subscriptions'
     | '/blog/$slug'
     | '/dashboard/history'
     | '/jobs/$slug'
@@ -534,6 +546,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/subscriptions': {
+      id: '/admin/subscriptions'
+      path: '/subscriptions'
+      fullPath: '/admin/subscriptions'
+      preLoaderRoute: typeof AdminSubscriptionsRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/dashboard': {
       id: '/admin/dashboard'
       path: '/dashboard'
@@ -553,11 +572,13 @@ declare module '@tanstack/react-router' {
 
 interface AdminRouteChildren {
   AdminDashboardRoute: typeof AdminDashboardRoute
+  AdminSubscriptionsRoute: typeof AdminSubscriptionsRoute
   AdminIndexRoute: typeof AdminIndexRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
   AdminDashboardRoute: AdminDashboardRoute,
+  AdminSubscriptionsRoute: AdminSubscriptionsRoute,
   AdminIndexRoute: AdminIndexRoute,
 }
 
