@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TermsRouteImport } from './routes/terms'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as PrizesRouteImport } from './routes/prizes'
@@ -35,6 +36,11 @@ import { Route as QuizResultSessionIdRouteImport } from './routes/quiz.result.$s
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
   path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SignupRoute = SignupRouteImport.update({
@@ -156,6 +162,7 @@ export interface FileRoutesByFullPath {
   '/prizes': typeof PrizesRoute
   '/profile': typeof ProfileRoute
   '/signup': typeof SignupRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/dashboard/history': typeof DashboardHistoryRoute
@@ -180,6 +187,7 @@ export interface FileRoutesByTo {
   '/prizes': typeof PrizesRoute
   '/profile': typeof ProfileRoute
   '/signup': typeof SignupRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/dashboard/history': typeof DashboardHistoryRoute
@@ -205,6 +213,7 @@ export interface FileRoutesById {
   '/prizes': typeof PrizesRoute
   '/profile': typeof ProfileRoute
   '/signup': typeof SignupRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/dashboard/history': typeof DashboardHistoryRoute
@@ -231,6 +240,7 @@ export interface FileRouteTypes {
     | '/prizes'
     | '/profile'
     | '/signup'
+    | '/sitemap.xml'
     | '/terms'
     | '/blog/$slug'
     | '/dashboard/history'
@@ -255,6 +265,7 @@ export interface FileRouteTypes {
     | '/prizes'
     | '/profile'
     | '/signup'
+    | '/sitemap.xml'
     | '/terms'
     | '/blog/$slug'
     | '/dashboard/history'
@@ -279,6 +290,7 @@ export interface FileRouteTypes {
     | '/prizes'
     | '/profile'
     | '/signup'
+    | '/sitemap.xml'
     | '/terms'
     | '/blog/$slug'
     | '/dashboard/history'
@@ -304,6 +316,7 @@ export interface RootRouteChildren {
   PrizesRoute: typeof PrizesRoute
   ProfileRoute: typeof ProfileRoute
   SignupRoute: typeof SignupRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TermsRoute: typeof TermsRoute
   BlogSlugRoute: typeof BlogSlugRoute
   DashboardHistoryRoute: typeof DashboardHistoryRoute
@@ -323,6 +336,13 @@ declare module '@tanstack/react-router' {
       path: '/terms'
       fullPath: '/terms'
       preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/signup': {
@@ -488,6 +508,7 @@ const rootRouteChildren: RootRouteChildren = {
   PrizesRoute: PrizesRoute,
   ProfileRoute: ProfileRoute,
   SignupRoute: SignupRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   TermsRoute: TermsRoute,
   BlogSlugRoute: BlogSlugRoute,
   DashboardHistoryRoute: DashboardHistoryRoute,

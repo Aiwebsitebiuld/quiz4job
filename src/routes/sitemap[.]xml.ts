@@ -34,8 +34,8 @@ export const Route = createFileRoute("/sitemap.xml")({
         const urls: { loc: string; lastmod?: string | null }[] = [
           ...STATIC_PATHS.map((p) => ({ loc: p })),
           ...((catsRes.data ?? []).map((c) => ({ loc: `/quiz/${c.slug}` }))),
-          ...((jobsRes.data ?? []).map((j: { slug: string; created_at: string }) => ({ loc: `/jobs/${j.slug}`, lastmod: j.created_at }))),
-          ...((postsRes.data ?? []).map((p: { slug: string; published_at: string | null }) => ({ loc: `/blog/${p.slug}`, lastmod: p.published_at }))),
+          ...((jobsRes.data ?? []).map((j) => ({ loc: `/jobs/${j.slug}`, lastmod: j.created_at }))),
+          ...((postsRes.data ?? []).map((p) => ({ loc: `/blog/${p.slug}`, lastmod: p.published_at }))),
         ];
 
         const xml = [
