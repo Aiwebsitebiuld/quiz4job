@@ -18,10 +18,35 @@ import { toBn, bnCurrency } from "@/lib/bn";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Quiz4Job — কুইজ দিন, ৳৩,০০০ পুরস্কার জিতুন!" },
-      { name: "description", content: "বাংলাদেশের #১ চাকরির কুইজ প্ল্যাটফর্ম। বিসিএস, ব্যাংক, প্রাইমারি প্রস্তুতি। মাসিক ৳৩,০০০ পর্যন্ত নগদ পুরস্কার। মাত্র ৳১০/মাসে প্রিমিয়াম।" },
+      { title: "Quiz4Job — কুইজ দিন, ৳৩,০০০ পুরস্কার জিতুন! | BCS ও ব্যাংক জব MCQ" },
+      { name: "description", content: "বাংলাদেশের সেরা চাকরির কুইজ প্ল্যাটফর্ম। BCS, ব্যাংক, প্রাইমারি MCQ কুইজ দিন এবং প্রতিমাসে নগদ পুরস্কার জিতুন। মাত্র ৳১০/মাসে প্রিমিয়াম।" },
+      { name: "keywords", content: "চাকরির খবর, বিসিএস প্রস্তুতি, ব্যাংক জব সার্কুলার, সরকারি চাকরি, অনলাইন কুইজ প্রতিযোগিতা, BCS MCQ, online quiz Bangladesh, নগদ পুরস্কার কুইজ" },
       { property: "og:title", content: "Quiz4Job — কুইজ দিন, পুরস্কার জিতুন!" },
       { property: "og:description", content: "মাত্র ৳১০/মাসে প্রিমিয়াম। আনলিমিটেড কুইজ + ৳৩,০০০ পর্যন্ত নগদ পুরস্কার।" },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: "/" },
+    ],
+    links: [{ rel: "canonical", href: "/" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          name: "Quiz4Job",
+          description: "বাংলাদেশের চাকরির কুইজ প্ল্যাটফর্ম",
+          inLanguage: "bn-BD",
+        }),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          name: "Quiz4Job",
+          description: "BCS, ব্যাংক ও প্রাইমারি পরীক্ষার অনলাইন কুইজ প্ল্যাটফর্ম",
+        }),
+      },
     ],
   }),
   component: HomePage,

@@ -9,22 +9,40 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TermsRouteImport } from './routes/terms'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as PrizesRouteImport } from './routes/prizes'
+import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as PremiumRouteImport } from './routes/premium'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as LeaderboardRouteImport } from './routes/leaderboard'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
+import { Route as FaqRouteImport } from './routes/faq'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as QuizIndexRouteImport } from './routes/quiz.index'
 import { Route as JobsIndexRouteImport } from './routes/jobs.index'
 import { Route as DashboardIndexRouteImport } from './routes/dashboard.index'
+import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as QuizSessionIdRouteImport } from './routes/quiz.$sessionId'
 import { Route as JobsSlugRouteImport } from './routes/jobs.$slug'
 import { Route as DashboardHistoryRouteImport } from './routes/dashboard.history'
+import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as QuizResultSessionIdRouteImport } from './routes/quiz.result.$sessionId'
 
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
   path: '/signup',
@@ -38,6 +56,11 @@ const ProfileRoute = ProfileRouteImport.update({
 const PrizesRoute = PrizesRouteImport.update({
   id: '/prizes',
   path: '/prizes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PremiumRoute = PremiumRouteImport.update({
@@ -60,6 +83,21 @@ const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
   path: '/forgot-password',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FaqRoute = FaqRouteImport.update({
+  id: '/faq',
+  path: '/faq',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -80,6 +118,11 @@ const DashboardIndexRoute = DashboardIndexRouteImport.update({
   path: '/dashboard/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BlogIndexRoute = BlogIndexRouteImport.update({
+  id: '/blog/',
+  path: '/blog/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const QuizSessionIdRoute = QuizSessionIdRouteImport.update({
   id: '/quiz/$sessionId',
   path: '/quiz/$sessionId',
@@ -95,6 +138,11 @@ const DashboardHistoryRoute = DashboardHistoryRouteImport.update({
   path: '/dashboard/history',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BlogSlugRoute = BlogSlugRouteImport.update({
+  id: '/blog/$slug',
+  path: '/blog/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const QuizResultSessionIdRoute = QuizResultSessionIdRouteImport.update({
   id: '/quiz/result/$sessionId',
   path: '/quiz/result/$sessionId',
@@ -103,16 +151,24 @@ const QuizResultSessionIdRoute = QuizResultSessionIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/contact': typeof ContactRoute
+  '/faq': typeof FaqRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/leaderboard': typeof LeaderboardRoute
   '/login': typeof LoginRoute
   '/premium': typeof PremiumRoute
+  '/privacy': typeof PrivacyRoute
   '/prizes': typeof PrizesRoute
   '/profile': typeof ProfileRoute
   '/signup': typeof SignupRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/terms': typeof TermsRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/dashboard/history': typeof DashboardHistoryRoute
   '/jobs/$slug': typeof JobsSlugRoute
   '/quiz/$sessionId': typeof QuizSessionIdRoute
+  '/blog/': typeof BlogIndexRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/jobs/': typeof JobsIndexRoute
   '/quiz/': typeof QuizIndexRoute
@@ -120,16 +176,24 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/contact': typeof ContactRoute
+  '/faq': typeof FaqRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/leaderboard': typeof LeaderboardRoute
   '/login': typeof LoginRoute
   '/premium': typeof PremiumRoute
+  '/privacy': typeof PrivacyRoute
   '/prizes': typeof PrizesRoute
   '/profile': typeof ProfileRoute
   '/signup': typeof SignupRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/terms': typeof TermsRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/dashboard/history': typeof DashboardHistoryRoute
   '/jobs/$slug': typeof JobsSlugRoute
   '/quiz/$sessionId': typeof QuizSessionIdRoute
+  '/blog': typeof BlogIndexRoute
   '/dashboard': typeof DashboardIndexRoute
   '/jobs': typeof JobsIndexRoute
   '/quiz': typeof QuizIndexRoute
@@ -138,16 +202,24 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/contact': typeof ContactRoute
+  '/faq': typeof FaqRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/leaderboard': typeof LeaderboardRoute
   '/login': typeof LoginRoute
   '/premium': typeof PremiumRoute
+  '/privacy': typeof PrivacyRoute
   '/prizes': typeof PrizesRoute
   '/profile': typeof ProfileRoute
   '/signup': typeof SignupRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/terms': typeof TermsRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/dashboard/history': typeof DashboardHistoryRoute
   '/jobs/$slug': typeof JobsSlugRoute
   '/quiz/$sessionId': typeof QuizSessionIdRoute
+  '/blog/': typeof BlogIndexRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/jobs/': typeof JobsIndexRoute
   '/quiz/': typeof QuizIndexRoute
@@ -157,16 +229,24 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/about'
+    | '/contact'
+    | '/faq'
     | '/forgot-password'
     | '/leaderboard'
     | '/login'
     | '/premium'
+    | '/privacy'
     | '/prizes'
     | '/profile'
     | '/signup'
+    | '/sitemap.xml'
+    | '/terms'
+    | '/blog/$slug'
     | '/dashboard/history'
     | '/jobs/$slug'
     | '/quiz/$sessionId'
+    | '/blog/'
     | '/dashboard/'
     | '/jobs/'
     | '/quiz/'
@@ -174,16 +254,24 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/about'
+    | '/contact'
+    | '/faq'
     | '/forgot-password'
     | '/leaderboard'
     | '/login'
     | '/premium'
+    | '/privacy'
     | '/prizes'
     | '/profile'
     | '/signup'
+    | '/sitemap.xml'
+    | '/terms'
+    | '/blog/$slug'
     | '/dashboard/history'
     | '/jobs/$slug'
     | '/quiz/$sessionId'
+    | '/blog'
     | '/dashboard'
     | '/jobs'
     | '/quiz'
@@ -191,16 +279,24 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/about'
+    | '/contact'
+    | '/faq'
     | '/forgot-password'
     | '/leaderboard'
     | '/login'
     | '/premium'
+    | '/privacy'
     | '/prizes'
     | '/profile'
     | '/signup'
+    | '/sitemap.xml'
+    | '/terms'
+    | '/blog/$slug'
     | '/dashboard/history'
     | '/jobs/$slug'
     | '/quiz/$sessionId'
+    | '/blog/'
     | '/dashboard/'
     | '/jobs/'
     | '/quiz/'
@@ -209,16 +305,24 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
+  ContactRoute: typeof ContactRoute
+  FaqRoute: typeof FaqRoute
   ForgotPasswordRoute: typeof ForgotPasswordRoute
   LeaderboardRoute: typeof LeaderboardRoute
   LoginRoute: typeof LoginRoute
   PremiumRoute: typeof PremiumRoute
+  PrivacyRoute: typeof PrivacyRoute
   PrizesRoute: typeof PrizesRoute
   ProfileRoute: typeof ProfileRoute
   SignupRoute: typeof SignupRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  TermsRoute: typeof TermsRoute
+  BlogSlugRoute: typeof BlogSlugRoute
   DashboardHistoryRoute: typeof DashboardHistoryRoute
   JobsSlugRoute: typeof JobsSlugRoute
   QuizSessionIdRoute: typeof QuizSessionIdRoute
+  BlogIndexRoute: typeof BlogIndexRoute
   DashboardIndexRoute: typeof DashboardIndexRoute
   JobsIndexRoute: typeof JobsIndexRoute
   QuizIndexRoute: typeof QuizIndexRoute
@@ -227,6 +331,20 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/signup': {
       id: '/signup'
       path: '/signup'
@@ -246,6 +364,13 @@ declare module '@tanstack/react-router' {
       path: '/prizes'
       fullPath: '/prizes'
       preLoaderRoute: typeof PrizesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/premium': {
@@ -276,6 +401,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ForgotPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/faq': {
+      id: '/faq'
+      path: '/faq'
+      fullPath: '/faq'
+      preLoaderRoute: typeof FaqRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -304,6 +450,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/blog/': {
+      id: '/blog/'
+      path: '/blog'
+      fullPath: '/blog/'
+      preLoaderRoute: typeof BlogIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/quiz/$sessionId': {
       id: '/quiz/$sessionId'
       path: '/quiz/$sessionId'
@@ -325,6 +478,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardHistoryRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/blog/$slug': {
+      id: '/blog/$slug'
+      path: '/blog/$slug'
+      fullPath: '/blog/$slug'
+      preLoaderRoute: typeof BlogSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/quiz/result/$sessionId': {
       id: '/quiz/result/$sessionId'
       path: '/quiz/result/$sessionId'
@@ -337,16 +497,24 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
+  ContactRoute: ContactRoute,
+  FaqRoute: FaqRoute,
   ForgotPasswordRoute: ForgotPasswordRoute,
   LeaderboardRoute: LeaderboardRoute,
   LoginRoute: LoginRoute,
   PremiumRoute: PremiumRoute,
+  PrivacyRoute: PrivacyRoute,
   PrizesRoute: PrizesRoute,
   ProfileRoute: ProfileRoute,
   SignupRoute: SignupRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
+  TermsRoute: TermsRoute,
+  BlogSlugRoute: BlogSlugRoute,
   DashboardHistoryRoute: DashboardHistoryRoute,
   JobsSlugRoute: JobsSlugRoute,
   QuizSessionIdRoute: QuizSessionIdRoute,
+  BlogIndexRoute: BlogIndexRoute,
   DashboardIndexRoute: DashboardIndexRoute,
   JobsIndexRoute: JobsIndexRoute,
   QuizIndexRoute: QuizIndexRoute,
