@@ -84,9 +84,11 @@ function ProfileTab({ profile, isPremium, onSaved }: { profile: any; isPremium: 
       const path = `${profile.id}/avatar-${Date.now()}.${ext}`;
       const { error: upErr } = await supabase.storage.from("avatars").upload(path, file, { upsert: true });
       if (upErr) throw upErr;
-      const { data: pub } = supabase.storage.from("avatars").getPublicUrl(path);
-      setAvatarUrl(pub.publicUrl);
-      await supabase.from("profiles").update({ avatar_url: pub.publicUrl }).eq("id", profile.id);
+      const { data: signed, error: sErr } = await supabase.storage.from("avatars")
+        .createSignedUrl(path, 60 * 60 * 24 * 365);
+      if (sErr) throw sErr;
+      setAvatarUrl(signed.signedUrl);
+      await supabase.from("profiles").update({ avatar_url: signed.signedUrl }).eq("id", profile.id);
       toast.success("অ্যাভাটার আপডেট হয়েছে");
       onSaved();
     } catch (e: any) {
