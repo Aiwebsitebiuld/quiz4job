@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SignupRouteImport } from './routes/signup'
+import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as PrizesRouteImport } from './routes/prizes'
 import { Route as PremiumRouteImport } from './routes/premium'
 import { Route as LoginRouteImport } from './routes/login'
@@ -27,6 +28,11 @@ import { Route as QuizResultSessionIdRouteImport } from './routes/quiz.result.$s
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
   path: '/signup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfileRoute = ProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PrizesRoute = PrizesRouteImport.update({
@@ -102,6 +108,7 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/premium': typeof PremiumRoute
   '/prizes': typeof PrizesRoute
+  '/profile': typeof ProfileRoute
   '/signup': typeof SignupRoute
   '/dashboard/history': typeof DashboardHistoryRoute
   '/jobs/$slug': typeof JobsSlugRoute
@@ -118,6 +125,7 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/premium': typeof PremiumRoute
   '/prizes': typeof PrizesRoute
+  '/profile': typeof ProfileRoute
   '/signup': typeof SignupRoute
   '/dashboard/history': typeof DashboardHistoryRoute
   '/jobs/$slug': typeof JobsSlugRoute
@@ -135,6 +143,7 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/premium': typeof PremiumRoute
   '/prizes': typeof PrizesRoute
+  '/profile': typeof ProfileRoute
   '/signup': typeof SignupRoute
   '/dashboard/history': typeof DashboardHistoryRoute
   '/jobs/$slug': typeof JobsSlugRoute
@@ -153,6 +162,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/premium'
     | '/prizes'
+    | '/profile'
     | '/signup'
     | '/dashboard/history'
     | '/jobs/$slug'
@@ -169,6 +179,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/premium'
     | '/prizes'
+    | '/profile'
     | '/signup'
     | '/dashboard/history'
     | '/jobs/$slug'
@@ -185,6 +196,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/premium'
     | '/prizes'
+    | '/profile'
     | '/signup'
     | '/dashboard/history'
     | '/jobs/$slug'
@@ -202,6 +214,7 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   PremiumRoute: typeof PremiumRoute
   PrizesRoute: typeof PrizesRoute
+  ProfileRoute: typeof ProfileRoute
   SignupRoute: typeof SignupRoute
   DashboardHistoryRoute: typeof DashboardHistoryRoute
   JobsSlugRoute: typeof JobsSlugRoute
@@ -219,6 +232,13 @@ declare module '@tanstack/react-router' {
       path: '/signup'
       fullPath: '/signup'
       preLoaderRoute: typeof SignupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/prizes': {
@@ -322,6 +342,7 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   PremiumRoute: PremiumRoute,
   PrizesRoute: PrizesRoute,
+  ProfileRoute: ProfileRoute,
   SignupRoute: SignupRoute,
   DashboardHistoryRoute: DashboardHistoryRoute,
   JobsSlugRoute: JobsSlugRoute,

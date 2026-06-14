@@ -44,7 +44,7 @@ function ProfilePage() {
         {tab === "notifications" && <NotificationsTab profile={profile} onSaved={() => qc.invalidateQueries()} />}
 
         {/* Prize history */}
-        <PrizeHistory userId={user.id} totalAmount={profile.total_prize_amount ?? 0} />
+        <PrizeHistory userId={user.id} totalAmount={(profile as any).total_prize_amount ?? 0} />
       </div>
     </div>
   );
