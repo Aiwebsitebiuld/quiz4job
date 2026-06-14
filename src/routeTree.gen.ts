@@ -36,6 +36,7 @@ import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as AdminSubscriptionsRouteImport } from './routes/admin.subscriptions'
 import { Route as AdminQuestionsRouteImport } from './routes/admin.questions'
 import { Route as AdminLeaderboardRouteImport } from './routes/admin.leaderboard'
+import { Route as AdminJobsRouteImport } from './routes/admin.jobs'
 import { Route as AdminDashboardRouteImport } from './routes/admin.dashboard'
 import { Route as AdminCategoriesRouteImport } from './routes/admin.categories'
 import { Route as QuizResultSessionIdRouteImport } from './routes/quiz.result.$sessionId'
@@ -178,6 +179,11 @@ const AdminLeaderboardRoute = AdminLeaderboardRouteImport.update({
   path: '/leaderboard',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminJobsRoute = AdminJobsRouteImport.update({
+  id: '/jobs',
+  path: '/jobs',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminDashboardRoute = AdminDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -228,6 +234,7 @@ export interface FileRoutesByFullPath {
   '/terms': typeof TermsRoute
   '/admin/categories': typeof AdminCategoriesRoute
   '/admin/dashboard': typeof AdminDashboardRoute
+  '/admin/jobs': typeof AdminJobsRoute
   '/admin/leaderboard': typeof AdminLeaderboardRoute
   '/admin/questions': typeof AdminQuestionsRouteWithChildren
   '/admin/subscriptions': typeof AdminSubscriptionsRouteWithChildren
@@ -262,6 +269,7 @@ export interface FileRoutesByTo {
   '/terms': typeof TermsRoute
   '/admin/categories': typeof AdminCategoriesRoute
   '/admin/dashboard': typeof AdminDashboardRoute
+  '/admin/jobs': typeof AdminJobsRoute
   '/admin/leaderboard': typeof AdminLeaderboardRoute
   '/admin/questions': typeof AdminQuestionsRouteWithChildren
   '/admin/subscriptions': typeof AdminSubscriptionsRouteWithChildren
@@ -298,6 +306,7 @@ export interface FileRoutesById {
   '/terms': typeof TermsRoute
   '/admin/categories': typeof AdminCategoriesRoute
   '/admin/dashboard': typeof AdminDashboardRoute
+  '/admin/jobs': typeof AdminJobsRoute
   '/admin/leaderboard': typeof AdminLeaderboardRoute
   '/admin/questions': typeof AdminQuestionsRouteWithChildren
   '/admin/subscriptions': typeof AdminSubscriptionsRouteWithChildren
@@ -335,6 +344,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/admin/categories'
     | '/admin/dashboard'
+    | '/admin/jobs'
     | '/admin/leaderboard'
     | '/admin/questions'
     | '/admin/subscriptions'
@@ -369,6 +379,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/admin/categories'
     | '/admin/dashboard'
+    | '/admin/jobs'
     | '/admin/leaderboard'
     | '/admin/questions'
     | '/admin/subscriptions'
@@ -404,6 +415,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/admin/categories'
     | '/admin/dashboard'
+    | '/admin/jobs'
     | '/admin/leaderboard'
     | '/admin/questions'
     | '/admin/subscriptions'
@@ -640,6 +652,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminLeaderboardRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/jobs': {
+      id: '/admin/jobs'
+      path: '/jobs'
+      fullPath: '/admin/jobs'
+      preLoaderRoute: typeof AdminJobsRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/dashboard': {
       id: '/admin/dashboard'
       path: '/dashboard'
@@ -713,6 +732,7 @@ const AdminSubscriptionsRouteWithChildren =
 interface AdminRouteChildren {
   AdminCategoriesRoute: typeof AdminCategoriesRoute
   AdminDashboardRoute: typeof AdminDashboardRoute
+  AdminJobsRoute: typeof AdminJobsRoute
   AdminLeaderboardRoute: typeof AdminLeaderboardRoute
   AdminQuestionsRoute: typeof AdminQuestionsRouteWithChildren
   AdminSubscriptionsRoute: typeof AdminSubscriptionsRouteWithChildren
@@ -722,6 +742,7 @@ interface AdminRouteChildren {
 const AdminRouteChildren: AdminRouteChildren = {
   AdminCategoriesRoute: AdminCategoriesRoute,
   AdminDashboardRoute: AdminDashboardRoute,
+  AdminJobsRoute: AdminJobsRoute,
   AdminLeaderboardRoute: AdminLeaderboardRoute,
   AdminQuestionsRoute: AdminQuestionsRouteWithChildren,
   AdminSubscriptionsRoute: AdminSubscriptionsRouteWithChildren,

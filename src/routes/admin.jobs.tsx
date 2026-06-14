@@ -11,7 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { toast } from "sonner";
-import { DISTRICTS } from "@/lib/districts";
+import { DISTRICTS_BD as DISTRICTS } from "@/lib/districts";
 
 export const Route = createFileRoute("/admin/jobs")({ component: JobsAdmin });
 
@@ -103,7 +103,7 @@ function JobsAdmin() {
                 <div><Label>জেলা</Label>
                   <Select value={edit.district || "none"} onValueChange={(v) => setEdit({ ...edit, district: v === "none" ? "" : v })}>
                     <SelectTrigger><SelectValue placeholder="বেছে নিন" /></SelectTrigger>
-                    <SelectContent><SelectItem value="none">—</SelectItem>{DISTRICTS.map((d) => <SelectItem key={d} value={d}>{d}</SelectItem>)}</SelectContent>
+                    <SelectContent><SelectItem value="none">—</SelectItem>{DISTRICTS.map((d: string) => <SelectItem key={d} value={d}>{d}</SelectItem>)}</SelectContent>
                   </Select>
                 </div>
                 <div><Label>স্থান</Label><Input value={edit.location_bn} onChange={(e) => setEdit({ ...edit, location_bn: e.target.value })} /></div>
