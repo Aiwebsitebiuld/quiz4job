@@ -17,7 +17,9 @@ import { Route as LeaderboardRouteImport } from './routes/leaderboard'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as QuizIndexRouteImport } from './routes/quiz.index'
+import { Route as JobsIndexRouteImport } from './routes/jobs.index'
 import { Route as QuizSessionIdRouteImport } from './routes/quiz.$sessionId'
+import { Route as JobsSlugRouteImport } from './routes/jobs.$slug'
 import { Route as QuizResultSessionIdRouteImport } from './routes/quiz.result.$sessionId'
 
 const SignupRoute = SignupRouteImport.update({
@@ -60,9 +62,19 @@ const QuizIndexRoute = QuizIndexRouteImport.update({
   path: '/quiz/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const JobsIndexRoute = JobsIndexRouteImport.update({
+  id: '/jobs/',
+  path: '/jobs/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const QuizSessionIdRoute = QuizSessionIdRouteImport.update({
   id: '/quiz/$sessionId',
   path: '/quiz/$sessionId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JobsSlugRoute = JobsSlugRouteImport.update({
+  id: '/jobs/$slug',
+  path: '/jobs/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const QuizResultSessionIdRoute = QuizResultSessionIdRouteImport.update({
@@ -79,7 +91,9 @@ export interface FileRoutesByFullPath {
   '/premium': typeof PremiumRoute
   '/prizes': typeof PrizesRoute
   '/signup': typeof SignupRoute
+  '/jobs/$slug': typeof JobsSlugRoute
   '/quiz/$sessionId': typeof QuizSessionIdRoute
+  '/jobs/': typeof JobsIndexRoute
   '/quiz/': typeof QuizIndexRoute
   '/quiz/result/$sessionId': typeof QuizResultSessionIdRoute
 }
@@ -91,7 +105,9 @@ export interface FileRoutesByTo {
   '/premium': typeof PremiumRoute
   '/prizes': typeof PrizesRoute
   '/signup': typeof SignupRoute
+  '/jobs/$slug': typeof JobsSlugRoute
   '/quiz/$sessionId': typeof QuizSessionIdRoute
+  '/jobs': typeof JobsIndexRoute
   '/quiz': typeof QuizIndexRoute
   '/quiz/result/$sessionId': typeof QuizResultSessionIdRoute
 }
@@ -104,7 +120,9 @@ export interface FileRoutesById {
   '/premium': typeof PremiumRoute
   '/prizes': typeof PrizesRoute
   '/signup': typeof SignupRoute
+  '/jobs/$slug': typeof JobsSlugRoute
   '/quiz/$sessionId': typeof QuizSessionIdRoute
+  '/jobs/': typeof JobsIndexRoute
   '/quiz/': typeof QuizIndexRoute
   '/quiz/result/$sessionId': typeof QuizResultSessionIdRoute
 }
@@ -118,7 +136,9 @@ export interface FileRouteTypes {
     | '/premium'
     | '/prizes'
     | '/signup'
+    | '/jobs/$slug'
     | '/quiz/$sessionId'
+    | '/jobs/'
     | '/quiz/'
     | '/quiz/result/$sessionId'
   fileRoutesByTo: FileRoutesByTo
@@ -130,7 +150,9 @@ export interface FileRouteTypes {
     | '/premium'
     | '/prizes'
     | '/signup'
+    | '/jobs/$slug'
     | '/quiz/$sessionId'
+    | '/jobs'
     | '/quiz'
     | '/quiz/result/$sessionId'
   id:
@@ -142,7 +164,9 @@ export interface FileRouteTypes {
     | '/premium'
     | '/prizes'
     | '/signup'
+    | '/jobs/$slug'
     | '/quiz/$sessionId'
+    | '/jobs/'
     | '/quiz/'
     | '/quiz/result/$sessionId'
   fileRoutesById: FileRoutesById
@@ -155,7 +179,9 @@ export interface RootRouteChildren {
   PremiumRoute: typeof PremiumRoute
   PrizesRoute: typeof PrizesRoute
   SignupRoute: typeof SignupRoute
+  JobsSlugRoute: typeof JobsSlugRoute
   QuizSessionIdRoute: typeof QuizSessionIdRoute
+  JobsIndexRoute: typeof JobsIndexRoute
   QuizIndexRoute: typeof QuizIndexRoute
   QuizResultSessionIdRoute: typeof QuizResultSessionIdRoute
 }
@@ -218,11 +244,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof QuizIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/jobs/': {
+      id: '/jobs/'
+      path: '/jobs'
+      fullPath: '/jobs/'
+      preLoaderRoute: typeof JobsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/quiz/$sessionId': {
       id: '/quiz/$sessionId'
       path: '/quiz/$sessionId'
       fullPath: '/quiz/$sessionId'
       preLoaderRoute: typeof QuizSessionIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/jobs/$slug': {
+      id: '/jobs/$slug'
+      path: '/jobs/$slug'
+      fullPath: '/jobs/$slug'
+      preLoaderRoute: typeof JobsSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/quiz/result/$sessionId': {
@@ -243,7 +283,9 @@ const rootRouteChildren: RootRouteChildren = {
   PremiumRoute: PremiumRoute,
   PrizesRoute: PrizesRoute,
   SignupRoute: SignupRoute,
+  JobsSlugRoute: JobsSlugRoute,
   QuizSessionIdRoute: QuizSessionIdRoute,
+  JobsIndexRoute: JobsIndexRoute,
   QuizIndexRoute: QuizIndexRoute,
   QuizResultSessionIdRoute: QuizResultSessionIdRoute,
 }
