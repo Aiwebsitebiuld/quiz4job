@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as PrizesRouteImport } from './routes/prizes'
+import { Route as PremiumRouteImport } from './routes/premium'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as LeaderboardRouteImport } from './routes/leaderboard'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
@@ -27,6 +28,11 @@ const SignupRoute = SignupRouteImport.update({
 const PrizesRoute = PrizesRouteImport.update({
   id: '/prizes',
   path: '/prizes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PremiumRoute = PremiumRouteImport.update({
+  id: '/premium',
+  path: '/premium',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -70,6 +76,7 @@ export interface FileRoutesByFullPath {
   '/forgot-password': typeof ForgotPasswordRoute
   '/leaderboard': typeof LeaderboardRoute
   '/login': typeof LoginRoute
+  '/premium': typeof PremiumRoute
   '/prizes': typeof PrizesRoute
   '/signup': typeof SignupRoute
   '/quiz/$sessionId': typeof QuizSessionIdRoute
@@ -81,6 +88,7 @@ export interface FileRoutesByTo {
   '/forgot-password': typeof ForgotPasswordRoute
   '/leaderboard': typeof LeaderboardRoute
   '/login': typeof LoginRoute
+  '/premium': typeof PremiumRoute
   '/prizes': typeof PrizesRoute
   '/signup': typeof SignupRoute
   '/quiz/$sessionId': typeof QuizSessionIdRoute
@@ -93,6 +101,7 @@ export interface FileRoutesById {
   '/forgot-password': typeof ForgotPasswordRoute
   '/leaderboard': typeof LeaderboardRoute
   '/login': typeof LoginRoute
+  '/premium': typeof PremiumRoute
   '/prizes': typeof PrizesRoute
   '/signup': typeof SignupRoute
   '/quiz/$sessionId': typeof QuizSessionIdRoute
@@ -106,6 +115,7 @@ export interface FileRouteTypes {
     | '/forgot-password'
     | '/leaderboard'
     | '/login'
+    | '/premium'
     | '/prizes'
     | '/signup'
     | '/quiz/$sessionId'
@@ -117,6 +127,7 @@ export interface FileRouteTypes {
     | '/forgot-password'
     | '/leaderboard'
     | '/login'
+    | '/premium'
     | '/prizes'
     | '/signup'
     | '/quiz/$sessionId'
@@ -128,6 +139,7 @@ export interface FileRouteTypes {
     | '/forgot-password'
     | '/leaderboard'
     | '/login'
+    | '/premium'
     | '/prizes'
     | '/signup'
     | '/quiz/$sessionId'
@@ -140,6 +152,7 @@ export interface RootRouteChildren {
   ForgotPasswordRoute: typeof ForgotPasswordRoute
   LeaderboardRoute: typeof LeaderboardRoute
   LoginRoute: typeof LoginRoute
+  PremiumRoute: typeof PremiumRoute
   PrizesRoute: typeof PrizesRoute
   SignupRoute: typeof SignupRoute
   QuizSessionIdRoute: typeof QuizSessionIdRoute
@@ -161,6 +174,13 @@ declare module '@tanstack/react-router' {
       path: '/prizes'
       fullPath: '/prizes'
       preLoaderRoute: typeof PrizesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/premium': {
+      id: '/premium'
+      path: '/premium'
+      fullPath: '/premium'
+      preLoaderRoute: typeof PremiumRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -220,6 +240,7 @@ const rootRouteChildren: RootRouteChildren = {
   ForgotPasswordRoute: ForgotPasswordRoute,
   LeaderboardRoute: LeaderboardRoute,
   LoginRoute: LoginRoute,
+  PremiumRoute: PremiumRoute,
   PrizesRoute: PrizesRoute,
   SignupRoute: SignupRoute,
   QuizSessionIdRoute: QuizSessionIdRoute,
