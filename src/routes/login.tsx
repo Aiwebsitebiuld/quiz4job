@@ -1,4 +1,4 @@
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, type FormEvent } from "react";
 import { AuthHero } from "@/components/auth-hero";
 import { supabase } from "@/integrations/supabase/client";
@@ -15,20 +15,15 @@ export const Route = createFileRoute("/login")({
   component: LoginPage,
 });
 
-async function routeByRole(navigate: ReturnType<typeof useNavigate>) {
+async function routeByRole() {
   const { data: u } = await supabase.auth.getUser();
   if (!u.user) return;
   const { data: p } = await supabase.from("profiles").select("role").eq("id", u.user.id).maybeSingle();
-  if ((p as { role?: string } | null)?.role === "admin") {
-    navigate({ to: "/" as never, search: {}, replace: true, href: "/admin/dashboard" } as never);
-    window.location.href = "/admin/dashboard";
-  } else {
-    window.location.href = "/dashboard";
-  }
+  const role = (p as { role?: string } | null)?.role;
+  window.location.href = role === "admin" ? "/admin/dashboard" : "/dashboard";
 }
 
 function LoginPage() {
-  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -44,7 +39,7 @@ function LoginPage() {
       setError(error.message === "Invalid login credentials" ? "ভুল ইমেইল বা পাসওয়ার্ড" : error.message);
       return;
     }
-    await routeByRole(navigate);
+    await routeByRole();
   };
 
   const onGoogle = async () => {
