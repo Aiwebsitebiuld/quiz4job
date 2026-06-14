@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TermsRouteImport } from './routes/terms'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as PrizesRouteImport } from './routes/prizes'
@@ -30,6 +31,11 @@ import { Route as DashboardHistoryRouteImport } from './routes/dashboard.history
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as QuizResultSessionIdRouteImport } from './routes/quiz.result.$sessionId'
 
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
   path: '/signup',
@@ -143,6 +149,7 @@ export interface FileRoutesByFullPath {
   '/prizes': typeof PrizesRoute
   '/profile': typeof ProfileRoute
   '/signup': typeof SignupRoute
+  '/terms': typeof TermsRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/dashboard/history': typeof DashboardHistoryRoute
   '/jobs/$slug': typeof JobsSlugRoute
@@ -165,6 +172,7 @@ export interface FileRoutesByTo {
   '/prizes': typeof PrizesRoute
   '/profile': typeof ProfileRoute
   '/signup': typeof SignupRoute
+  '/terms': typeof TermsRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/dashboard/history': typeof DashboardHistoryRoute
   '/jobs/$slug': typeof JobsSlugRoute
@@ -188,6 +196,7 @@ export interface FileRoutesById {
   '/prizes': typeof PrizesRoute
   '/profile': typeof ProfileRoute
   '/signup': typeof SignupRoute
+  '/terms': typeof TermsRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/dashboard/history': typeof DashboardHistoryRoute
   '/jobs/$slug': typeof JobsSlugRoute
@@ -212,6 +221,7 @@ export interface FileRouteTypes {
     | '/prizes'
     | '/profile'
     | '/signup'
+    | '/terms'
     | '/blog/$slug'
     | '/dashboard/history'
     | '/jobs/$slug'
@@ -234,6 +244,7 @@ export interface FileRouteTypes {
     | '/prizes'
     | '/profile'
     | '/signup'
+    | '/terms'
     | '/blog/$slug'
     | '/dashboard/history'
     | '/jobs/$slug'
@@ -256,6 +267,7 @@ export interface FileRouteTypes {
     | '/prizes'
     | '/profile'
     | '/signup'
+    | '/terms'
     | '/blog/$slug'
     | '/dashboard/history'
     | '/jobs/$slug'
@@ -279,6 +291,7 @@ export interface RootRouteChildren {
   PrizesRoute: typeof PrizesRoute
   ProfileRoute: typeof ProfileRoute
   SignupRoute: typeof SignupRoute
+  TermsRoute: typeof TermsRoute
   BlogSlugRoute: typeof BlogSlugRoute
   DashboardHistoryRoute: typeof DashboardHistoryRoute
   JobsSlugRoute: typeof JobsSlugRoute
@@ -292,6 +305,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/signup': {
       id: '/signup'
       path: '/signup'
@@ -447,6 +467,7 @@ const rootRouteChildren: RootRouteChildren = {
   PrizesRoute: PrizesRoute,
   ProfileRoute: ProfileRoute,
   SignupRoute: SignupRoute,
+  TermsRoute: TermsRoute,
   BlogSlugRoute: BlogSlugRoute,
   DashboardHistoryRoute: DashboardHistoryRoute,
   JobsSlugRoute: JobsSlugRoute,
