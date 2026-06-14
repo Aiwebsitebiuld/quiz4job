@@ -50,10 +50,12 @@ function QuizTakingPage() {
   // Init timer once session loaded
   useEffect(() => {
     if (!session || remaining !== null) return;
-    const elapsed = Math.floor((Date.now() - new Date(session.started_at).getTime()) / 1000);
-    const left = Math.max(0, session.time_limit_seconds - elapsed);
+    const startedAt = session.started_at ?? new Date().toISOString();
+    const limit = session.time_limit_seconds ?? 600;
+    const elapsed = Math.floor((Date.now() - new Date(startedAt).getTime()) / 1000);
+    const left = Math.max(0, limit - elapsed);
     setRemaining(left);
-    startTime.current = new Date(session.started_at).getTime();
+    startTime.current = new Date(startedAt).getTime();
   }, [session, remaining]);
 
   // Tick
