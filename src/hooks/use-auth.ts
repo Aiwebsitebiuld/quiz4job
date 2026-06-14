@@ -25,20 +25,26 @@ export function useAuth() {
   useEffect(() => {
     let active = true;
 
-    const loadProfile = async (uid: string) => {
-      const { data } = await supabase
+    const loadProfile = async (uid: string, email: string | null) => {
+      const { data, error } = await supabase
         .from("profiles")
-        .select("id, full_name, username, email, avatar_url, district, is_premium, premium_expires_at, free_quizzes_today, free_quota_reset_date, facebook_liked, role")
+        .select("id, full_name, username, avatar_url, district, is_premium, premium_expires_at, free_quizzes_today, free_quota_reset_date, facebook_liked, role")
         .eq("id", uid)
         .maybeSingle();
-      if (active) setProfile((data as Profile | null) ?? null);
+      if (!active) return;
+      if (error) {
+        console.error("loadProfile error", error);
+        setProfile(null);
+        return;
+      }
+      setProfile(data ? ({ ...(data as object), email } as Profile) : null);
     };
 
     supabase.auth.getSession().then(({ data }) => {
       if (!active) return;
       const u = data.session?.user ?? null;
       setUser(u);
-      if (u) loadProfile(u.id);
+      if (u) loadProfile(u.id, u.email ?? null);
       setLoading(false);
     });
 
@@ -47,7 +53,7 @@ export function useAuth() {
       const u = session?.user ?? null;
       setUser(u);
       if (u) {
-        setTimeout(() => loadProfile(u.id), 0);
+        setTimeout(() => loadProfile(u.id, u.email ?? null), 0);
       } else {
         setProfile(null);
       }
