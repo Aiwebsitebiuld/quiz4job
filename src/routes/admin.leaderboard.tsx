@@ -1,6 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import { useServerFn } from "@tanstack/react-start";
+import { adminFetchLeaderboard, adminFetchPrizeHistory } from "@/lib/admin.functions";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -24,19 +26,20 @@ function LBAdmin() {
   const [payFor, setPayFor] = useState<{ row: any; pos: number; amount: number } | null>(null);
   const [bkash, setBkash] = useState(""); const [txn, setTxn] = useState("");
   const [historyRows, setHistoryRows] = useState<any[]>([]);
+  const fetchLB = useServerFn(adminFetchLeaderboard);
+  const fetchHistory = useServerFn(adminFetchPrizeHistory);
 
   const load = async () => {
-    const { data } = await supabase
-      .from("monthly_leaderboard")
-      .select("*, profiles!monthly_leaderboard_user_id_fkey(full_name,email,phone,facebook_liked,is_premium)")
-      .eq("month", month).eq("year", year)
-      .order("total_score", { ascending: false }).limit(50);
-    setRows((data ?? []).map((r: any, i) => ({ ...r, rankPos: i + 1 })));
+    try {
+      const data = await fetchLB({ data: { month, year } });
+      setRows((data ?? []).map((r: any, i: number) => ({ ...r, rankPos: i + 1 })));
+    } catch (e: any) { toast.error(e.message); }
   };
   useEffect(() => { load(); /* eslint-disable-next-line */ }, [month, year]);
 
   useEffect(() => {
-    supabase.from("prize_records").select("*, profiles!prize_records_user_id_fkey(full_name,email)").order("created_at", { ascending: false }).limit(100).then(({ data }) => setHistoryRows(data ?? []));
+    fetchHistory({}).then((data) => setHistoryRows(data ?? [])).catch((e: any) => toast.error(e.message));
+    // eslint-disable-next-line
   }, []);
 
   const openPay = (row: any, pos: number) => {

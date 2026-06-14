@@ -1,6 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import { useServerFn } from "@tanstack/react-start";
+import { adminFetchUsers } from "@/lib/admin.functions";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -13,12 +15,15 @@ export const Route = createFileRoute("/admin/users")({ component: UsersPage });
 function UsersPage() {
   const [rows, setRows] = useState<any[]>([]);
   const [q, setQ] = useState("");
+  const fetchUsers = useServerFn(adminFetchUsers);
 
   const load = async () => {
-    let query: any = supabase.from("profiles").select("id,full_name,email,phone,is_premium,role,is_active,total_quizzes_taken,created_at").order("created_at", { ascending: false }).limit(200);
-    if (q) query = query.or(`full_name.ilike.%${q}%,email.ilike.%${q}%`);
-    const { data } = await query;
-    setRows(data ?? []);
+    try {
+      const data = await fetchUsers({ data: { q } });
+      setRows(data ?? []);
+    } catch (e: any) {
+      toast.error(e.message);
+    }
   };
   useEffect(() => { load(); /* eslint-disable-next-line */ }, [q]);
 
