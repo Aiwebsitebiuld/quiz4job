@@ -25,7 +25,7 @@ function QuestionsPage() {
   const [selected, setSelected] = useState<Set<string>>(new Set());
 
   const load = async () => {
-    let q: any = supabase.from("questions").select("id,question_text_bn,correct_option,difficulty,is_active,times_appeared,times_correct,category_id,quiz_categories(name_bn)").order("created_at", { ascending: false }).limit(200);
+    let q: any = supabase.from("questions").select("id,question_text_bn,correct_option,difficulty,is_active,times_appeared,times_correct,category_id,quiz_categories(name_bn)").order("created_at", { ascending: false }).limit(2000);
     if (filters.cat !== "all") q = q.eq("category_id", filters.cat);
     if (filters.diff !== "all") q = q.eq("difficulty", filters.diff);
     if (filters.active !== "all") q = q.eq("is_active", filters.active === "yes");
