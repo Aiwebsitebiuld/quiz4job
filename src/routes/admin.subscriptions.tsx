@@ -1,6 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import { useServerFn } from "@tanstack/react-start";
+import { adminFetchSubscriptions } from "@/lib/admin.functions";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
@@ -25,16 +27,18 @@ function SubsPage() {
   const [rejectFor, setRejectFor] = useState<Sub | null>(null);
   const [rejectReason, setRejectReason] = useState("");
   const [screenshot, setScreenshot] = useState<string | null>(null);
+  const fetchSubs = useServerFn(adminFetchSubscriptions);
 
   const load = async (status: string) => {
     setLoading(true);
-    const { data } = await supabase
-      .from("subscriptions")
-      .select("*, profiles!subscriptions_user_id_fkey(full_name,email)")
-      .eq("status", status)
-      .order("created_at", { ascending: false });
-    setRows((data ?? []) as any);
-    setLoading(false);
+    try {
+      const data = await fetchSubs({ data: { status } });
+      setRows((data ?? []) as any);
+    } catch (e: any) {
+      toast.error(e.message);
+    } finally {
+      setLoading(false);
+    }
   };
   useEffect(() => { load(tab); }, [tab]);
 
