@@ -35,6 +35,7 @@ import { Route as DashboardHistoryRouteImport } from './routes/dashboard.history
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as AdminSubscriptionsRouteImport } from './routes/admin.subscriptions'
 import { Route as AdminQuestionsRouteImport } from './routes/admin.questions'
+import { Route as AdminLeaderboardRouteImport } from './routes/admin.leaderboard'
 import { Route as AdminDashboardRouteImport } from './routes/admin.dashboard'
 import { Route as AdminCategoriesRouteImport } from './routes/admin.categories'
 import { Route as QuizResultSessionIdRouteImport } from './routes/quiz.result.$sessionId'
@@ -172,6 +173,11 @@ const AdminQuestionsRoute = AdminQuestionsRouteImport.update({
   path: '/questions',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminLeaderboardRoute = AdminLeaderboardRouteImport.update({
+  id: '/leaderboard',
+  path: '/leaderboard',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminDashboardRoute = AdminDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -222,6 +228,7 @@ export interface FileRoutesByFullPath {
   '/terms': typeof TermsRoute
   '/admin/categories': typeof AdminCategoriesRoute
   '/admin/dashboard': typeof AdminDashboardRoute
+  '/admin/leaderboard': typeof AdminLeaderboardRoute
   '/admin/questions': typeof AdminQuestionsRouteWithChildren
   '/admin/subscriptions': typeof AdminSubscriptionsRouteWithChildren
   '/blog/$slug': typeof BlogSlugRoute
@@ -255,6 +262,7 @@ export interface FileRoutesByTo {
   '/terms': typeof TermsRoute
   '/admin/categories': typeof AdminCategoriesRoute
   '/admin/dashboard': typeof AdminDashboardRoute
+  '/admin/leaderboard': typeof AdminLeaderboardRoute
   '/admin/questions': typeof AdminQuestionsRouteWithChildren
   '/admin/subscriptions': typeof AdminSubscriptionsRouteWithChildren
   '/blog/$slug': typeof BlogSlugRoute
@@ -290,6 +298,7 @@ export interface FileRoutesById {
   '/terms': typeof TermsRoute
   '/admin/categories': typeof AdminCategoriesRoute
   '/admin/dashboard': typeof AdminDashboardRoute
+  '/admin/leaderboard': typeof AdminLeaderboardRoute
   '/admin/questions': typeof AdminQuestionsRouteWithChildren
   '/admin/subscriptions': typeof AdminSubscriptionsRouteWithChildren
   '/blog/$slug': typeof BlogSlugRoute
@@ -326,6 +335,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/admin/categories'
     | '/admin/dashboard'
+    | '/admin/leaderboard'
     | '/admin/questions'
     | '/admin/subscriptions'
     | '/blog/$slug'
@@ -359,6 +369,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/admin/categories'
     | '/admin/dashboard'
+    | '/admin/leaderboard'
     | '/admin/questions'
     | '/admin/subscriptions'
     | '/blog/$slug'
@@ -393,6 +404,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/admin/categories'
     | '/admin/dashboard'
+    | '/admin/leaderboard'
     | '/admin/questions'
     | '/admin/subscriptions'
     | '/blog/$slug'
@@ -621,6 +633,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminQuestionsRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/leaderboard': {
+      id: '/admin/leaderboard'
+      path: '/leaderboard'
+      fullPath: '/admin/leaderboard'
+      preLoaderRoute: typeof AdminLeaderboardRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/dashboard': {
       id: '/admin/dashboard'
       path: '/dashboard'
@@ -694,6 +713,7 @@ const AdminSubscriptionsRouteWithChildren =
 interface AdminRouteChildren {
   AdminCategoriesRoute: typeof AdminCategoriesRoute
   AdminDashboardRoute: typeof AdminDashboardRoute
+  AdminLeaderboardRoute: typeof AdminLeaderboardRoute
   AdminQuestionsRoute: typeof AdminQuestionsRouteWithChildren
   AdminSubscriptionsRoute: typeof AdminSubscriptionsRouteWithChildren
   AdminIndexRoute: typeof AdminIndexRoute
@@ -702,6 +722,7 @@ interface AdminRouteChildren {
 const AdminRouteChildren: AdminRouteChildren = {
   AdminCategoriesRoute: AdminCategoriesRoute,
   AdminDashboardRoute: AdminDashboardRoute,
+  AdminLeaderboardRoute: AdminLeaderboardRoute,
   AdminQuestionsRoute: AdminQuestionsRouteWithChildren,
   AdminSubscriptionsRoute: AdminSubscriptionsRouteWithChildren,
   AdminIndexRoute: AdminIndexRoute,
