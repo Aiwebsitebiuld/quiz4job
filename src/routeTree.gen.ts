@@ -13,6 +13,9 @@ import { Route as SignupRouteImport } from './routes/signup'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as QuizIndexRouteImport } from './routes/quiz.index'
+import { Route as QuizSessionIdRouteImport } from './routes/quiz.$sessionId'
+import { Route as QuizResultSessionIdRouteImport } from './routes/quiz.result.$sessionId'
 
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
@@ -34,18 +37,39 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const QuizIndexRoute = QuizIndexRouteImport.update({
+  id: '/quiz/',
+  path: '/quiz/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const QuizSessionIdRoute = QuizSessionIdRouteImport.update({
+  id: '/quiz/$sessionId',
+  path: '/quiz/$sessionId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const QuizResultSessionIdRoute = QuizResultSessionIdRouteImport.update({
+  id: '/quiz/result/$sessionId',
+  path: '/quiz/result/$sessionId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
+  '/quiz/$sessionId': typeof QuizSessionIdRoute
+  '/quiz/': typeof QuizIndexRoute
+  '/quiz/result/$sessionId': typeof QuizResultSessionIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
+  '/quiz/$sessionId': typeof QuizSessionIdRoute
+  '/quiz': typeof QuizIndexRoute
+  '/quiz/result/$sessionId': typeof QuizResultSessionIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -53,13 +77,38 @@ export interface FileRoutesById {
   '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
+  '/quiz/$sessionId': typeof QuizSessionIdRoute
+  '/quiz/': typeof QuizIndexRoute
+  '/quiz/result/$sessionId': typeof QuizResultSessionIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/forgot-password' | '/login' | '/signup'
+  fullPaths:
+    | '/'
+    | '/forgot-password'
+    | '/login'
+    | '/signup'
+    | '/quiz/$sessionId'
+    | '/quiz/'
+    | '/quiz/result/$sessionId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/forgot-password' | '/login' | '/signup'
-  id: '__root__' | '/' | '/forgot-password' | '/login' | '/signup'
+  to:
+    | '/'
+    | '/forgot-password'
+    | '/login'
+    | '/signup'
+    | '/quiz/$sessionId'
+    | '/quiz'
+    | '/quiz/result/$sessionId'
+  id:
+    | '__root__'
+    | '/'
+    | '/forgot-password'
+    | '/login'
+    | '/signup'
+    | '/quiz/$sessionId'
+    | '/quiz/'
+    | '/quiz/result/$sessionId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -67,6 +116,9 @@ export interface RootRouteChildren {
   ForgotPasswordRoute: typeof ForgotPasswordRoute
   LoginRoute: typeof LoginRoute
   SignupRoute: typeof SignupRoute
+  QuizSessionIdRoute: typeof QuizSessionIdRoute
+  QuizIndexRoute: typeof QuizIndexRoute
+  QuizResultSessionIdRoute: typeof QuizResultSessionIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -99,6 +151,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/quiz/': {
+      id: '/quiz/'
+      path: '/quiz'
+      fullPath: '/quiz/'
+      preLoaderRoute: typeof QuizIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/quiz/$sessionId': {
+      id: '/quiz/$sessionId'
+      path: '/quiz/$sessionId'
+      fullPath: '/quiz/$sessionId'
+      preLoaderRoute: typeof QuizSessionIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/quiz/result/$sessionId': {
+      id: '/quiz/result/$sessionId'
+      path: '/quiz/result/$sessionId'
+      fullPath: '/quiz/result/$sessionId'
+      preLoaderRoute: typeof QuizResultSessionIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -107,6 +180,9 @@ const rootRouteChildren: RootRouteChildren = {
   ForgotPasswordRoute: ForgotPasswordRoute,
   LoginRoute: LoginRoute,
   SignupRoute: SignupRoute,
+  QuizSessionIdRoute: QuizSessionIdRoute,
+  QuizIndexRoute: QuizIndexRoute,
+  QuizResultSessionIdRoute: QuizResultSessionIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
