@@ -13,6 +13,7 @@ import { Route as TermsRouteImport } from './routes/terms'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as PrizesRouteImport } from './routes/prizes'
+import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as PremiumRouteImport } from './routes/premium'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as LeaderboardRouteImport } from './routes/leaderboard'
@@ -49,6 +50,11 @@ const ProfileRoute = ProfileRouteImport.update({
 const PrizesRoute = PrizesRouteImport.update({
   id: '/prizes',
   path: '/prizes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PremiumRoute = PremiumRouteImport.update({
@@ -146,6 +152,7 @@ export interface FileRoutesByFullPath {
   '/leaderboard': typeof LeaderboardRoute
   '/login': typeof LoginRoute
   '/premium': typeof PremiumRoute
+  '/privacy': typeof PrivacyRoute
   '/prizes': typeof PrizesRoute
   '/profile': typeof ProfileRoute
   '/signup': typeof SignupRoute
@@ -169,6 +176,7 @@ export interface FileRoutesByTo {
   '/leaderboard': typeof LeaderboardRoute
   '/login': typeof LoginRoute
   '/premium': typeof PremiumRoute
+  '/privacy': typeof PrivacyRoute
   '/prizes': typeof PrizesRoute
   '/profile': typeof ProfileRoute
   '/signup': typeof SignupRoute
@@ -193,6 +201,7 @@ export interface FileRoutesById {
   '/leaderboard': typeof LeaderboardRoute
   '/login': typeof LoginRoute
   '/premium': typeof PremiumRoute
+  '/privacy': typeof PrivacyRoute
   '/prizes': typeof PrizesRoute
   '/profile': typeof ProfileRoute
   '/signup': typeof SignupRoute
@@ -218,6 +227,7 @@ export interface FileRouteTypes {
     | '/leaderboard'
     | '/login'
     | '/premium'
+    | '/privacy'
     | '/prizes'
     | '/profile'
     | '/signup'
@@ -241,6 +251,7 @@ export interface FileRouteTypes {
     | '/leaderboard'
     | '/login'
     | '/premium'
+    | '/privacy'
     | '/prizes'
     | '/profile'
     | '/signup'
@@ -264,6 +275,7 @@ export interface FileRouteTypes {
     | '/leaderboard'
     | '/login'
     | '/premium'
+    | '/privacy'
     | '/prizes'
     | '/profile'
     | '/signup'
@@ -288,6 +300,7 @@ export interface RootRouteChildren {
   LeaderboardRoute: typeof LeaderboardRoute
   LoginRoute: typeof LoginRoute
   PremiumRoute: typeof PremiumRoute
+  PrivacyRoute: typeof PrivacyRoute
   PrizesRoute: typeof PrizesRoute
   ProfileRoute: typeof ProfileRoute
   SignupRoute: typeof SignupRoute
@@ -331,6 +344,13 @@ declare module '@tanstack/react-router' {
       path: '/prizes'
       fullPath: '/prizes'
       preLoaderRoute: typeof PrizesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/premium': {
@@ -464,6 +484,7 @@ const rootRouteChildren: RootRouteChildren = {
   LeaderboardRoute: LeaderboardRoute,
   LoginRoute: LoginRoute,
   PremiumRoute: PremiumRoute,
+  PrivacyRoute: PrivacyRoute,
   PrizesRoute: PrizesRoute,
   ProfileRoute: ProfileRoute,
   SignupRoute: SignupRoute,
