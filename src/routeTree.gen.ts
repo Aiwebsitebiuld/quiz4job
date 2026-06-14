@@ -36,6 +36,7 @@ import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as AdminSubscriptionsRouteImport } from './routes/admin.subscriptions'
 import { Route as AdminDashboardRouteImport } from './routes/admin.dashboard'
 import { Route as QuizResultSessionIdRouteImport } from './routes/quiz.result.$sessionId'
+import { Route as AdminSubscriptionsVerifiedRouteImport } from './routes/admin.subscriptions.verified'
 
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
@@ -172,6 +173,12 @@ const QuizResultSessionIdRoute = QuizResultSessionIdRouteImport.update({
   path: '/quiz/result/$sessionId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminSubscriptionsVerifiedRoute =
+  AdminSubscriptionsVerifiedRouteImport.update({
+    id: '/verified',
+    path: '/verified',
+    getParentRoute: () => AdminSubscriptionsRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -190,7 +197,7 @@ export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/admin/dashboard': typeof AdminDashboardRoute
-  '/admin/subscriptions': typeof AdminSubscriptionsRoute
+  '/admin/subscriptions': typeof AdminSubscriptionsRouteWithChildren
   '/blog/$slug': typeof BlogSlugRoute
   '/dashboard/history': typeof DashboardHistoryRoute
   '/jobs/$slug': typeof JobsSlugRoute
@@ -200,6 +207,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/': typeof DashboardIndexRoute
   '/jobs/': typeof JobsIndexRoute
   '/quiz/': typeof QuizIndexRoute
+  '/admin/subscriptions/verified': typeof AdminSubscriptionsVerifiedRoute
   '/quiz/result/$sessionId': typeof QuizResultSessionIdRoute
 }
 export interface FileRoutesByTo {
@@ -218,7 +226,7 @@ export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/admin/dashboard': typeof AdminDashboardRoute
-  '/admin/subscriptions': typeof AdminSubscriptionsRoute
+  '/admin/subscriptions': typeof AdminSubscriptionsRouteWithChildren
   '/blog/$slug': typeof BlogSlugRoute
   '/dashboard/history': typeof DashboardHistoryRoute
   '/jobs/$slug': typeof JobsSlugRoute
@@ -228,6 +236,7 @@ export interface FileRoutesByTo {
   '/dashboard': typeof DashboardIndexRoute
   '/jobs': typeof JobsIndexRoute
   '/quiz': typeof QuizIndexRoute
+  '/admin/subscriptions/verified': typeof AdminSubscriptionsVerifiedRoute
   '/quiz/result/$sessionId': typeof QuizResultSessionIdRoute
 }
 export interface FileRoutesById {
@@ -248,7 +257,7 @@ export interface FileRoutesById {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/admin/dashboard': typeof AdminDashboardRoute
-  '/admin/subscriptions': typeof AdminSubscriptionsRoute
+  '/admin/subscriptions': typeof AdminSubscriptionsRouteWithChildren
   '/blog/$slug': typeof BlogSlugRoute
   '/dashboard/history': typeof DashboardHistoryRoute
   '/jobs/$slug': typeof JobsSlugRoute
@@ -258,6 +267,7 @@ export interface FileRoutesById {
   '/dashboard/': typeof DashboardIndexRoute
   '/jobs/': typeof JobsIndexRoute
   '/quiz/': typeof QuizIndexRoute
+  '/admin/subscriptions/verified': typeof AdminSubscriptionsVerifiedRoute
   '/quiz/result/$sessionId': typeof QuizResultSessionIdRoute
 }
 export interface FileRouteTypes {
@@ -289,6 +299,7 @@ export interface FileRouteTypes {
     | '/dashboard/'
     | '/jobs/'
     | '/quiz/'
+    | '/admin/subscriptions/verified'
     | '/quiz/result/$sessionId'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -317,6 +328,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/jobs'
     | '/quiz'
+    | '/admin/subscriptions/verified'
     | '/quiz/result/$sessionId'
   id:
     | '__root__'
@@ -346,6 +358,7 @@ export interface FileRouteTypes {
     | '/dashboard/'
     | '/jobs/'
     | '/quiz/'
+    | '/admin/subscriptions/verified'
     | '/quiz/result/$sessionId'
   fileRoutesById: FileRoutesById
 }
@@ -567,18 +580,36 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof QuizResultSessionIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/subscriptions/verified': {
+      id: '/admin/subscriptions/verified'
+      path: '/verified'
+      fullPath: '/admin/subscriptions/verified'
+      preLoaderRoute: typeof AdminSubscriptionsVerifiedRouteImport
+      parentRoute: typeof AdminSubscriptionsRoute
+    }
   }
 }
 
+interface AdminSubscriptionsRouteChildren {
+  AdminSubscriptionsVerifiedRoute: typeof AdminSubscriptionsVerifiedRoute
+}
+
+const AdminSubscriptionsRouteChildren: AdminSubscriptionsRouteChildren = {
+  AdminSubscriptionsVerifiedRoute: AdminSubscriptionsVerifiedRoute,
+}
+
+const AdminSubscriptionsRouteWithChildren =
+  AdminSubscriptionsRoute._addFileChildren(AdminSubscriptionsRouteChildren)
+
 interface AdminRouteChildren {
   AdminDashboardRoute: typeof AdminDashboardRoute
-  AdminSubscriptionsRoute: typeof AdminSubscriptionsRoute
+  AdminSubscriptionsRoute: typeof AdminSubscriptionsRouteWithChildren
   AdminIndexRoute: typeof AdminIndexRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
   AdminDashboardRoute: AdminDashboardRoute,
-  AdminSubscriptionsRoute: AdminSubscriptionsRoute,
+  AdminSubscriptionsRoute: AdminSubscriptionsRouteWithChildren,
   AdminIndexRoute: AdminIndexRoute,
 }
 
