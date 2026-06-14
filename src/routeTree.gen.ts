@@ -36,6 +36,7 @@ import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as AdminSubscriptionsRouteImport } from './routes/admin.subscriptions'
 import { Route as AdminQuestionsRouteImport } from './routes/admin.questions'
 import { Route as AdminDashboardRouteImport } from './routes/admin.dashboard'
+import { Route as AdminCategoriesRouteImport } from './routes/admin.categories'
 import { Route as QuizResultSessionIdRouteImport } from './routes/quiz.result.$sessionId'
 import { Route as AdminSubscriptionsVerifiedRouteImport } from './routes/admin.subscriptions.verified'
 import { Route as AdminQuestionsNewRouteImport } from './routes/admin.questions.new'
@@ -176,6 +177,11 @@ const AdminDashboardRoute = AdminDashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminCategoriesRoute = AdminCategoriesRouteImport.update({
+  id: '/categories',
+  path: '/categories',
+  getParentRoute: () => AdminRoute,
+} as any)
 const QuizResultSessionIdRoute = QuizResultSessionIdRouteImport.update({
   id: '/quiz/result/$sessionId',
   path: '/quiz/result/$sessionId',
@@ -214,6 +220,7 @@ export interface FileRoutesByFullPath {
   '/signup': typeof SignupRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
+  '/admin/categories': typeof AdminCategoriesRoute
   '/admin/dashboard': typeof AdminDashboardRoute
   '/admin/questions': typeof AdminQuestionsRouteWithChildren
   '/admin/subscriptions': typeof AdminSubscriptionsRouteWithChildren
@@ -246,6 +253,7 @@ export interface FileRoutesByTo {
   '/signup': typeof SignupRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
+  '/admin/categories': typeof AdminCategoriesRoute
   '/admin/dashboard': typeof AdminDashboardRoute
   '/admin/questions': typeof AdminQuestionsRouteWithChildren
   '/admin/subscriptions': typeof AdminSubscriptionsRouteWithChildren
@@ -280,6 +288,7 @@ export interface FileRoutesById {
   '/signup': typeof SignupRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
+  '/admin/categories': typeof AdminCategoriesRoute
   '/admin/dashboard': typeof AdminDashboardRoute
   '/admin/questions': typeof AdminQuestionsRouteWithChildren
   '/admin/subscriptions': typeof AdminSubscriptionsRouteWithChildren
@@ -315,6 +324,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/sitemap.xml'
     | '/terms'
+    | '/admin/categories'
     | '/admin/dashboard'
     | '/admin/questions'
     | '/admin/subscriptions'
@@ -347,6 +357,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/sitemap.xml'
     | '/terms'
+    | '/admin/categories'
     | '/admin/dashboard'
     | '/admin/questions'
     | '/admin/subscriptions'
@@ -380,6 +391,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/sitemap.xml'
     | '/terms'
+    | '/admin/categories'
     | '/admin/dashboard'
     | '/admin/questions'
     | '/admin/subscriptions'
@@ -616,6 +628,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminDashboardRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/categories': {
+      id: '/admin/categories'
+      path: '/categories'
+      fullPath: '/admin/categories'
+      preLoaderRoute: typeof AdminCategoriesRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/quiz/result/$sessionId': {
       id: '/quiz/result/$sessionId'
       path: '/quiz/result/$sessionId'
@@ -673,6 +692,7 @@ const AdminSubscriptionsRouteWithChildren =
   AdminSubscriptionsRoute._addFileChildren(AdminSubscriptionsRouteChildren)
 
 interface AdminRouteChildren {
+  AdminCategoriesRoute: typeof AdminCategoriesRoute
   AdminDashboardRoute: typeof AdminDashboardRoute
   AdminQuestionsRoute: typeof AdminQuestionsRouteWithChildren
   AdminSubscriptionsRoute: typeof AdminSubscriptionsRouteWithChildren
@@ -680,6 +700,7 @@ interface AdminRouteChildren {
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
+  AdminCategoriesRoute: AdminCategoriesRoute,
   AdminDashboardRoute: AdminDashboardRoute,
   AdminQuestionsRoute: AdminQuestionsRouteWithChildren,
   AdminSubscriptionsRoute: AdminSubscriptionsRouteWithChildren,
