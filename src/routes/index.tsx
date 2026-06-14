@@ -17,27 +17,7 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="border-b border-border bg-card/80 backdrop-blur sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2">
-            <div className="w-9 h-9 rounded-lg bg-bd-green text-white grid place-items-center font-bold text-lg">Q4</div>
-            <span className="font-bold text-lg">Quiz4Job</span>
-          </Link>
-          <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
-            <a href="#features" className="hover:text-bd-green">ফিচার</a>
-            <a href="#prize" className="hover:text-bd-green">পুরস্কার</a>
-            <a href="#pricing" className="hover:text-bd-green">প্রিমিয়াম</a>
-          </nav>
-          <Link
-            to="/"
-            className="px-4 py-2 rounded-lg bg-bd-green text-white text-sm font-semibold hover:bg-bd-green-dark transition"
-          >
-            শুরু করুন
-          </Link>
-        </div>
-      </header>
+    <div className="bg-background">
 
       {/* Hero */}
       <section className="hero-gradient text-white relative overflow-hidden">
@@ -73,7 +53,7 @@ function Index() {
               transition={{ delay: 0.3 }}
               className="mt-8 flex flex-wrap gap-3"
             >
-              <Link to="/" className="px-6 py-3 rounded-xl bg-bd-green hover:bg-bd-green-dark font-semibold transition shadow-lg">
+              <Link to="/signup" className="px-6 py-3 rounded-xl bg-bd-green hover:bg-bd-green-dark font-semibold transition shadow-lg">
                 ফ্রি কুইজ শুরু করুন
               </Link>
               <a href="#pricing" className="px-6 py-3 rounded-xl bg-white/10 backdrop-blur border border-white/20 font-semibold hover:bg-white/20 transition">
@@ -182,9 +162,6 @@ function Index() {
         </div>
       </section>
 
-      <footer className="border-t border-border py-8 text-center text-sm text-muted-foreground">
-        © {new Date().getFullYear()} Quiz4Job · বাংলাদেশ
-      </footer>
     </div>
   );
 }
