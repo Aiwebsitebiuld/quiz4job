@@ -40,11 +40,12 @@ export function useAuth() {
       setProfile(data ? ({ ...(data as object), email } as Profile) : null);
     };
 
-    supabase.auth.getSession().then(({ data }) => {
+    supabase.auth.getSession().then(async ({ data }) => {
       if (!active) return;
       const u = data.session?.user ?? null;
       setUser(u);
-      if (u) loadProfile(u.id, u.email ?? null);
+      if (u) await loadProfile(u.id, u.email ?? null);
+      if (!active) return;
       setLoading(false);
     });
 
@@ -53,9 +54,14 @@ export function useAuth() {
       const u = session?.user ?? null;
       setUser(u);
       if (u) {
-        setTimeout(() => loadProfile(u.id, u.email ?? null), 0);
+        setLoading(true);
+        setTimeout(async () => {
+          await loadProfile(u.id, u.email ?? null);
+          if (active) setLoading(false);
+        }, 0);
       } else {
         setProfile(null);
+        setLoading(false);
       }
     });
 
