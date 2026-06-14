@@ -17,6 +17,7 @@ import { Route as LeaderboardRouteImport } from './routes/leaderboard'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as QuizIndexRouteImport } from './routes/quiz.index'
+import { Route as JobsIndexRouteImport } from './routes/jobs.index'
 import { Route as QuizSessionIdRouteImport } from './routes/quiz.$sessionId'
 import { Route as QuizResultSessionIdRouteImport } from './routes/quiz.result.$sessionId'
 
@@ -60,6 +61,11 @@ const QuizIndexRoute = QuizIndexRouteImport.update({
   path: '/quiz/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const JobsIndexRoute = JobsIndexRouteImport.update({
+  id: '/jobs/',
+  path: '/jobs/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const QuizSessionIdRoute = QuizSessionIdRouteImport.update({
   id: '/quiz/$sessionId',
   path: '/quiz/$sessionId',
@@ -80,6 +86,7 @@ export interface FileRoutesByFullPath {
   '/prizes': typeof PrizesRoute
   '/signup': typeof SignupRoute
   '/quiz/$sessionId': typeof QuizSessionIdRoute
+  '/jobs/': typeof JobsIndexRoute
   '/quiz/': typeof QuizIndexRoute
   '/quiz/result/$sessionId': typeof QuizResultSessionIdRoute
 }
@@ -92,6 +99,7 @@ export interface FileRoutesByTo {
   '/prizes': typeof PrizesRoute
   '/signup': typeof SignupRoute
   '/quiz/$sessionId': typeof QuizSessionIdRoute
+  '/jobs': typeof JobsIndexRoute
   '/quiz': typeof QuizIndexRoute
   '/quiz/result/$sessionId': typeof QuizResultSessionIdRoute
 }
@@ -105,6 +113,7 @@ export interface FileRoutesById {
   '/prizes': typeof PrizesRoute
   '/signup': typeof SignupRoute
   '/quiz/$sessionId': typeof QuizSessionIdRoute
+  '/jobs/': typeof JobsIndexRoute
   '/quiz/': typeof QuizIndexRoute
   '/quiz/result/$sessionId': typeof QuizResultSessionIdRoute
 }
@@ -119,6 +128,7 @@ export interface FileRouteTypes {
     | '/prizes'
     | '/signup'
     | '/quiz/$sessionId'
+    | '/jobs/'
     | '/quiz/'
     | '/quiz/result/$sessionId'
   fileRoutesByTo: FileRoutesByTo
@@ -131,6 +141,7 @@ export interface FileRouteTypes {
     | '/prizes'
     | '/signup'
     | '/quiz/$sessionId'
+    | '/jobs'
     | '/quiz'
     | '/quiz/result/$sessionId'
   id:
@@ -143,6 +154,7 @@ export interface FileRouteTypes {
     | '/prizes'
     | '/signup'
     | '/quiz/$sessionId'
+    | '/jobs/'
     | '/quiz/'
     | '/quiz/result/$sessionId'
   fileRoutesById: FileRoutesById
@@ -156,6 +168,7 @@ export interface RootRouteChildren {
   PrizesRoute: typeof PrizesRoute
   SignupRoute: typeof SignupRoute
   QuizSessionIdRoute: typeof QuizSessionIdRoute
+  JobsIndexRoute: typeof JobsIndexRoute
   QuizIndexRoute: typeof QuizIndexRoute
   QuizResultSessionIdRoute: typeof QuizResultSessionIdRoute
 }
@@ -218,6 +231,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof QuizIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/jobs/': {
+      id: '/jobs/'
+      path: '/jobs'
+      fullPath: '/jobs/'
+      preLoaderRoute: typeof JobsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/quiz/$sessionId': {
       id: '/quiz/$sessionId'
       path: '/quiz/$sessionId'
@@ -244,6 +264,7 @@ const rootRouteChildren: RootRouteChildren = {
   PrizesRoute: PrizesRoute,
   SignupRoute: SignupRoute,
   QuizSessionIdRoute: QuizSessionIdRoute,
+  JobsIndexRoute: JobsIndexRoute,
   QuizIndexRoute: QuizIndexRoute,
   QuizResultSessionIdRoute: QuizResultSessionIdRoute,
 }
