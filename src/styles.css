@@ -4,20 +4,6 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/*
- * Design system definition.
- *
- * The @theme inline block maps CSS custom properties to Tailwind utility
- * classes (e.g. --color-primary -> bg-primary, text-primary).
- *
- * The :root and .dark blocks define the actual color values using oklch.
- * All colors MUST use oklch format.
- *
- * To add a new semantic color:
- * 1. Add the variable to :root (light value) and .dark (dark value)
- * 2. Register it in @theme inline as --color-<name>: var(--<name>)
- */
-
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -59,29 +45,49 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  --color-bd-green: var(--bd-green);
+  --color-bd-green-dark: var(--bd-green-dark);
+  --color-bd-green-light: var(--bd-green-light);
+  --color-bd-red: var(--bd-red);
+  --color-gold: var(--gold);
+  --color-gold-light: var(--gold-light);
+  --color-info: var(--info);
+  --color-premium: var(--premium);
+  --font-bn: "Hind Siliguri", "Inter", sans-serif;
+  --font-sans: "Inter", "Hind Siliguri", sans-serif;
 }
 
 :root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.129 0.042 264.695);
+  --radius: 0.75rem;
+  /* Quiz4Job palette */
+  --bd-green: oklch(0.45 0.12 160);          /* #006A4E */
+  --bd-green-dark: oklch(0.36 0.11 160);     /* #004d38 */
+  --bd-green-light: oklch(0.96 0.03 160);    /* #E6F4EF */
+  --bd-red: oklch(0.62 0.23 25);             /* #F42A41 */
+  --gold: oklch(0.78 0.16 75);               /* #F59E0B */
+  --gold-light: oklch(0.94 0.08 90);         /* #FEF3C7 */
+  --info: oklch(0.58 0.22 265);              /* #2563EB */
+  --premium: oklch(0.55 0.25 295);           /* #7C3AED */
+
+  --background: oklch(0.985 0.005 240);       /* #F8FAFC-ish */
+  --foreground: oklch(0.18 0.04 260);         /* #0F172A */
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.129 0.042 264.695);
+  --card-foreground: oklch(0.18 0.04 260);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.129 0.042 264.695);
-  --primary: oklch(0.208 0.042 265.755);
-  --primary-foreground: oklch(0.984 0.003 247.858);
-  --secondary: oklch(0.968 0.007 247.896);
-  --secondary-foreground: oklch(0.208 0.042 265.755);
-  --muted: oklch(0.968 0.007 247.896);
-  --muted-foreground: oklch(0.554 0.046 257.417);
-  --accent: oklch(0.968 0.007 247.896);
-  --accent-foreground: oklch(0.208 0.042 265.755);
-  --destructive: oklch(0.577 0.245 27.325);
+  --popover-foreground: oklch(0.18 0.04 260);
+  --primary: var(--bd-green);
+  --primary-foreground: oklch(0.98 0 0);
+  --secondary: var(--bd-green-light);
+  --secondary-foreground: var(--bd-green-dark);
+  --muted: oklch(0.96 0.008 250);
+  --muted-foreground: oklch(0.48 0.03 250);   /* #64748B */
+  --accent: var(--gold-light);
+  --accent-foreground: oklch(0.35 0.12 70);
+  --destructive: var(--bd-red);
   --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(0.929 0.013 255.508);
-  --input: oklch(0.929 0.013 255.508);
-  --ring: oklch(0.704 0.04 256.788);
+  --border: oklch(0.91 0.012 250);            /* #E2E8F0 */
+  --input: oklch(0.91 0.012 250);
+  --ring: var(--bd-green);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -140,5 +146,33 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    font-family: var(--font-bn);
+    font-feature-settings: "ss01", "cv11";
   }
+  h1, h2, h3, h4, h5 {
+    font-family: var(--font-bn);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+}
+
+@utility prize-gradient {
+  background-image: linear-gradient(135deg, #F59E0B 0%, #EF4444 50%, #7C3AED 100%);
+}
+@utility hero-gradient {
+  background-image: linear-gradient(135deg, #0F172A 0%, #004d38 50%, #006A4E 100%);
+}
+@utility gold-shimmer {
+  background: linear-gradient(110deg, #F59E0B 0%, #FCD34D 45%, #FFFFFF 50%, #FCD34D 55%, #F59E0B 100%);
+  background-size: 200% 100%;
+  animation: shimmer 3s linear infinite;
+}
+@keyframes shimmer {
+  to { background-position: -200% 0; }
+}
+@utility text-gradient-prize {
+  background-image: linear-gradient(135deg, #F59E0B 0%, #EF4444 50%, #7C3AED 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
