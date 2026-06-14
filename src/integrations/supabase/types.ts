@@ -721,7 +721,7 @@ export type Database = {
           time_limit_seconds: number | null
           time_taken_seconds: number | null
           total_questions: number | null
-          user_id: string | null
+          user_id: string
           wrong_answers: number | null
         }
         Insert: {
@@ -743,7 +743,7 @@ export type Database = {
           time_limit_seconds?: number | null
           time_taken_seconds?: number | null
           total_questions?: number | null
-          user_id?: string | null
+          user_id: string
           wrong_answers?: number | null
         }
         Update: {
@@ -765,7 +765,7 @@ export type Database = {
           time_limit_seconds?: number | null
           time_taken_seconds?: number | null
           total_questions?: number | null
-          user_id?: string | null
+          user_id?: string
           wrong_answers?: number | null
         }
         Relationships: [
