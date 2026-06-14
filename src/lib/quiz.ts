@@ -136,7 +136,7 @@ export async function fetchSessionWithQuestions(sessionId: string) {
       .select("question_id, created_at")
       .eq("session_id", sessionId)
       .order("created_at", { ascending: true });
-    ids = (ans ?? []).map((a) => a.question_id);
+    ids = (ans ?? []).map((a) => a.question_id).filter((id): id is string => !!id);
   }
 
   let questions: QuestionRow[] = [];
