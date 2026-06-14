@@ -113,6 +113,7 @@ function DashboardPage() {
     const byCat: Record<string, { sum: number; n: number }> = {};
     sessions.forEach((s) => {
       const k = s.category_id;
+      if (!k) return;
       byCat[k] ||= { sum: 0, n: 0 };
       byCat[k].sum += Number(s.percentage ?? 0);
       byCat[k].n += 1;
@@ -236,7 +237,7 @@ function DashboardPage() {
                 }
               />
               <ChecklistItem
-                ok={(profile?.current_month_quizzes ?? totalQuizzes) >= 5}
+                ok={totalQuizzes >= 5}
                 label="এই মাসে ৫+ র‍্যান্ক কুইজ"
                 action={
                   totalQuizzes < 5 && (
@@ -286,8 +287,8 @@ function DashboardPage() {
                       <tr key={s.id} className="border-b last:border-0">
                         <td className="py-2 pr-2">{cat?.name_bn ?? "—"}</td>
                         <td className="py-2 pr-2">{s.completed_at ? new Date(s.completed_at).toLocaleDateString("en-GB") : "—"}</td>
-                        <td className="py-2 pr-2 font-medium">{toBn(s.score)}</td>
-                        <td className="py-2 pr-2">{toBn(s.correct_answers)}/{toBn(s.total_questions)}</td>
+                        <td className="py-2 pr-2 font-medium">{toBn(s.score ?? 0)}</td>
+                        <td className="py-2 pr-2">{toBn(s.correct_answers ?? 0)}/{toBn(s.total_questions ?? 0)}</td>
                         <td className="py-2 pr-2">{toBn(Math.round((s.time_taken_seconds ?? 0) / 60))} মি</td>
                         <td className="py-2 pr-2">
                           <Link to="/quiz/result/$sessionId" params={{ sessionId: s.id }} className="text-bd-green hover:underline">দেখুন</Link>
