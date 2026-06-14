@@ -33,6 +33,7 @@ import { Route as QuizSessionIdRouteImport } from './routes/quiz.$sessionId'
 import { Route as JobsSlugRouteImport } from './routes/jobs.$slug'
 import { Route as DashboardHistoryRouteImport } from './routes/dashboard.history'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
+import { Route as AdminUsersRouteImport } from './routes/admin.users'
 import { Route as AdminSubscriptionsRouteImport } from './routes/admin.subscriptions'
 import { Route as AdminQuestionsRouteImport } from './routes/admin.questions'
 import { Route as AdminLeaderboardRouteImport } from './routes/admin.leaderboard'
@@ -164,6 +165,11 @@ const BlogSlugRoute = BlogSlugRouteImport.update({
   path: '/blog/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminUsersRoute = AdminUsersRouteImport.update({
+  id: '/users',
+  path: '/users',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminSubscriptionsRoute = AdminSubscriptionsRouteImport.update({
   id: '/subscriptions',
   path: '/subscriptions',
@@ -238,6 +244,7 @@ export interface FileRoutesByFullPath {
   '/admin/leaderboard': typeof AdminLeaderboardRoute
   '/admin/questions': typeof AdminQuestionsRouteWithChildren
   '/admin/subscriptions': typeof AdminSubscriptionsRouteWithChildren
+  '/admin/users': typeof AdminUsersRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/dashboard/history': typeof DashboardHistoryRoute
   '/jobs/$slug': typeof JobsSlugRoute
@@ -273,6 +280,7 @@ export interface FileRoutesByTo {
   '/admin/leaderboard': typeof AdminLeaderboardRoute
   '/admin/questions': typeof AdminQuestionsRouteWithChildren
   '/admin/subscriptions': typeof AdminSubscriptionsRouteWithChildren
+  '/admin/users': typeof AdminUsersRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/dashboard/history': typeof DashboardHistoryRoute
   '/jobs/$slug': typeof JobsSlugRoute
@@ -310,6 +318,7 @@ export interface FileRoutesById {
   '/admin/leaderboard': typeof AdminLeaderboardRoute
   '/admin/questions': typeof AdminQuestionsRouteWithChildren
   '/admin/subscriptions': typeof AdminSubscriptionsRouteWithChildren
+  '/admin/users': typeof AdminUsersRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/dashboard/history': typeof DashboardHistoryRoute
   '/jobs/$slug': typeof JobsSlugRoute
@@ -348,6 +357,7 @@ export interface FileRouteTypes {
     | '/admin/leaderboard'
     | '/admin/questions'
     | '/admin/subscriptions'
+    | '/admin/users'
     | '/blog/$slug'
     | '/dashboard/history'
     | '/jobs/$slug'
@@ -383,6 +393,7 @@ export interface FileRouteTypes {
     | '/admin/leaderboard'
     | '/admin/questions'
     | '/admin/subscriptions'
+    | '/admin/users'
     | '/blog/$slug'
     | '/dashboard/history'
     | '/jobs/$slug'
@@ -419,6 +430,7 @@ export interface FileRouteTypes {
     | '/admin/leaderboard'
     | '/admin/questions'
     | '/admin/subscriptions'
+    | '/admin/users'
     | '/blog/$slug'
     | '/dashboard/history'
     | '/jobs/$slug'
@@ -631,6 +643,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/users': {
+      id: '/admin/users'
+      path: '/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AdminUsersRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/subscriptions': {
       id: '/admin/subscriptions'
       path: '/subscriptions'
@@ -736,6 +755,7 @@ interface AdminRouteChildren {
   AdminLeaderboardRoute: typeof AdminLeaderboardRoute
   AdminQuestionsRoute: typeof AdminQuestionsRouteWithChildren
   AdminSubscriptionsRoute: typeof AdminSubscriptionsRouteWithChildren
+  AdminUsersRoute: typeof AdminUsersRoute
   AdminIndexRoute: typeof AdminIndexRoute
 }
 
@@ -746,6 +766,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminLeaderboardRoute: AdminLeaderboardRoute,
   AdminQuestionsRoute: AdminQuestionsRouteWithChildren,
   AdminSubscriptionsRoute: AdminSubscriptionsRouteWithChildren,
+  AdminUsersRoute: AdminUsersRoute,
   AdminIndexRoute: AdminIndexRoute,
 }
 
