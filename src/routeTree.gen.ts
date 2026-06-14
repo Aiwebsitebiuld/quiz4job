@@ -35,6 +35,7 @@ import { Route as DashboardHistoryRouteImport } from './routes/dashboard.history
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as AdminUsersRouteImport } from './routes/admin.users'
 import { Route as AdminSubscriptionsRouteImport } from './routes/admin.subscriptions'
+import { Route as AdminSettingsRouteImport } from './routes/admin.settings'
 import { Route as AdminQuestionsRouteImport } from './routes/admin.questions'
 import { Route as AdminLeaderboardRouteImport } from './routes/admin.leaderboard'
 import { Route as AdminJobsRouteImport } from './routes/admin.jobs'
@@ -176,6 +177,11 @@ const AdminSubscriptionsRoute = AdminSubscriptionsRouteImport.update({
   path: '/subscriptions',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminSettingsRoute = AdminSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminQuestionsRoute = AdminQuestionsRouteImport.update({
   id: '/questions',
   path: '/questions',
@@ -250,6 +256,7 @@ export interface FileRoutesByFullPath {
   '/admin/jobs': typeof AdminJobsRoute
   '/admin/leaderboard': typeof AdminLeaderboardRoute
   '/admin/questions': typeof AdminQuestionsRouteWithChildren
+  '/admin/settings': typeof AdminSettingsRoute
   '/admin/subscriptions': typeof AdminSubscriptionsRouteWithChildren
   '/admin/users': typeof AdminUsersRoute
   '/blog/$slug': typeof BlogSlugRoute
@@ -287,6 +294,7 @@ export interface FileRoutesByTo {
   '/admin/jobs': typeof AdminJobsRoute
   '/admin/leaderboard': typeof AdminLeaderboardRoute
   '/admin/questions': typeof AdminQuestionsRouteWithChildren
+  '/admin/settings': typeof AdminSettingsRoute
   '/admin/subscriptions': typeof AdminSubscriptionsRouteWithChildren
   '/admin/users': typeof AdminUsersRoute
   '/blog/$slug': typeof BlogSlugRoute
@@ -326,6 +334,7 @@ export interface FileRoutesById {
   '/admin/jobs': typeof AdminJobsRoute
   '/admin/leaderboard': typeof AdminLeaderboardRoute
   '/admin/questions': typeof AdminQuestionsRouteWithChildren
+  '/admin/settings': typeof AdminSettingsRoute
   '/admin/subscriptions': typeof AdminSubscriptionsRouteWithChildren
   '/admin/users': typeof AdminUsersRoute
   '/blog/$slug': typeof BlogSlugRoute
@@ -366,6 +375,7 @@ export interface FileRouteTypes {
     | '/admin/jobs'
     | '/admin/leaderboard'
     | '/admin/questions'
+    | '/admin/settings'
     | '/admin/subscriptions'
     | '/admin/users'
     | '/blog/$slug'
@@ -403,6 +413,7 @@ export interface FileRouteTypes {
     | '/admin/jobs'
     | '/admin/leaderboard'
     | '/admin/questions'
+    | '/admin/settings'
     | '/admin/subscriptions'
     | '/admin/users'
     | '/blog/$slug'
@@ -441,6 +452,7 @@ export interface FileRouteTypes {
     | '/admin/jobs'
     | '/admin/leaderboard'
     | '/admin/questions'
+    | '/admin/settings'
     | '/admin/subscriptions'
     | '/admin/users'
     | '/blog/$slug'
@@ -669,6 +681,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminSubscriptionsRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/settings': {
+      id: '/admin/settings'
+      path: '/settings'
+      fullPath: '/admin/settings'
+      preLoaderRoute: typeof AdminSettingsRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/questions': {
       id: '/admin/questions'
       path: '/questions'
@@ -774,6 +793,7 @@ interface AdminRouteChildren {
   AdminJobsRoute: typeof AdminJobsRoute
   AdminLeaderboardRoute: typeof AdminLeaderboardRoute
   AdminQuestionsRoute: typeof AdminQuestionsRouteWithChildren
+  AdminSettingsRoute: typeof AdminSettingsRoute
   AdminSubscriptionsRoute: typeof AdminSubscriptionsRouteWithChildren
   AdminUsersRoute: typeof AdminUsersRoute
   AdminIndexRoute: typeof AdminIndexRoute
@@ -786,6 +806,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminJobsRoute: AdminJobsRoute,
   AdminLeaderboardRoute: AdminLeaderboardRoute,
   AdminQuestionsRoute: AdminQuestionsRouteWithChildren,
+  AdminSettingsRoute: AdminSettingsRoute,
   AdminSubscriptionsRoute: AdminSubscriptionsRouteWithChildren,
   AdminUsersRoute: AdminUsersRoute,
   AdminIndexRoute: AdminIndexRoute,
