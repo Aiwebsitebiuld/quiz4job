@@ -17,27 +17,7 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="border-b border-border bg-card/80 backdrop-blur sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2">
-            <div className="w-9 h-9 rounded-lg bg-bd-green text-white grid place-items-center font-bold text-lg">Q4</div>
-            <span className="font-bold text-lg">Quiz4Job</span>
-          </Link>
-          <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
-            <a href="#features" className="hover:text-bd-green">ফিচার</a>
-            <a href="#prize" className="hover:text-bd-green">পুরস্কার</a>
-            <a href="#pricing" className="hover:text-bd-green">প্রিমিয়াম</a>
-          </nav>
-          <Link
-            to="/"
-            className="px-4 py-2 rounded-lg bg-bd-green text-white text-sm font-semibold hover:bg-bd-green-dark transition"
-          >
-            শুরু করুন
-          </Link>
-        </div>
-      </header>
+    <div className="bg-background">
 
       {/* Hero */}
       <section className="hero-gradient text-white relative overflow-hidden">
