@@ -28,7 +28,7 @@ export function useAuth() {
     const loadProfile = async (uid: string) => {
       const { data } = await supabase
         .from("profiles")
-        .select("id, full_name, username, email, avatar_url, district, is_premium, premium_expires_at, free_quizzes_today, free_quota_reset_date, facebook_liked, role")
+        .select("id, full_name, username, avatar_url, district, is_premium, premium_expires_at, free_quizzes_today, free_quota_reset_date, facebook_liked, role")
         .eq("id", uid)
         .maybeSingle();
       if (active) setProfile((data as Profile | null) ?? null);
