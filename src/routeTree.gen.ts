@@ -39,6 +39,7 @@ import { Route as AdminDashboardRouteImport } from './routes/admin.dashboard'
 import { Route as QuizResultSessionIdRouteImport } from './routes/quiz.result.$sessionId'
 import { Route as AdminSubscriptionsVerifiedRouteImport } from './routes/admin.subscriptions.verified'
 import { Route as AdminQuestionsNewRouteImport } from './routes/admin.questions.new'
+import { Route as AdminQuestionsIdEditRouteImport } from './routes/admin.questions.$id.edit'
 
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
@@ -191,6 +192,11 @@ const AdminQuestionsNewRoute = AdminQuestionsNewRouteImport.update({
   path: '/new',
   getParentRoute: () => AdminQuestionsRoute,
 } as any)
+const AdminQuestionsIdEditRoute = AdminQuestionsIdEditRouteImport.update({
+  id: '/$id/edit',
+  path: '/$id/edit',
+  getParentRoute: () => AdminQuestionsRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -223,6 +229,7 @@ export interface FileRoutesByFullPath {
   '/admin/questions/new': typeof AdminQuestionsNewRoute
   '/admin/subscriptions/verified': typeof AdminSubscriptionsVerifiedRoute
   '/quiz/result/$sessionId': typeof QuizResultSessionIdRoute
+  '/admin/questions/$id/edit': typeof AdminQuestionsIdEditRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -254,6 +261,7 @@ export interface FileRoutesByTo {
   '/admin/questions/new': typeof AdminQuestionsNewRoute
   '/admin/subscriptions/verified': typeof AdminSubscriptionsVerifiedRoute
   '/quiz/result/$sessionId': typeof QuizResultSessionIdRoute
+  '/admin/questions/$id/edit': typeof AdminQuestionsIdEditRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -287,6 +295,7 @@ export interface FileRoutesById {
   '/admin/questions/new': typeof AdminQuestionsNewRoute
   '/admin/subscriptions/verified': typeof AdminSubscriptionsVerifiedRoute
   '/quiz/result/$sessionId': typeof QuizResultSessionIdRoute
+  '/admin/questions/$id/edit': typeof AdminQuestionsIdEditRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -321,6 +330,7 @@ export interface FileRouteTypes {
     | '/admin/questions/new'
     | '/admin/subscriptions/verified'
     | '/quiz/result/$sessionId'
+    | '/admin/questions/$id/edit'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -352,6 +362,7 @@ export interface FileRouteTypes {
     | '/admin/questions/new'
     | '/admin/subscriptions/verified'
     | '/quiz/result/$sessionId'
+    | '/admin/questions/$id/edit'
   id:
     | '__root__'
     | '/'
@@ -384,6 +395,7 @@ export interface FileRouteTypes {
     | '/admin/questions/new'
     | '/admin/subscriptions/verified'
     | '/quiz/result/$sessionId'
+    | '/admin/questions/$id/edit'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -625,15 +637,24 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminQuestionsNewRouteImport
       parentRoute: typeof AdminQuestionsRoute
     }
+    '/admin/questions/$id/edit': {
+      id: '/admin/questions/$id/edit'
+      path: '/$id/edit'
+      fullPath: '/admin/questions/$id/edit'
+      preLoaderRoute: typeof AdminQuestionsIdEditRouteImport
+      parentRoute: typeof AdminQuestionsRoute
+    }
   }
 }
 
 interface AdminQuestionsRouteChildren {
   AdminQuestionsNewRoute: typeof AdminQuestionsNewRoute
+  AdminQuestionsIdEditRoute: typeof AdminQuestionsIdEditRoute
 }
 
 const AdminQuestionsRouteChildren: AdminQuestionsRouteChildren = {
   AdminQuestionsNewRoute: AdminQuestionsNewRoute,
+  AdminQuestionsIdEditRoute: AdminQuestionsIdEditRoute,
 }
 
 const AdminQuestionsRouteWithChildren = AdminQuestionsRoute._addFileChildren(
