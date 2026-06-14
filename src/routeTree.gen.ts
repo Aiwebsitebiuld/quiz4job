@@ -21,17 +21,31 @@ import { Route as LeaderboardRouteImport } from './routes/leaderboard'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as QuizIndexRouteImport } from './routes/quiz.index'
 import { Route as JobsIndexRouteImport } from './routes/jobs.index'
 import { Route as DashboardIndexRouteImport } from './routes/dashboard.index'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
+import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as QuizSessionIdRouteImport } from './routes/quiz.$sessionId'
 import { Route as JobsSlugRouteImport } from './routes/jobs.$slug'
 import { Route as DashboardHistoryRouteImport } from './routes/dashboard.history'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
+import { Route as AdminUsersRouteImport } from './routes/admin.users'
+import { Route as AdminSubscriptionsRouteImport } from './routes/admin.subscriptions'
+import { Route as AdminSettingsRouteImport } from './routes/admin.settings'
+import { Route as AdminQuestionsRouteImport } from './routes/admin.questions'
+import { Route as AdminLeaderboardRouteImport } from './routes/admin.leaderboard'
+import { Route as AdminJobsRouteImport } from './routes/admin.jobs'
+import { Route as AdminDashboardRouteImport } from './routes/admin.dashboard'
+import { Route as AdminCategoriesRouteImport } from './routes/admin.categories'
+import { Route as AdminBlogRouteImport } from './routes/admin.blog'
 import { Route as QuizResultSessionIdRouteImport } from './routes/quiz.result.$sessionId'
+import { Route as AdminSubscriptionsVerifiedRouteImport } from './routes/admin.subscriptions.verified'
+import { Route as AdminQuestionsNewRouteImport } from './routes/admin.questions.new'
+import { Route as AdminQuestionsIdEditRouteImport } from './routes/admin.questions.$id.edit'
 
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
@@ -93,6 +107,11 @@ const ContactRoute = ContactRouteImport.update({
   path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
@@ -123,6 +142,11 @@ const BlogIndexRoute = BlogIndexRouteImport.update({
   path: '/blog/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRoute,
+} as any)
 const QuizSessionIdRoute = QuizSessionIdRouteImport.update({
   id: '/quiz/$sessionId',
   path: '/quiz/$sessionId',
@@ -143,15 +167,77 @@ const BlogSlugRoute = BlogSlugRouteImport.update({
   path: '/blog/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminUsersRoute = AdminUsersRouteImport.update({
+  id: '/users',
+  path: '/users',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminSubscriptionsRoute = AdminSubscriptionsRouteImport.update({
+  id: '/subscriptions',
+  path: '/subscriptions',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminSettingsRoute = AdminSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminQuestionsRoute = AdminQuestionsRouteImport.update({
+  id: '/questions',
+  path: '/questions',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminLeaderboardRoute = AdminLeaderboardRouteImport.update({
+  id: '/leaderboard',
+  path: '/leaderboard',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminJobsRoute = AdminJobsRouteImport.update({
+  id: '/jobs',
+  path: '/jobs',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminDashboardRoute = AdminDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminCategoriesRoute = AdminCategoriesRouteImport.update({
+  id: '/categories',
+  path: '/categories',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminBlogRoute = AdminBlogRouteImport.update({
+  id: '/blog',
+  path: '/blog',
+  getParentRoute: () => AdminRoute,
+} as any)
 const QuizResultSessionIdRoute = QuizResultSessionIdRouteImport.update({
   id: '/quiz/result/$sessionId',
   path: '/quiz/result/$sessionId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminSubscriptionsVerifiedRoute =
+  AdminSubscriptionsVerifiedRouteImport.update({
+    id: '/verified',
+    path: '/verified',
+    getParentRoute: () => AdminSubscriptionsRoute,
+  } as any)
+const AdminQuestionsNewRoute = AdminQuestionsNewRouteImport.update({
+  id: '/new',
+  path: '/new',
+  getParentRoute: () => AdminQuestionsRoute,
+} as any)
+const AdminQuestionsIdEditRoute = AdminQuestionsIdEditRouteImport.update({
+  id: '/$id/edit',
+  path: '/$id/edit',
+  getParentRoute: () => AdminQuestionsRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/admin': typeof AdminRouteWithChildren
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
   '/forgot-password': typeof ForgotPasswordRoute
@@ -164,15 +250,28 @@ export interface FileRoutesByFullPath {
   '/signup': typeof SignupRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
+  '/admin/blog': typeof AdminBlogRoute
+  '/admin/categories': typeof AdminCategoriesRoute
+  '/admin/dashboard': typeof AdminDashboardRoute
+  '/admin/jobs': typeof AdminJobsRoute
+  '/admin/leaderboard': typeof AdminLeaderboardRoute
+  '/admin/questions': typeof AdminQuestionsRouteWithChildren
+  '/admin/settings': typeof AdminSettingsRoute
+  '/admin/subscriptions': typeof AdminSubscriptionsRouteWithChildren
+  '/admin/users': typeof AdminUsersRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/dashboard/history': typeof DashboardHistoryRoute
   '/jobs/$slug': typeof JobsSlugRoute
   '/quiz/$sessionId': typeof QuizSessionIdRoute
+  '/admin/': typeof AdminIndexRoute
   '/blog/': typeof BlogIndexRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/jobs/': typeof JobsIndexRoute
   '/quiz/': typeof QuizIndexRoute
+  '/admin/questions/new': typeof AdminQuestionsNewRoute
+  '/admin/subscriptions/verified': typeof AdminSubscriptionsVerifiedRoute
   '/quiz/result/$sessionId': typeof QuizResultSessionIdRoute
+  '/admin/questions/$id/edit': typeof AdminQuestionsIdEditRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -189,20 +288,34 @@ export interface FileRoutesByTo {
   '/signup': typeof SignupRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
+  '/admin/blog': typeof AdminBlogRoute
+  '/admin/categories': typeof AdminCategoriesRoute
+  '/admin/dashboard': typeof AdminDashboardRoute
+  '/admin/jobs': typeof AdminJobsRoute
+  '/admin/leaderboard': typeof AdminLeaderboardRoute
+  '/admin/questions': typeof AdminQuestionsRouteWithChildren
+  '/admin/settings': typeof AdminSettingsRoute
+  '/admin/subscriptions': typeof AdminSubscriptionsRouteWithChildren
+  '/admin/users': typeof AdminUsersRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/dashboard/history': typeof DashboardHistoryRoute
   '/jobs/$slug': typeof JobsSlugRoute
   '/quiz/$sessionId': typeof QuizSessionIdRoute
+  '/admin': typeof AdminIndexRoute
   '/blog': typeof BlogIndexRoute
   '/dashboard': typeof DashboardIndexRoute
   '/jobs': typeof JobsIndexRoute
   '/quiz': typeof QuizIndexRoute
+  '/admin/questions/new': typeof AdminQuestionsNewRoute
+  '/admin/subscriptions/verified': typeof AdminSubscriptionsVerifiedRoute
   '/quiz/result/$sessionId': typeof QuizResultSessionIdRoute
+  '/admin/questions/$id/edit': typeof AdminQuestionsIdEditRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/admin': typeof AdminRouteWithChildren
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
   '/forgot-password': typeof ForgotPasswordRoute
@@ -215,21 +328,35 @@ export interface FileRoutesById {
   '/signup': typeof SignupRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
+  '/admin/blog': typeof AdminBlogRoute
+  '/admin/categories': typeof AdminCategoriesRoute
+  '/admin/dashboard': typeof AdminDashboardRoute
+  '/admin/jobs': typeof AdminJobsRoute
+  '/admin/leaderboard': typeof AdminLeaderboardRoute
+  '/admin/questions': typeof AdminQuestionsRouteWithChildren
+  '/admin/settings': typeof AdminSettingsRoute
+  '/admin/subscriptions': typeof AdminSubscriptionsRouteWithChildren
+  '/admin/users': typeof AdminUsersRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/dashboard/history': typeof DashboardHistoryRoute
   '/jobs/$slug': typeof JobsSlugRoute
   '/quiz/$sessionId': typeof QuizSessionIdRoute
+  '/admin/': typeof AdminIndexRoute
   '/blog/': typeof BlogIndexRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/jobs/': typeof JobsIndexRoute
   '/quiz/': typeof QuizIndexRoute
+  '/admin/questions/new': typeof AdminQuestionsNewRoute
+  '/admin/subscriptions/verified': typeof AdminSubscriptionsVerifiedRoute
   '/quiz/result/$sessionId': typeof QuizResultSessionIdRoute
+  '/admin/questions/$id/edit': typeof AdminQuestionsIdEditRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/about'
+    | '/admin'
     | '/contact'
     | '/faq'
     | '/forgot-password'
@@ -242,15 +369,28 @@ export interface FileRouteTypes {
     | '/signup'
     | '/sitemap.xml'
     | '/terms'
+    | '/admin/blog'
+    | '/admin/categories'
+    | '/admin/dashboard'
+    | '/admin/jobs'
+    | '/admin/leaderboard'
+    | '/admin/questions'
+    | '/admin/settings'
+    | '/admin/subscriptions'
+    | '/admin/users'
     | '/blog/$slug'
     | '/dashboard/history'
     | '/jobs/$slug'
     | '/quiz/$sessionId'
+    | '/admin/'
     | '/blog/'
     | '/dashboard/'
     | '/jobs/'
     | '/quiz/'
+    | '/admin/questions/new'
+    | '/admin/subscriptions/verified'
     | '/quiz/result/$sessionId'
+    | '/admin/questions/$id/edit'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -267,19 +407,33 @@ export interface FileRouteTypes {
     | '/signup'
     | '/sitemap.xml'
     | '/terms'
+    | '/admin/blog'
+    | '/admin/categories'
+    | '/admin/dashboard'
+    | '/admin/jobs'
+    | '/admin/leaderboard'
+    | '/admin/questions'
+    | '/admin/settings'
+    | '/admin/subscriptions'
+    | '/admin/users'
     | '/blog/$slug'
     | '/dashboard/history'
     | '/jobs/$slug'
     | '/quiz/$sessionId'
+    | '/admin'
     | '/blog'
     | '/dashboard'
     | '/jobs'
     | '/quiz'
+    | '/admin/questions/new'
+    | '/admin/subscriptions/verified'
     | '/quiz/result/$sessionId'
+    | '/admin/questions/$id/edit'
   id:
     | '__root__'
     | '/'
     | '/about'
+    | '/admin'
     | '/contact'
     | '/faq'
     | '/forgot-password'
@@ -292,20 +446,34 @@ export interface FileRouteTypes {
     | '/signup'
     | '/sitemap.xml'
     | '/terms'
+    | '/admin/blog'
+    | '/admin/categories'
+    | '/admin/dashboard'
+    | '/admin/jobs'
+    | '/admin/leaderboard'
+    | '/admin/questions'
+    | '/admin/settings'
+    | '/admin/subscriptions'
+    | '/admin/users'
     | '/blog/$slug'
     | '/dashboard/history'
     | '/jobs/$slug'
     | '/quiz/$sessionId'
+    | '/admin/'
     | '/blog/'
     | '/dashboard/'
     | '/jobs/'
     | '/quiz/'
+    | '/admin/questions/new'
+    | '/admin/subscriptions/verified'
     | '/quiz/result/$sessionId'
+    | '/admin/questions/$id/edit'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  AdminRoute: typeof AdminRouteWithChildren
   ContactRoute: typeof ContactRoute
   FaqRoute: typeof FaqRoute
   ForgotPasswordRoute: typeof ForgotPasswordRoute
@@ -415,6 +583,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/about': {
       id: '/about'
       path: '/about'
@@ -457,6 +632,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/quiz/$sessionId': {
       id: '/quiz/$sessionId'
       path: '/quiz/$sessionId'
@@ -485,6 +667,69 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/users': {
+      id: '/admin/users'
+      path: '/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AdminUsersRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/subscriptions': {
+      id: '/admin/subscriptions'
+      path: '/subscriptions'
+      fullPath: '/admin/subscriptions'
+      preLoaderRoute: typeof AdminSubscriptionsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/settings': {
+      id: '/admin/settings'
+      path: '/settings'
+      fullPath: '/admin/settings'
+      preLoaderRoute: typeof AdminSettingsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/questions': {
+      id: '/admin/questions'
+      path: '/questions'
+      fullPath: '/admin/questions'
+      preLoaderRoute: typeof AdminQuestionsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/leaderboard': {
+      id: '/admin/leaderboard'
+      path: '/leaderboard'
+      fullPath: '/admin/leaderboard'
+      preLoaderRoute: typeof AdminLeaderboardRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/jobs': {
+      id: '/admin/jobs'
+      path: '/jobs'
+      fullPath: '/admin/jobs'
+      preLoaderRoute: typeof AdminJobsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/dashboard': {
+      id: '/admin/dashboard'
+      path: '/dashboard'
+      fullPath: '/admin/dashboard'
+      preLoaderRoute: typeof AdminDashboardRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/categories': {
+      id: '/admin/categories'
+      path: '/categories'
+      fullPath: '/admin/categories'
+      preLoaderRoute: typeof AdminCategoriesRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/blog': {
+      id: '/admin/blog'
+      path: '/blog'
+      fullPath: '/admin/blog'
+      preLoaderRoute: typeof AdminBlogRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/quiz/result/$sessionId': {
       id: '/quiz/result/$sessionId'
       path: '/quiz/result/$sessionId'
@@ -492,12 +737,87 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof QuizResultSessionIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/subscriptions/verified': {
+      id: '/admin/subscriptions/verified'
+      path: '/verified'
+      fullPath: '/admin/subscriptions/verified'
+      preLoaderRoute: typeof AdminSubscriptionsVerifiedRouteImport
+      parentRoute: typeof AdminSubscriptionsRoute
+    }
+    '/admin/questions/new': {
+      id: '/admin/questions/new'
+      path: '/new'
+      fullPath: '/admin/questions/new'
+      preLoaderRoute: typeof AdminQuestionsNewRouteImport
+      parentRoute: typeof AdminQuestionsRoute
+    }
+    '/admin/questions/$id/edit': {
+      id: '/admin/questions/$id/edit'
+      path: '/$id/edit'
+      fullPath: '/admin/questions/$id/edit'
+      preLoaderRoute: typeof AdminQuestionsIdEditRouteImport
+      parentRoute: typeof AdminQuestionsRoute
+    }
   }
 }
+
+interface AdminQuestionsRouteChildren {
+  AdminQuestionsNewRoute: typeof AdminQuestionsNewRoute
+  AdminQuestionsIdEditRoute: typeof AdminQuestionsIdEditRoute
+}
+
+const AdminQuestionsRouteChildren: AdminQuestionsRouteChildren = {
+  AdminQuestionsNewRoute: AdminQuestionsNewRoute,
+  AdminQuestionsIdEditRoute: AdminQuestionsIdEditRoute,
+}
+
+const AdminQuestionsRouteWithChildren = AdminQuestionsRoute._addFileChildren(
+  AdminQuestionsRouteChildren,
+)
+
+interface AdminSubscriptionsRouteChildren {
+  AdminSubscriptionsVerifiedRoute: typeof AdminSubscriptionsVerifiedRoute
+}
+
+const AdminSubscriptionsRouteChildren: AdminSubscriptionsRouteChildren = {
+  AdminSubscriptionsVerifiedRoute: AdminSubscriptionsVerifiedRoute,
+}
+
+const AdminSubscriptionsRouteWithChildren =
+  AdminSubscriptionsRoute._addFileChildren(AdminSubscriptionsRouteChildren)
+
+interface AdminRouteChildren {
+  AdminBlogRoute: typeof AdminBlogRoute
+  AdminCategoriesRoute: typeof AdminCategoriesRoute
+  AdminDashboardRoute: typeof AdminDashboardRoute
+  AdminJobsRoute: typeof AdminJobsRoute
+  AdminLeaderboardRoute: typeof AdminLeaderboardRoute
+  AdminQuestionsRoute: typeof AdminQuestionsRouteWithChildren
+  AdminSettingsRoute: typeof AdminSettingsRoute
+  AdminSubscriptionsRoute: typeof AdminSubscriptionsRouteWithChildren
+  AdminUsersRoute: typeof AdminUsersRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminBlogRoute: AdminBlogRoute,
+  AdminCategoriesRoute: AdminCategoriesRoute,
+  AdminDashboardRoute: AdminDashboardRoute,
+  AdminJobsRoute: AdminJobsRoute,
+  AdminLeaderboardRoute: AdminLeaderboardRoute,
+  AdminQuestionsRoute: AdminQuestionsRouteWithChildren,
+  AdminSettingsRoute: AdminSettingsRoute,
+  AdminSubscriptionsRoute: AdminSubscriptionsRouteWithChildren,
+  AdminUsersRoute: AdminUsersRoute,
+  AdminIndexRoute: AdminIndexRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  AdminRoute: AdminRouteWithChildren,
   ContactRoute: ContactRoute,
   FaqRoute: FaqRoute,
   ForgotPasswordRoute: ForgotPasswordRoute,
