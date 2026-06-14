@@ -53,7 +53,7 @@ function Index() {
               transition={{ delay: 0.3 }}
               className="mt-8 flex flex-wrap gap-3"
             >
-              <Link to="/" className="px-6 py-3 rounded-xl bg-bd-green hover:bg-bd-green-dark font-semibold transition shadow-lg">
+              <Link to="/signup" className="px-6 py-3 rounded-xl bg-bd-green hover:bg-bd-green-dark font-semibold transition shadow-lg">
                 ফ্রি কুইজ শুরু করুন
               </Link>
               <a href="#pricing" className="px-6 py-3 rounded-xl bg-white/10 backdrop-blur border border-white/20 font-semibold hover:bg-white/20 transition">
@@ -162,9 +162,6 @@ function Index() {
         </div>
       </section>
 
-      <footer className="border-t border-border py-8 text-center text-sm text-muted-foreground">
-        © {new Date().getFullYear()} Quiz4Job · বাংলাদেশ
-      </footer>
     </div>
   );
 }
