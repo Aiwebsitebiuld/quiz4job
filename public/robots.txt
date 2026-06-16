@@ -5,4 +5,4 @@ Disallow: /dashboard
 Disallow: /profile
 Disallow: /quiz/result
 
-Sitemap: /sitemap.xml
+Sitemap: https://quiz4job.com/sitemap.xml
