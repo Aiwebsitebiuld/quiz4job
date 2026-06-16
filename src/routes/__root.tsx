@@ -103,6 +103,36 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         href: appCss,
       },
     ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          name: "Quiz4Job",
+          url: "https://quiz4job.com",
+          inLanguage: "bn-BD",
+          description:
+            "বাংলাদেশের #১ চাকরির কুইজ প্ল্যাটফর্ম। বিসিএস, ব্যাংক, প্রাইমারি প্রস্তুতি।",
+          potentialAction: {
+            "@type": "SearchAction",
+            target: "https://quiz4job.com/quiz?q={search_term_string}",
+            "query-input": "required name=search_term_string",
+          },
+        }),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          name: "Quiz4Job",
+          url: "https://quiz4job.com",
+          logo: "https://quiz4job.com/favicon.ico",
+          sameAs: [],
+        }),
+      },
+    ],
   }),
   shellComponent: RootShell,
   component: RootComponent,
