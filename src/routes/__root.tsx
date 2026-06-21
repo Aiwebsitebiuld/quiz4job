@@ -14,6 +14,7 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import { MobileBottomNav } from "@/components/mobile-bottom-nav";
 
 function NotFoundComponent() {
   return (
@@ -179,10 +180,11 @@ function RootComponent() {
       ) : (
         <div className="min-h-screen flex flex-col bg-background">
           <SiteHeader />
-          <main className="flex-1">
+          <main className="flex-1 pb-16 lg:pb-0">
             <Outlet />
           </main>
           <SiteFooter />
+          <MobileBottomNav />
         </div>
       )}
     </QueryClientProvider>
