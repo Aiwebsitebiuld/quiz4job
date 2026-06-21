@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "@tanstack/react-router";
-import { Bell, Menu, X, Crown, Trophy, LogOut, User as UserIcon, LayoutDashboard } from "lucide-react";
+import { Bell, Crown, Trophy, LogOut, User as UserIcon, LayoutDashboard } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
 import { supabase } from "@/integrations/supabase/client";
 import { PrizeBanner } from "./prize-banner";
@@ -15,7 +15,6 @@ const NAV = [
 
 export function SiteHeader() {
   const { user, profile, isPremium, isAdmin } = useAuth();
-  const [openMenu, setOpenMenu] = useState(false);
   const [openDrop, setOpenDrop] = useState(false);
   const navigate = useNavigate();
 
@@ -55,7 +54,7 @@ export function SiteHeader() {
               <>
                 <Link
                   to="/login"
-                  className="hidden sm:inline-flex px-3 py-1.5 rounded-lg text-sm font-semibold text-bd-green hover:bg-bd-green-light transition"
+                  className="inline-flex px-3 py-1.5 rounded-lg text-sm font-semibold text-bd-green hover:bg-bd-green-light transition"
                 >
                   লগ ইন
                 </Link>
@@ -126,70 +125,9 @@ export function SiteHeader() {
                 </div>
               </>
             )}
-
-            {/* Mobile hamburger */}
-            <button
-              className="lg:hidden grid w-9 h-9 place-items-center rounded-lg hover:bg-muted"
-              onClick={() => setOpenMenu(true)}
-              aria-label="Menu"
-            >
-              <Menu className="w-5 h-5" />
-            </button>
           </div>
         </div>
       </header>
-
-      {/* Mobile drawer */}
-      {openMenu && (
-        <div className="fixed inset-0 z-[60] lg:hidden">
-          <div className="absolute inset-0 bg-black/50" onClick={() => setOpenMenu(false)} />
-          <div className="absolute right-0 top-0 bottom-0 w-72 bg-card shadow-xl flex flex-col">
-            <div className="flex items-center justify-between p-4 border-b border-border">
-              <span className="font-bold text-bd-green">মেনু</span>
-              <button onClick={() => setOpenMenu(false)} className="w-9 h-9 grid place-items-center rounded-lg hover:bg-muted">
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-            <nav className="flex-1 p-2 overflow-y-auto">
-              {NAV.map((n) => (
-                <a
-                  key={n.href}
-                  href={n.href}
-                  className="block px-4 py-3 rounded-lg text-sm font-semibold hover:bg-muted"
-                  onClick={() => setOpenMenu(false)}
-                >
-                  {n.label}
-                </a>
-              ))}
-              <div className="border-t border-border my-2" />
-              {!user ? (
-                <>
-                  <Link to="/login" className="block px-4 py-3 rounded-lg text-sm font-semibold hover:bg-muted" onClick={() => setOpenMenu(false)}>
-                    লগ ইন
-                  </Link>
-                  <Link to="/signup" className="block mx-2 my-2 px-4 py-3 rounded-lg bg-bd-green text-white text-sm font-bold text-center" onClick={() => setOpenMenu(false)}>
-                    নিবন্ধন করুন
-                  </Link>
-                </>
-              ) : (
-                <>
-                  <a href={isAdmin ? "/admin/dashboard" : "/dashboard"} className="block px-4 py-3 rounded-lg text-sm font-semibold hover:bg-muted">
-                    ড্যাশবোর্ড
-                  </a>
-                  {!isPremium && (
-                    <a href="/premium" className="block mx-2 my-2 px-4 py-3 rounded-lg gold-shimmer text-foreground text-sm font-bold text-center">
-                      <Crown className="inline w-4 h-4 mr-1" /> প্রিমিয়াম হন ৳১০
-                    </a>
-                  )}
-                  <button onClick={handleSignOut} className="w-full text-left px-4 py-3 rounded-lg text-sm font-semibold hover:bg-muted text-destructive">
-                    লগ আউট
-                  </button>
-                </>
-              )}
-            </nav>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
