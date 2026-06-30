@@ -216,6 +216,11 @@ const PRIZE_AMOUNTS = [1500, 1000, 500];
 
 function HomePage() {
   const { user } = useAuth();
+  const [hasAccount, setHasAccount] = useState(false);
+  useEffect(() => {
+    try { setHasAccount(localStorage.getItem("q4j_has_account") === "1"); } catch { /* ignore */ }
+  }, []);
+  const ctaTarget = user ? "/dashboard" : hasAccount ? "/login" : "/signup";
   const categories = useCategories();
   const leaderboard = useLeaderboard();
   const winners = useWinners();
