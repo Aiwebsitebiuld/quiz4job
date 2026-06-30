@@ -619,23 +619,44 @@ function HomePage() {
         </div>
       </section>
 
-      {/* ───────────── 8. SUBSCRIPTION CTA ───────────── */}
+      {/* ───────────── 8. SUBSCRIPTION CTA + PAYMENT STEPS ───────────── */}
       <section className="py-20 px-4 gold-shimmer text-black">
         <div className="max-w-5xl mx-auto text-center">
           <Gift className="w-12 h-12 mx-auto" />
           <h2 className="mt-4 text-4xl md:text-6xl font-extrabold text-slate-900">
-            মাত্র {bnCurrency(10)}-এ পুরস্কার জিতুন!
+            ৩ ধাপে প্রিমিয়াম হোন
           </h2>
           <p className="mt-4 text-lg text-slate-900/85 max-w-2xl mx-auto">
-            প্রতিমাসে মাত্র একটি চা-এর দামে প্রিমিয়াম হন এবং {bnCurrency(1500)} পর্যন্ত নগদ পুরস্কার জিতুন!
+            Basic {bnCurrency(30)} / Pro {bnCurrency(50)} — bKash, Nagad বা Rocket-এ <b>Send Money</b> করুন।
           </p>
+
+          <div className="mt-8 grid sm:grid-cols-3 gap-4 text-left">
+            <div className="rounded-2xl bg-white/90 p-5 border border-slate-900/10">
+              <div className="text-xs font-bold text-bd-green-dark">ধাপ ১</div>
+              <div className="mt-1 font-bold text-slate-900">Send Money করুন</div>
+              <div className="mt-2 text-sm text-slate-700">নম্বর:</div>
+              <div className="text-2xl font-extrabold tabular-nums text-slate-900">01767-091490</div>
+              <div className="mt-1 text-xs text-slate-600">পরিমাণ: {bnCurrency(30)} বা {bnCurrency(50)}</div>
+            </div>
+            <div className="rounded-2xl bg-white/90 p-5 border border-slate-900/10">
+              <div className="text-xs font-bold text-bd-green-dark">ধাপ ২</div>
+              <div className="mt-1 font-bold text-slate-900">Transaction ID দিন</div>
+              <div className="mt-2 text-sm text-slate-700">পেমেন্ট পেজে গিয়ে আপনার TrxID, পেমেন্ট পদ্ধতি ও নম্বর জমা দিন।</div>
+            </div>
+            <div className="rounded-2xl bg-white/90 p-5 border border-slate-900/10">
+              <div className="text-xs font-bold text-bd-green-dark">ধাপ ৩</div>
+              <div className="mt-1 font-bold text-slate-900">আমরা যাচাই করব</div>
+              <div className="mt-2 text-sm text-slate-700">সাধারণত ২৪ ঘণ্টার মধ্যে প্রিমিয়াম সক্রিয় হয়ে যাবে।</div>
+            </div>
+          </div>
+
           <div className="mt-6 flex items-center justify-center gap-3 flex-wrap">
             <Badge className="bg-pink-500 hover:bg-pink-500 text-white border-0 text-sm px-3 py-1">bKash</Badge>
             <Badge className="bg-orange-500 hover:bg-orange-500 text-white border-0 text-sm px-3 py-1">Nagad</Badge>
             <Badge className="bg-purple-600 hover:bg-purple-600 text-white border-0 text-sm px-3 py-1">Rocket</Badge>
           </div>
           <Button asChild size="lg" className="mt-8 h-14 px-10 bg-slate-900 hover:bg-slate-800 text-white text-base font-bold">
-            <Link to="/premium">⭐ এখনই প্রিমিয়াম হন — মাত্র {bnCurrency(10)}/মাস</Link>
+            <Link to="/premium">⭐ পেমেন্ট পেজে যান</Link>
           </Button>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-4 text-sm text-slate-900/80">
             <Link to="/faq" className="hover:underline">কখন পুরস্কার পাবো?</Link>
