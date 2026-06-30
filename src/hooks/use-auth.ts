@@ -49,7 +49,10 @@ export function useAuth() {
       if (!active) return;
       const u = data.session?.user ?? null;
       setUser(u);
-      if (u) await loadProfile(u.id, u.email ?? null);
+      if (u) {
+        try { localStorage.setItem("q4j_has_account", "1"); } catch { /* ignore */ }
+        await loadProfile(u.id, u.email ?? null);
+      }
       if (!active) return;
       setLoading(false);
     });
@@ -59,6 +62,7 @@ export function useAuth() {
       const u = session?.user ?? null;
       setUser(u);
       if (u) {
+        try { localStorage.setItem("q4j_has_account", "1"); } catch { /* ignore */ }
         setLoading(true);
         setTimeout(async () => {
           await loadProfile(u.id, u.email ?? null);
