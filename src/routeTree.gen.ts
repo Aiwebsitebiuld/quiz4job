@@ -37,12 +37,12 @@ import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as AdminUsersRouteImport } from './routes/admin.users'
 import { Route as AdminSubscriptionsRouteImport } from './routes/admin.subscriptions'
 import { Route as AdminSettingsRouteImport } from './routes/admin.settings'
-import { Route as AdminQuestionsRouteImport } from './routes/admin.questions'
 import { Route as AdminLeaderboardRouteImport } from './routes/admin.leaderboard'
 import { Route as AdminJobsRouteImport } from './routes/admin.jobs'
 import { Route as AdminDashboardRouteImport } from './routes/admin.dashboard'
 import { Route as AdminCategoriesRouteImport } from './routes/admin.categories'
 import { Route as AdminBlogRouteImport } from './routes/admin.blog'
+import { Route as AdminQuestionsIndexRouteImport } from './routes/admin.questions.index'
 import { Route as QuizResultSessionIdRouteImport } from './routes/quiz.result.$sessionId'
 import { Route as AdminSubscriptionsVerifiedRouteImport } from './routes/admin.subscriptions.verified'
 import { Route as AdminQuestionsNewRouteImport } from './routes/admin.questions.new'
@@ -188,11 +188,6 @@ const AdminSettingsRoute = AdminSettingsRouteImport.update({
   path: '/settings',
   getParentRoute: () => AdminRoute,
 } as any)
-const AdminQuestionsRoute = AdminQuestionsRouteImport.update({
-  id: '/questions',
-  path: '/questions',
-  getParentRoute: () => AdminRoute,
-} as any)
 const AdminLeaderboardRoute = AdminLeaderboardRouteImport.update({
   id: '/leaderboard',
   path: '/leaderboard',
@@ -218,6 +213,11 @@ const AdminBlogRoute = AdminBlogRouteImport.update({
   path: '/blog',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminQuestionsIndexRoute = AdminQuestionsIndexRouteImport.update({
+  id: '/questions/',
+  path: '/questions/',
+  getParentRoute: () => AdminRoute,
+} as any)
 const QuizResultSessionIdRoute = QuizResultSessionIdRouteImport.update({
   id: '/quiz/result/$sessionId',
   path: '/quiz/result/$sessionId',
@@ -230,14 +230,14 @@ const AdminSubscriptionsVerifiedRoute =
     getParentRoute: () => AdminSubscriptionsRoute,
   } as any)
 const AdminQuestionsNewRoute = AdminQuestionsNewRouteImport.update({
-  id: '/new',
-  path: '/new',
-  getParentRoute: () => AdminQuestionsRoute,
+  id: '/questions/new',
+  path: '/questions/new',
+  getParentRoute: () => AdminRoute,
 } as any)
 const AdminQuestionsIdEditRoute = AdminQuestionsIdEditRouteImport.update({
-  id: '/$id/edit',
-  path: '/$id/edit',
-  getParentRoute: () => AdminQuestionsRoute,
+  id: '/questions/$id/edit',
+  path: '/questions/$id/edit',
+  getParentRoute: () => AdminRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -262,7 +262,6 @@ export interface FileRoutesByFullPath {
   '/admin/dashboard': typeof AdminDashboardRoute
   '/admin/jobs': typeof AdminJobsRoute
   '/admin/leaderboard': typeof AdminLeaderboardRoute
-  '/admin/questions': typeof AdminQuestionsRouteWithChildren
   '/admin/settings': typeof AdminSettingsRoute
   '/admin/subscriptions': typeof AdminSubscriptionsRouteWithChildren
   '/admin/users': typeof AdminUsersRoute
@@ -278,6 +277,7 @@ export interface FileRoutesByFullPath {
   '/admin/questions/new': typeof AdminQuestionsNewRoute
   '/admin/subscriptions/verified': typeof AdminSubscriptionsVerifiedRoute
   '/quiz/result/$sessionId': typeof QuizResultSessionIdRoute
+  '/admin/questions/': typeof AdminQuestionsIndexRoute
   '/admin/questions/$id/edit': typeof AdminQuestionsIdEditRoute
 }
 export interface FileRoutesByTo {
@@ -301,7 +301,6 @@ export interface FileRoutesByTo {
   '/admin/dashboard': typeof AdminDashboardRoute
   '/admin/jobs': typeof AdminJobsRoute
   '/admin/leaderboard': typeof AdminLeaderboardRoute
-  '/admin/questions': typeof AdminQuestionsRouteWithChildren
   '/admin/settings': typeof AdminSettingsRoute
   '/admin/subscriptions': typeof AdminSubscriptionsRouteWithChildren
   '/admin/users': typeof AdminUsersRoute
@@ -317,6 +316,7 @@ export interface FileRoutesByTo {
   '/admin/questions/new': typeof AdminQuestionsNewRoute
   '/admin/subscriptions/verified': typeof AdminSubscriptionsVerifiedRoute
   '/quiz/result/$sessionId': typeof QuizResultSessionIdRoute
+  '/admin/questions': typeof AdminQuestionsIndexRoute
   '/admin/questions/$id/edit': typeof AdminQuestionsIdEditRoute
 }
 export interface FileRoutesById {
@@ -342,7 +342,6 @@ export interface FileRoutesById {
   '/admin/dashboard': typeof AdminDashboardRoute
   '/admin/jobs': typeof AdminJobsRoute
   '/admin/leaderboard': typeof AdminLeaderboardRoute
-  '/admin/questions': typeof AdminQuestionsRouteWithChildren
   '/admin/settings': typeof AdminSettingsRoute
   '/admin/subscriptions': typeof AdminSubscriptionsRouteWithChildren
   '/admin/users': typeof AdminUsersRoute
@@ -358,6 +357,7 @@ export interface FileRoutesById {
   '/admin/questions/new': typeof AdminQuestionsNewRoute
   '/admin/subscriptions/verified': typeof AdminSubscriptionsVerifiedRoute
   '/quiz/result/$sessionId': typeof QuizResultSessionIdRoute
+  '/admin/questions/': typeof AdminQuestionsIndexRoute
   '/admin/questions/$id/edit': typeof AdminQuestionsIdEditRoute
 }
 export interface FileRouteTypes {
@@ -384,7 +384,6 @@ export interface FileRouteTypes {
     | '/admin/dashboard'
     | '/admin/jobs'
     | '/admin/leaderboard'
-    | '/admin/questions'
     | '/admin/settings'
     | '/admin/subscriptions'
     | '/admin/users'
@@ -400,6 +399,7 @@ export interface FileRouteTypes {
     | '/admin/questions/new'
     | '/admin/subscriptions/verified'
     | '/quiz/result/$sessionId'
+    | '/admin/questions/'
     | '/admin/questions/$id/edit'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -423,7 +423,6 @@ export interface FileRouteTypes {
     | '/admin/dashboard'
     | '/admin/jobs'
     | '/admin/leaderboard'
-    | '/admin/questions'
     | '/admin/settings'
     | '/admin/subscriptions'
     | '/admin/users'
@@ -439,6 +438,7 @@ export interface FileRouteTypes {
     | '/admin/questions/new'
     | '/admin/subscriptions/verified'
     | '/quiz/result/$sessionId'
+    | '/admin/questions'
     | '/admin/questions/$id/edit'
   id:
     | '__root__'
@@ -463,7 +463,6 @@ export interface FileRouteTypes {
     | '/admin/dashboard'
     | '/admin/jobs'
     | '/admin/leaderboard'
-    | '/admin/questions'
     | '/admin/settings'
     | '/admin/subscriptions'
     | '/admin/users'
@@ -479,6 +478,7 @@ export interface FileRouteTypes {
     | '/admin/questions/new'
     | '/admin/subscriptions/verified'
     | '/quiz/result/$sessionId'
+    | '/admin/questions/'
     | '/admin/questions/$id/edit'
   fileRoutesById: FileRoutesById
 }
@@ -708,13 +708,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminSettingsRouteImport
       parentRoute: typeof AdminRoute
     }
-    '/admin/questions': {
-      id: '/admin/questions'
-      path: '/questions'
-      fullPath: '/admin/questions'
-      preLoaderRoute: typeof AdminQuestionsRouteImport
-      parentRoute: typeof AdminRoute
-    }
     '/admin/leaderboard': {
       id: '/admin/leaderboard'
       path: '/leaderboard'
@@ -750,6 +743,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminBlogRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/questions/': {
+      id: '/admin/questions/'
+      path: '/questions'
+      fullPath: '/admin/questions/'
+      preLoaderRoute: typeof AdminQuestionsIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/quiz/result/$sessionId': {
       id: '/quiz/result/$sessionId'
       path: '/quiz/result/$sessionId'
@@ -766,34 +766,20 @@ declare module '@tanstack/react-router' {
     }
     '/admin/questions/new': {
       id: '/admin/questions/new'
-      path: '/new'
+      path: '/questions/new'
       fullPath: '/admin/questions/new'
       preLoaderRoute: typeof AdminQuestionsNewRouteImport
-      parentRoute: typeof AdminQuestionsRoute
+      parentRoute: typeof AdminRoute
     }
     '/admin/questions/$id/edit': {
       id: '/admin/questions/$id/edit'
-      path: '/$id/edit'
+      path: '/questions/$id/edit'
       fullPath: '/admin/questions/$id/edit'
       preLoaderRoute: typeof AdminQuestionsIdEditRouteImport
-      parentRoute: typeof AdminQuestionsRoute
+      parentRoute: typeof AdminRoute
     }
   }
 }
-
-interface AdminQuestionsRouteChildren {
-  AdminQuestionsNewRoute: typeof AdminQuestionsNewRoute
-  AdminQuestionsIdEditRoute: typeof AdminQuestionsIdEditRoute
-}
-
-const AdminQuestionsRouteChildren: AdminQuestionsRouteChildren = {
-  AdminQuestionsNewRoute: AdminQuestionsNewRoute,
-  AdminQuestionsIdEditRoute: AdminQuestionsIdEditRoute,
-}
-
-const AdminQuestionsRouteWithChildren = AdminQuestionsRoute._addFileChildren(
-  AdminQuestionsRouteChildren,
-)
 
 interface AdminSubscriptionsRouteChildren {
   AdminSubscriptionsVerifiedRoute: typeof AdminSubscriptionsVerifiedRoute
@@ -812,11 +798,13 @@ interface AdminRouteChildren {
   AdminDashboardRoute: typeof AdminDashboardRoute
   AdminJobsRoute: typeof AdminJobsRoute
   AdminLeaderboardRoute: typeof AdminLeaderboardRoute
-  AdminQuestionsRoute: typeof AdminQuestionsRouteWithChildren
   AdminSettingsRoute: typeof AdminSettingsRoute
   AdminSubscriptionsRoute: typeof AdminSubscriptionsRouteWithChildren
   AdminUsersRoute: typeof AdminUsersRoute
   AdminIndexRoute: typeof AdminIndexRoute
+  AdminQuestionsNewRoute: typeof AdminQuestionsNewRoute
+  AdminQuestionsIndexRoute: typeof AdminQuestionsIndexRoute
+  AdminQuestionsIdEditRoute: typeof AdminQuestionsIdEditRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
@@ -825,11 +813,13 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminDashboardRoute: AdminDashboardRoute,
   AdminJobsRoute: AdminJobsRoute,
   AdminLeaderboardRoute: AdminLeaderboardRoute,
-  AdminQuestionsRoute: AdminQuestionsRouteWithChildren,
   AdminSettingsRoute: AdminSettingsRoute,
   AdminSubscriptionsRoute: AdminSubscriptionsRouteWithChildren,
   AdminUsersRoute: AdminUsersRoute,
   AdminIndexRoute: AdminIndexRoute,
+  AdminQuestionsNewRoute: AdminQuestionsNewRoute,
+  AdminQuestionsIndexRoute: AdminQuestionsIndexRoute,
+  AdminQuestionsIdEditRoute: AdminQuestionsIdEditRoute,
 }
 
 const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
