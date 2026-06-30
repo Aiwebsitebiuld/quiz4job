@@ -422,6 +422,7 @@ export type Database = {
           district: string | null
           email: string | null
           email_notifications: boolean | null
+          email_verified: boolean
           facebook_liked: boolean | null
           free_quizzes_today: number | null
           free_quizzes_week: number
@@ -455,6 +456,7 @@ export type Database = {
           district?: string | null
           email?: string | null
           email_notifications?: boolean | null
+          email_verified?: boolean
           facebook_liked?: boolean | null
           free_quizzes_today?: number | null
           free_quizzes_week?: number
@@ -488,6 +490,7 @@ export type Database = {
           district?: string | null
           email?: string | null
           email_notifications?: boolean | null
+          email_verified?: boolean
           facebook_liked?: boolean | null
           free_quizzes_today?: number | null
           free_quizzes_week?: number

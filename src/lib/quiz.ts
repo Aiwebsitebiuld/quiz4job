@@ -72,6 +72,9 @@ export async function createQuizSession(cfg: QuizConfig) {
   if (qErr0) throw qErr0;
   const quota = quotaData as QuizQuota;
   if (!quota.allowed) {
+    if ((quota as unknown as { reason?: string }).reason === "email_verification_required") {
+      throw new Error("EMAIL_VERIFY_REQUIRED");
+    }
     if (quota.tier === "free") {
       throw new Error("এই সপ্তাহের ৫টি ফ্রি কুইজ শেষ। প্রিমিয়াম নিন।");
     }

@@ -16,7 +16,45 @@ import {
   ThumbsUp,
   Bookmark,
   ArrowRight,
+  Mail,
+  AlertTriangle,
 } from "lucide-react";
+
+function EmailVerifyBanner({ createdAt, verified }: { createdAt: string | null; verified: boolean }) {
+  if (verified || !createdAt) return null;
+  const ageMs = Date.now() - new Date(createdAt).getTime();
+  const twoDays = 2 * 24 * 60 * 60 * 1000;
+  const overdue = ageMs > twoDays;
+  const hoursLeft = Math.max(0, Math.ceil((twoDays - ageMs) / (60 * 60 * 1000)));
+
+  if (overdue) {
+    return (
+      <div className="rounded-xl border border-red-300 bg-red-50 p-4 flex gap-3 items-start">
+        <AlertTriangle className="w-5 h-5 text-red-600 mt-0.5 shrink-0" />
+        <div className="flex-1">
+          <p className="font-bold text-red-900">ইমেইল ভেরিফাই করুন</p>
+          <p className="text-sm text-red-800 mt-0.5">২ দিনের গ্রেস পিরিয়ড শেষ। ভেরিফাই না করা পর্যন্ত নতুন কুইজ দেওয়া যাবে না।</p>
+        </div>
+        <Link to="/verify-email" className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-red-600 text-white text-sm font-bold hover:bg-red-700">
+          <Mail className="w-4 h-4" /> ভেরিফাই
+        </Link>
+      </div>
+    );
+  }
+
+  return (
+    <div className="rounded-xl border border-amber-300 bg-amber-50 p-4 flex gap-3 items-start">
+      <Mail className="w-5 h-5 text-amber-700 mt-0.5 shrink-0" />
+      <div className="flex-1">
+        <p className="font-semibold text-amber-900">ইমেইল ভেরিফাই করতে ভুলবেন না</p>
+        <p className="text-sm text-amber-800 mt-0.5">আনুমানিক {Math.floor(hoursLeft / 24)} দিন {hoursLeft % 24} ঘন্টা বাকি। এর পরে ভেরিফাই ছাড়া কুইজ বন্ধ থাকবে।</p>
+      </div>
+      <Link to="/verify-email" className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-600 text-white text-sm font-bold hover:bg-amber-700">
+        এখনই ভেরিফাই
+      </Link>
+    </div>
+  );
+}
 
 export const Route = createFileRoute("/dashboard/")({
   head: () => ({
@@ -155,6 +193,7 @@ function DashboardPage() {
   return (
     <div className="min-h-screen bg-slate-50">
       <div className="max-w-7xl mx-auto px-4 py-8 space-y-6">
+        <EmailVerifyBanner createdAt={profile?.created_at ?? null} verified={!!profile?.email_verified} />
         {/* Welcome */}
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
