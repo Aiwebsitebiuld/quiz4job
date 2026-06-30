@@ -1,0 +1,1 @@
+REVOKE SELECT (correct_option, explanation_bn, explanation_en) ON public.questions FROM anon;
