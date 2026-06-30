@@ -51,7 +51,10 @@ function SubsPage() {
     }).eq("id", s.id);
     if (e1) return toast.error(e1.message);
     await supabase.from("profiles").update({
-      is_premium: true, premium_started_at: now.toISOString(), premium_expires_at: expires.toISOString(),
+      is_premium: true,
+      premium_tier: (s as any).tier ?? ((s as any).amount >= 50 ? "pro" : "basic"),
+      premium_started_at: now.toISOString(),
+      premium_expires_at: expires.toISOString(),
     }).eq("id", s.user_id);
     await supabase.from("notifications").insert({
       user_id: s.user_id, type: "success",
