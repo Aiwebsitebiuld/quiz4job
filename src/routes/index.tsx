@@ -19,10 +19,10 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Quiz4Job — কুইজ দিন, ৳৩,০০০ পুরস্কার জিতুন! | BCS ও ব্যাংক জব MCQ" },
-      { name: "description", content: "বাংলাদেশের সেরা চাকরির কুইজ প্ল্যাটফর্ম। BCS, ব্যাংক, প্রাইমারি MCQ কুইজ দিন এবং প্রতিমাসে নগদ পুরস্কার জিতুন। মাত্র ৳৩০/মাসে প্রিমিয়াম।" },
+      { name: "description", content: "বাংলাদেশের সেরা চাকরির কুইজ প্ল্যাটফর্ম। BCS, ব্যাংক, প্রাইমারি MCQ কুইজ দিন এবং প্রতিমাসে নগদ পুরস্কার জিতুন। Basic মাত্র ৳৩০/মাস, Pro ৳৫০/মাস।" },
       { name: "keywords", content: "চাকরির খবর, বিসিএস প্রস্তুতি, ব্যাংক জব সার্কুলার, সরকারি চাকরি, অনলাইন কুইজ প্রতিযোগিতা, BCS MCQ, online quiz Bangladesh, নগদ পুরস্কার কুইজ" },
       { property: "og:title", content: "Quiz4Job — কুইজ দিন, পুরস্কার জিতুন!" },
-      { property: "og:description", content: "মাত্র ৳৩০/মাসে প্রিমিয়াম। আনলিমিটেড কুইজ + ৳৩,০০০ পর্যন্ত নগদ পুরস্কার।" },
+      { property: "og:description", content: "Basic ৳৩০/মাস বা Pro ৳৫০/মাস — প্রতিদিন কুইজ + ৳৩,০০০ পর্যন্ত নগদ পুরস্কার।" },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "/" },
     ],
