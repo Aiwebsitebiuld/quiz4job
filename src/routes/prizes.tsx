@@ -158,7 +158,7 @@ function PrizesPage() {
           to="/signup"
           className="block text-center px-8 py-6 rounded-3xl bg-gradient-to-br from-gold via-amber-400 to-amber-600 text-amber-950 font-extrabold text-2xl shadow-2xl hover:scale-[1.02] transition border-2 border-amber-300"
         >
-          এখনই প্রিমিয়াম হন — মাত্র {bnCurrency(10)} 👑
+          এখনই প্রিমিয়াম হন — মাত্র {bnCurrency(30)} 👑
         </Link>
       </section>
     </div>
