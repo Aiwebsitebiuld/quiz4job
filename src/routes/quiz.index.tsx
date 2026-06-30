@@ -186,11 +186,12 @@ function QuizCategoriesPage() {
 }
 
 function ConfigDialog({
-  category, onClose, isPremium, onStart,
+  category, onClose, isPremium, maxQuestions, onStart,
 }: {
   category: Category | null;
   onClose: () => void;
   isPremium: boolean;
+  maxQuestions: number;
   onStart: (cfg: Parameters<typeof createQuizSession>[0]) => void;
 }) {
   const [count, setCount] = useState("10");
@@ -200,6 +201,10 @@ function ConfigDialog({
   const [busy, setBusy] = useState(false);
 
   if (!category) return null;
+
+  const countOptions = ["10", "20", "30", "40", "50", "60"].filter(
+    (n) => parseInt(n, 10) <= maxQuestions,
+  );
 
   return (
     <Dialog open={!!category} onOpenChange={(o) => !o && onClose()}>
@@ -217,11 +222,12 @@ function ConfigDialog({
 
         <div className="space-y-5">
           <Field label="প্রশ্নের সংখ্যা">
-            <RadioGroup value={count} onValueChange={setCount} className="grid grid-cols-4 gap-2">
-              {["10", "20", "30", "50"].map((n) => (
+            <RadioGroup value={countOptions.includes(count) ? count : countOptions[countOptions.length - 1]} onValueChange={setCount} className="grid grid-cols-4 gap-2">
+              {countOptions.map((n) => (
                 <PillOption key={n} id={`n-${n}`} value={n} selected={count === n} label={toBn(n)} />
               ))}
             </RadioGroup>
+            <p className="text-xs text-muted-foreground mt-1">আপনার প্ল্যানে প্রতি কুইজে সর্বোচ্চ {toBn(maxQuestions)} প্রশ্ন।</p>
           </Field>
 
           <Field label="সময়সীমা">
