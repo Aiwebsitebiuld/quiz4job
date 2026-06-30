@@ -10,7 +10,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from "sonner";
 import { Plus, Upload } from "lucide-react";
 
-export const Route = createFileRoute("/admin/questions")({ component: QuestionsPage });
+export const Route = createFileRoute("/admin/questions/")({ component: QuestionsPage });
 
 type Q = {
   id: string; question_text_bn: string; correct_option: string; difficulty: string;
