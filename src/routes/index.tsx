@@ -339,13 +339,13 @@ function HomePage() {
         </div>
       </section>
 
-      {/* ───────────── 3. FREE vs PREMIUM ───────────── */}
+      {/* ───────────── 3. PRICING TIERS ───────────── */}
       <section className="py-20 px-4 bg-gradient-to-b from-background to-bd-green-light/30">
         <div className="max-w-6xl mx-auto">
-          <SectionHeader eyebrow="তুলনা" title="ফ্রি বনাম প্রিমিয়াম" />
-          <div className="grid md:grid-cols-2 gap-6 mt-12">
+          <SectionHeader eyebrow="তিনটি প্ল্যান" title="আপনার জন্য সঠিক প্ল্যান বেছে নিন" />
+          <div className="grid md:grid-cols-3 gap-6 mt-12">
             {/* Free */}
-            <div className="rounded-3xl border-2 border-border bg-card p-8">
+            <div className="rounded-3xl border-2 border-border bg-card p-8 flex flex-col">
               <div className="flex items-center justify-between">
                 <div>
                   <h3 className="text-2xl font-bold">ফ্রি</h3>
@@ -353,12 +353,11 @@ function HomePage() {
                 </div>
                 <div className="text-3xl font-extrabold">{bnCurrency(0)}</div>
               </div>
-              <ul className="mt-6 space-y-3 text-sm">
-                <FeatureLine ok>প্রতিদিন {toBn(5)}টি কুইজ</FeatureLine>
-                <FeatureLine ok>সব বিষয়ে প্রশ্ন</FeatureLine>
-                <FeatureLine ok>চাকরির বোর্ড</FeatureLine>
+              <ul className="mt-6 space-y-3 text-sm flex-1">
+                <FeatureLine ok>সপ্তাহে {toBn(5)}টি কুইজ</FeatureLine>
+                <FeatureLine ok>প্রতি কুইজে সর্বোচ্চ {toBn(20)} প্রশ্ন</FeatureLine>
+                <FeatureLine ok>সব বিষয়ে অ্যাক্সেস</FeatureLine>
                 <FeatureLine ok>লিডারবোর্ড দেখা</FeatureLine>
-                <FeatureLine>সীমাহীন কুইজ নয়</FeatureLine>
                 <FeatureLine>নগদ পুরস্কার নেই</FeatureLine>
                 <FeatureLine>Ranked কুইজ নয়</FeatureLine>
               </ul>
@@ -366,33 +365,60 @@ function HomePage() {
                 <Link to="/signup">বিনামূল্যে শুরু করুন</Link>
               </Button>
             </div>
-            {/* Premium */}
-            <div className="relative rounded-3xl border-2 border-gold bg-gradient-to-br from-gold-light via-card to-card p-8 shadow-[0_0_60px_-15px_rgba(245,158,11,0.5)]">
+
+            {/* Basic */}
+            <div className="relative rounded-3xl border-2 border-emerald-500 bg-gradient-to-br from-emerald-50 via-card to-card p-8 shadow-[0_0_60px_-15px_rgba(16,185,129,0.5)] flex flex-col">
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-emerald-600 text-white text-xs font-bold px-4 py-1 rounded-full">
+                জনপ্রিয়
+              </div>
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="text-2xl font-bold">Basic</h3>
+                  <p className="text-muted-foreground text-sm">দৈনিক প্রস্তুতি</p>
+                </div>
+                <div className="text-right">
+                  <div className="text-3xl font-extrabold text-emerald-700">{bnCurrency(30)}</div>
+                  <div className="text-xs text-muted-foreground">/মাস</div>
+                </div>
+              </div>
+              <ul className="mt-6 space-y-3 text-sm flex-1">
+                <FeatureLine ok>প্রতিদিন {toBn(5)}টি কুইজ</FeatureLine>
+                <FeatureLine ok>প্রতি কুইজে সর্বোচ্চ {toBn(40)} প্রশ্ন</FeatureLine>
+                <FeatureLine ok highlight>🏆 নগদ পুরস্কারের যোগ্য</FeatureLine>
+                <FeatureLine ok>Ranked লিডারবোর্ড</FeatureLine>
+                <FeatureLine ok>বিজ্ঞাপন মুক্ত</FeatureLine>
+              </ul>
+              <Button asChild className="w-full mt-8 h-12 bg-emerald-600 hover:bg-emerald-700 text-white font-bold">
+                <Link to="/premium">Basic নিন — {bnCurrency(30)}</Link>
+              </Button>
+            </div>
+
+            {/* Pro */}
+            <div className="relative rounded-3xl border-2 border-gold bg-gradient-to-br from-gold-light via-card to-card p-8 shadow-[0_0_60px_-15px_rgba(245,158,11,0.5)] flex flex-col">
               <div className="absolute -top-3 left-1/2 -translate-x-1/2 gold-shimmer text-black text-xs font-bold px-4 py-1 rounded-full">
-                ⭐ সবচেয়ে জনপ্রিয়
+                ⭐ সেরা ভ্যালু
               </div>
               <div className="flex items-center justify-between">
                 <div>
                   <h3 className="text-2xl font-bold flex items-center gap-2">
-                    প্রিমিয়াম <Crown className="w-6 h-6 text-gold" />
+                    Pro <Crown className="w-6 h-6 text-gold" />
                   </h3>
-                  <p className="text-muted-foreground text-sm">পুরস্কার পাওয়ার যোগ্য</p>
+                  <p className="text-muted-foreground text-sm">সিরিয়াস প্রস্তুতি</p>
                 </div>
                 <div className="text-right">
-                  <div className="text-3xl font-extrabold text-bd-green-dark">{bnCurrency(10)}</div>
+                  <div className="text-3xl font-extrabold text-bd-green-dark">{bnCurrency(50)}</div>
                   <div className="text-xs text-muted-foreground">/মাস</div>
                 </div>
               </div>
-              <ul className="mt-6 space-y-3 text-sm">
-                <FeatureLine ok>সীমাহীন কুইজ প্রতিদিন</FeatureLine>
+              <ul className="mt-6 space-y-3 text-sm flex-1">
+                <FeatureLine ok>প্রতিদিন {toBn(10)}টি কুইজ</FeatureLine>
+                <FeatureLine ok>প্রতি কুইজে সর্বোচ্চ {toBn(60)} প্রশ্ন</FeatureLine>
                 <FeatureLine ok highlight>🏆 নগদ পুরস্কারের যোগ্য</FeatureLine>
-                <FeatureLine ok>Ranked লিডারবোর্ডে নাম</FeatureLine>
-                <FeatureLine ok>বিস্তারিত বিশ্লেষণ</FeatureLine>
-                <FeatureLine ok>সব বিষয়ে এক্সক্লুসিভ প্রশ্ন</FeatureLine>
-                <FeatureLine ok>bKash/Nagad-এ পুরস্কার</FeatureLine>
+                <FeatureLine ok>Ranked লিডারবোর্ড</FeatureLine>
+                <FeatureLine ok>প্রিমিয়াম ব্যাজ + প্রায়োরিটি সাপোর্ট</FeatureLine>
               </ul>
               <Button asChild className="w-full mt-8 h-12 gold-shimmer text-black hover:opacity-90 font-bold">
-                <Link to="/premium">⭐ প্রিমিয়াম হন</Link>
+                <Link to="/premium">Pro নিন — {bnCurrency(50)}</Link>
               </Button>
             </div>
           </div>
