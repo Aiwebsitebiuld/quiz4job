@@ -83,7 +83,7 @@ export function SiteHeader() {
                     href="/premium"
                     className="hidden sm:inline-flex items-center gap-1 gold-shimmer text-foreground text-xs sm:text-sm font-bold px-3 py-1.5 rounded-lg shadow-sm"
                   >
-                    <Crown className="w-4 h-4" /> প্রিমিয়াম হন ৳১০
+                    <Crown className="w-4 h-4" /> প্রিমিয়াম হন ৳৩০
                   </a>
                 )}
 

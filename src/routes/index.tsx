@@ -19,10 +19,10 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Quiz4Job — কুইজ দিন, ৳৩,০০০ পুরস্কার জিতুন! | BCS ও ব্যাংক জব MCQ" },
-      { name: "description", content: "বাংলাদেশের সেরা চাকরির কুইজ প্ল্যাটফর্ম। BCS, ব্যাংক, প্রাইমারি MCQ কুইজ দিন এবং প্রতিমাসে নগদ পুরস্কার জিতুন। মাত্র ৳১০/মাসে প্রিমিয়াম।" },
+      { name: "description", content: "বাংলাদেশের সেরা চাকরির কুইজ প্ল্যাটফর্ম। BCS, ব্যাংক, প্রাইমারি MCQ কুইজ দিন এবং প্রতিমাসে নগদ পুরস্কার জিতুন। মাত্র ৳৩০/মাসে প্রিমিয়াম।" },
       { name: "keywords", content: "চাকরির খবর, বিসিএস প্রস্তুতি, ব্যাংক জব সার্কুলার, সরকারি চাকরি, অনলাইন কুইজ প্রতিযোগিতা, BCS MCQ, online quiz Bangladesh, নগদ পুরস্কার কুইজ" },
       { property: "og:title", content: "Quiz4Job — কুইজ দিন, পুরস্কার জিতুন!" },
-      { property: "og:description", content: "মাত্র ৳১০/মাসে প্রিমিয়াম। আনলিমিটেড কুইজ + ৳৩,০০০ পর্যন্ত নগদ পুরস্কার।" },
+      { property: "og:description", content: "মাত্র ৳৩০/মাসে প্রিমিয়াম। আনলিমিটেড কুইজ + ৳৩,০০০ পর্যন্ত নগদ পুরস্কার।" },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "/" },
     ],
@@ -392,7 +392,7 @@ function HomePage() {
                 <FeatureLine ok>bKash/Nagad-এ পুরস্কার</FeatureLine>
               </ul>
               <Button asChild className="w-full mt-8 h-12 gold-shimmer text-black hover:opacity-90 font-bold">
-                <Link to="/subscribe">⭐ প্রিমিয়াম হন</Link>
+                <Link to="/premium">⭐ প্রিমিয়াম হন</Link>
               </Button>
             </div>
           </div>
@@ -609,7 +609,7 @@ function HomePage() {
             <Badge className="bg-purple-600 hover:bg-purple-600 text-white border-0 text-sm px-3 py-1">Rocket</Badge>
           </div>
           <Button asChild size="lg" className="mt-8 h-14 px-10 bg-slate-900 hover:bg-slate-800 text-white text-base font-bold">
-            <Link to="/subscribe">⭐ এখনই প্রিমিয়াম হন — মাত্র {bnCurrency(10)}/মাস</Link>
+            <Link to="/premium">⭐ এখনই প্রিমিয়াম হন — মাত্র {bnCurrency(10)}/মাস</Link>
           </Button>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-4 text-sm text-slate-900/80">
             <Link to="/faq" className="hover:underline">কখন পুরস্কার পাবো?</Link>

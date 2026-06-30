@@ -152,7 +152,7 @@ function LeaderboardPage() {
         <div className="rounded-2xl border-2 border-gold/60 bg-gold/5 p-6">
           <h2 className="text-xl font-bold text-foreground">পুরস্কারের জন্য যোগ্যতা</h2>
           <ul className="mt-3 space-y-2 text-foreground/90">
-            <li className="flex gap-2"><Check className="w-5 h-5 text-bd-green shrink-0" /> প্রিমিয়াম সদস্য হতে হবে (৳১০/মাস)</li>
+            <li className="flex gap-2"><Check className="w-5 h-5 text-bd-green shrink-0" /> প্রিমিয়াম সদস্য হতে হবে (৳৩০/মাস)</li>
             <li className="flex gap-2"><Check className="w-5 h-5 text-bd-green shrink-0" /> আমাদের Facebook পেজ লাইক করতে হবে</li>
             <li className="flex gap-2"><Check className="w-5 h-5 text-bd-green shrink-0" /> এই মাসে কমপক্ষে ৫টি র‍্যান্ক কুইজ দিতে হবে</li>
           </ul>
@@ -356,7 +356,7 @@ function LeaderboardPage() {
             <ul className="space-y-3">
               <li className="flex items-center gap-3">
                 {isPremium ? <Check className="w-5 h-5 text-bd-green" /> : <XIcon className="w-5 h-5 text-red-500" />}
-                <span>প্রিমিয়াম সদস্য (৳১০/মাস)</span>
+                <span>প্রিমিয়াম সদস্য (৳৩০/মাস)</span>
               </li>
               <li className="flex items-center gap-3">
                 {profile.facebook_liked ? <Check className="w-5 h-5 text-bd-green" /> : <XIcon className="w-5 h-5 text-red-500" />}

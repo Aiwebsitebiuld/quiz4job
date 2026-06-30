@@ -154,10 +154,10 @@ function ResultPage() {
           <div className="rounded-2xl gold-shimmer text-black p-6 flex flex-wrap items-center justify-between gap-3">
             <div>
               <div className="font-extrabold text-lg flex items-center gap-2"><Crown className="w-5 h-5" /> প্রিমিয়াম হলে সীমাহীন কুইজ + পুরস্কার</div>
-              <div className="text-sm">মাত্র ৳১০/মাসে — শীর্ষ ৩ জন পাবেন ৳৩,০০০ পর্যন্ত নগদ।</div>
+              <div className="text-sm">মাত্র ৳৩০/মাসে — শীর্ষ ৩ জন পাবেন ৳৩,০০০ পর্যন্ত নগদ।</div>
             </div>
             <Button asChild className="bg-slate-900 hover:bg-slate-800 text-white">
-              <Link to="/subscribe">প্রিমিয়াম হন</Link>
+              <Link to="/premium">প্রিমিয়াম হন</Link>
             </Button>
           </div>
         )}
