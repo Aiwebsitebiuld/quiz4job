@@ -25,14 +25,35 @@ const METHODS = [
 const PAY_NUMBER = "01767091490";
 const PAY_NUMBER_FMT = "01767-091490";
 
-const FEATURES = [
-  "সীমাহীন কুইজ (ফ্রি ৫টি/দিন এর সীমা নেই)",
-  "র‍্যান্ক কুইজ অংশগ্রহণ",
-  "মাসিক ৳৩,০০০ পুরস্কারের সুযোগ",
-  "লিডারবোর্ডে স্থান",
-  "বিস্তারিত পারফরম্যান্স অ্যানালিটিক্স",
-  "বিজ্ঞাপন মুক্ত অভিজ্ঞতা",
-  "প্রিমিয়াম ব্যাজ",
+const TIERS = [
+  {
+    id: "basic" as const,
+    name: "Basic",
+    price: 30,
+    accent: "from-emerald-300 via-emerald-400 to-emerald-600",
+    features: [
+      "প্রতিদিন ৫টি কুইজ",
+      "প্রতি কুইজে সর্বোচ্চ ৪০ প্রশ্ন",
+      "র‍্যাংকড কুইজ অংশগ্রহণ",
+      "মাসিক ৳৩,০০০ পুরস্কারের সুযোগ",
+      "লিডারবোর্ডে স্থান",
+      "বিজ্ঞাপন মুক্ত অভিজ্ঞতা",
+    ],
+  },
+  {
+    id: "pro" as const,
+    name: "Pro",
+    price: 50,
+    accent: "from-amber-300 via-gold to-amber-600",
+    features: [
+      "প্রতিদিন ১০টি কুইজ",
+      "প্রতি কুইজে সর্বোচ্চ ৬০ প্রশ্ন",
+      "র‍্যাংকড কুইজ অংশগ্রহণ",
+      "মাসিক ৳৩,০০০ পুরস্কারের সুযোগ",
+      "প্রিমিয়াম ব্যাজ + অগ্রাধিকার সাপোর্ট",
+      "বিজ্ঞাপন মুক্ত অভিজ্ঞতা",
+    ],
+  },
 ];
 
 const BN_MONTHS = ["জানুয়ারি","ফেব্রুয়ারি","মার্চ","এপ্রিল","মে","জুন","জুলাই","আগস্ট","সেপ্টেম্বর","অক্টোবর","নভেম্বর","ডিসেম্বর"];
@@ -47,6 +68,7 @@ function PremiumPage() {
   const navigate = useNavigate();
 
   const [method, setMethod] = useState<typeof METHODS[number]["id"] | null>(null);
+  const [tier, setTier] = useState<"basic" | "pro">("basic");
   const [txn, setTxn] = useState("");
   const [payerNumber, setPayerNumber] = useState("");
   const [file, setFile] = useState<File | null>(null);
@@ -96,9 +118,11 @@ function PremiumPage() {
         screenshotUrl = path;
       }
       const now = new Date();
+      const amount = tier === "pro" ? 50 : 30;
       const { error: insErr } = await supabase.from("subscriptions").insert({
         user_id: user.id,
-        amount: 10,
+        amount,
+        tier,
         payment_method: method,
         transaction_id: txn.trim(),
         bkash_number: payerNumber.trim(),
@@ -144,7 +168,8 @@ function PremiumPage() {
         <div className="max-w-4xl mx-auto px-4 py-12 text-center">
           <Crown className="w-14 h-14 mx-auto mb-3 text-gold" />
           <h1 className="text-4xl sm:text-5xl font-extrabold">প্রিমিয়াম সদস্যতা</h1>
-          <h2 className="mt-3 text-xl sm:text-2xl text-white/90">মাত্র {bnCurrency(10)}/মাসে পুরস্কার জিতুন!</h2>
+          <h2 className="mt-3 text-xl sm:text-2xl text-white/90">৳৩০ অথবা ৳৫০/মাসে প্রিমিয়াম হোন এবং পুরস্কার জিতুন!</h2>
+          <p className="mt-2 text-sm text-white/70">ফ্রি প্ল্যান: সপ্তাহে মাত্র ৫টি কুইজ, প্রতি কুইজে সর্বোচ্চ ২০ প্রশ্ন।</p>
         </div>
       </section>
 
@@ -170,33 +195,46 @@ function PremiumPage() {
         </section>
       )}
 
-      {/* Pricing card */}
-      <section className="max-w-md mx-auto px-4 mt-10">
-        <div className="rounded-3xl p-1 bg-gradient-to-br from-amber-300 via-gold to-amber-600 shadow-2xl">
-          <div className="rounded-[22px] bg-white p-6 sm:p-8">
-            <div className="flex items-center justify-center gap-2 text-gold font-bold">
-              <Crown className="w-5 h-5" /> PREMIUM
-            </div>
-            <div className="text-center mt-3">
-              <span className="text-5xl font-extrabold">{bnCurrency(10)}</span>
-              <span className="text-muted-foreground">/মাস</span>
-            </div>
-            <ul className="mt-6 space-y-2.5">
-              {FEATURES.map((f) => (
-                <li key={f} className="flex gap-2 text-sm">
-                  <Check className="w-5 h-5 text-bd-green shrink-0" />
-                  <span>{f}</span>
-                </li>
-              ))}
-            </ul>
-            <a
-              href="#pay"
-              className="mt-6 block text-center px-6 py-3 rounded-xl bg-gradient-to-r from-amber-500 to-gold text-white font-bold shadow hover:scale-[1.02] transition"
+      {/* Pricing cards */}
+      <section className="max-w-5xl mx-auto px-4 mt-10 grid sm:grid-cols-2 gap-6">
+        {TIERS.map((t) => {
+          const selected = tier === t.id;
+          return (
+            <div
+              key={t.id}
+              onClick={() => setTier(t.id)}
+              className={`rounded-3xl p-1 bg-gradient-to-br ${t.accent} shadow-xl cursor-pointer transition ${selected ? "scale-[1.02] shadow-2xl ring-2 ring-bd-green" : "opacity-90"}`}
             >
-              এখনই সক্রিয় করুন
-            </a>
-          </div>
-        </div>
+              <div className="rounded-[22px] bg-white p-6 sm:p-8 h-full">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2 font-bold text-lg">
+                    <Crown className={`w-5 h-5 ${t.id === "pro" ? "text-gold" : "text-emerald-600"}`} /> {t.name}
+                  </div>
+                  {selected && <span className="text-xs px-2 py-1 rounded-full bg-bd-green text-white font-bold">নির্বাচিত</span>}
+                </div>
+                <div className="mt-3">
+                  <span className="text-5xl font-extrabold">{bnCurrency(t.price)}</span>
+                  <span className="text-muted-foreground">/মাস</span>
+                </div>
+                <ul className="mt-6 space-y-2.5">
+                  {t.features.map((f) => (
+                    <li key={f} className="flex gap-2 text-sm">
+                      <Check className="w-5 h-5 text-bd-green shrink-0" />
+                      <span>{f}</span>
+                    </li>
+                  ))}
+                </ul>
+                <a
+                  href="#pay"
+                  onClick={() => setTier(t.id)}
+                  className={`mt-6 block text-center px-6 py-3 rounded-xl text-white font-bold shadow hover:scale-[1.02] transition bg-gradient-to-r ${t.accent}`}
+                >
+                  {t.name} নিন — ৳{t.price}
+                </a>
+              </div>
+            </div>
+          );
+        })}
       </section>
 
       {/* Payment */}
@@ -254,7 +292,7 @@ function PremiumPage() {
               <ol className="space-y-3 text-sm">
                 {[
                   `আপনার ${METHODS.find(m => m.id === method)!.label} অ্যাপ অথবা *247# ডায়াল করুন`,
-                  `Send Money → ${PAY_NUMBER_FMT} নম্বরে ${bnCurrency(10)} পাঠান`,
+                  `Send Money → ${PAY_NUMBER_FMT} নম্বরে ${bnCurrency(tier === "pro" ? 50 : 30)} পাঠান (${tier === "pro" ? "Pro" : "Basic"} প্ল্যান)`,
                   `Reference-এ আপনার ইমেইল বা ইউজারনেম লিখুন`,
                   `ট্রানজেকশন ID কপি করে নিচের ফর্মে দিন`,
                 ].map((s, i) => (

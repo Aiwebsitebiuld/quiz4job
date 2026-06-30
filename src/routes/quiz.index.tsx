@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/use-auth";
 import { createQuizSession } from "@/lib/quiz";
+import { getQuizQuota, type QuizQuota } from "@/lib/quiz";
 import { toBn } from "@/lib/bn";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
@@ -37,6 +38,13 @@ function QuizCategoriesPage() {
   const navigate = useNavigate();
   const [picked, setPicked] = useState<Category | null>(null);
 
+  const quotaQ = useQuery({
+    queryKey: ["quiz", "quota", user?.id],
+    queryFn: getQuizQuota,
+    enabled: !!user,
+  });
+  const quota = quotaQ.data ?? null;
+
   const cats = useQuery({
     queryKey: ["quiz", "categories", "all"],
     queryFn: async () => {
@@ -50,9 +58,12 @@ function QuizCategoriesPage() {
     },
   });
 
-  const free = profile?.free_quizzes_today ?? 0;
-  const remaining = Math.max(0, 5 - free);
-  const isPremium = !!profile?.is_premium;
+  const isPremium = (profile?.premium_tier === "basic" || profile?.premium_tier === "pro") && !!profile?.is_premium;
+  const limit = quota?.limit ?? 5;
+  const used = quota?.used ?? 0;
+  const remaining = quota?.remaining ?? Math.max(0, limit - used);
+  const periodLabel = quota?.period === "day" ? "আজ" : "এই সপ্তাহে";
+  const periodEndLabel = quota?.period === "day" ? "আজকের" : "এই সপ্তাহের";
 
   return (
     <main className="bg-background min-h-screen">
@@ -76,11 +87,11 @@ function QuizCategoriesPage() {
               <div>
                 <div className="font-bold text-lg">
                   {remaining === 0
-                    ? "আজকের ফ্রি কুইজ শেষ! 🚫"
-                    : <>আজ আপনি <span className="text-bd-green-dark">{toBn(free)}/৫</span> টি কুইজ নিয়েছেন। <span className="text-bd-green">{toBn(remaining)}</span> টি বাকি আছে।</>}
+                    ? `${periodEndLabel} ফ্রি কুইজ শেষ! 🚫`
+                    : <>{periodLabel} আপনি <span className="text-bd-green-dark">{toBn(used)}/{toBn(limit)}</span> টি কুইজ নিয়েছেন। <span className="text-bd-green">{toBn(remaining)}</span> টি বাকি আছে।</>}
                 </div>
                 <div className="mt-3 max-w-md">
-                  <Progress value={(free / 5) * 100} className="h-2.5" />
+                  <Progress value={(used / Math.max(1, limit)) * 100} className="h-2.5" />
                 </div>
               </div>
               {remaining === 0 && (
@@ -95,8 +106,8 @@ function QuizCategoriesPage() {
           <div className="rounded-2xl border border-gold/40 bg-gold/5 p-5 flex items-center gap-3">
             <Crown className="w-6 h-6 text-gold" />
             <div>
-              <div className="font-bold">প্রিমিয়াম একাউন্ট — সীমাহীন কুইজ + পুরস্কারের যোগ্য 🏆</div>
-              <div className="text-sm text-muted-foreground">র‍্যাংকড কুইজ দিয়ে লিডারবোর্ডে এগিয়ে যান।</div>
+              <div className="font-bold">প্রিমিয়াম ({profile?.premium_tier === "pro" ? "Pro" : "Basic"}) — আজ {toBn(used)}/{toBn(limit)} কুইজ ব্যবহার হয়েছে 🏆</div>
+              <div className="text-sm text-muted-foreground">প্রতি কুইজে সর্বোচ্চ {toBn(quota?.max_questions ?? 0)} প্রশ্ন।</div>
             </div>
           </div>
         )}
@@ -158,11 +169,13 @@ function QuizCategoriesPage() {
         category={picked}
         onClose={() => setPicked(null)}
         isPremium={isPremium}
+        maxQuestions={quota?.max_questions ?? 20}
         onStart={async (cfg) => {
           try {
             const { session } = await createQuizSession(cfg);
             toast.success("কুইজ শুরু হচ্ছে…");
             navigate({ to: "/quiz/$sessionId", params: { sessionId: session.id } });
+            quotaQ.refetch();
           } catch (e: any) {
             toast.error(e?.message ?? "কুইজ শুরু করা যায়নি");
           }
@@ -173,11 +186,12 @@ function QuizCategoriesPage() {
 }
 
 function ConfigDialog({
-  category, onClose, isPremium, onStart,
+  category, onClose, isPremium, maxQuestions, onStart,
 }: {
   category: Category | null;
   onClose: () => void;
   isPremium: boolean;
+  maxQuestions: number;
   onStart: (cfg: Parameters<typeof createQuizSession>[0]) => void;
 }) {
   const [count, setCount] = useState("10");
@@ -187,6 +201,10 @@ function ConfigDialog({
   const [busy, setBusy] = useState(false);
 
   if (!category) return null;
+
+  const countOptions = ["10", "20", "30", "40", "50", "60"].filter(
+    (n) => parseInt(n, 10) <= maxQuestions,
+  );
 
   return (
     <Dialog open={!!category} onOpenChange={(o) => !o && onClose()}>
@@ -204,11 +222,12 @@ function ConfigDialog({
 
         <div className="space-y-5">
           <Field label="প্রশ্নের সংখ্যা">
-            <RadioGroup value={count} onValueChange={setCount} className="grid grid-cols-4 gap-2">
-              {["10", "20", "30", "50"].map((n) => (
+            <RadioGroup value={countOptions.includes(count) ? count : countOptions[countOptions.length - 1]} onValueChange={setCount} className="grid grid-cols-4 gap-2">
+              {countOptions.map((n) => (
                 <PillOption key={n} id={`n-${n}`} value={n} selected={count === n} label={toBn(n)} />
               ))}
             </RadioGroup>
+            <p className="text-xs text-muted-foreground mt-1">আপনার প্ল্যানে প্রতি কুইজে সর্বোচ্চ {toBn(maxQuestions)} প্রশ্ন।</p>
           </Field>
 
           <Field label="সময়সীমা">

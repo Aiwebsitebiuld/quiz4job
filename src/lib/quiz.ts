@@ -43,40 +43,83 @@ export type QuizConfig = {
   isRanked: boolean;
 };
 
-/** Create a new quiz session: enforces free-quota, picks random questions */
+export type QuizQuota = {
+  allowed: boolean;
+  remaining: number;
+  limit: number;
+  max_questions: number;
+  tier: "free" | "basic" | "pro";
+  period: "day" | "week";
+  used: number;
+};
+
+export async function getQuizQuota(): Promise<QuizQuota | null> {
+  const { data: userData } = await supabase.auth.getUser();
+  if (!userData.user) return null;
+  const { data, error } = await supabase.rpc("quiz_quota", { user_uuid: userData.user.id });
+  if (error) throw error;
+  return data as QuizQuota;
+}
+
+/** Create a new quiz session: enforces tier quota + caps + no duplicate questions */
 export async function createQuizSession(cfg: QuizConfig) {
   const { data: userData } = await supabase.auth.getUser();
   const user = userData.user;
   if (!user) throw new Error("লগইন করুন");
 
-  // Quota check via DB function
-  const { data: canTake, error: ctErr } = await supabase.rpc("can_take_quiz", { user_uuid: user.id });
-  if (ctErr) throw ctErr;
-  if (!canTake) throw new Error("আজকের ৫টি ফ্রি কুইজ শেষ। প্রিমিয়াম হন।");
+  // Quota + tier limits via DB
+  const { data: quotaData, error: qErr0 } = await supabase.rpc("quiz_quota", { user_uuid: user.id });
+  if (qErr0) throw qErr0;
+  const quota = quotaData as QuizQuota;
+  if (!quota.allowed) {
+    if (quota.tier === "free") {
+      throw new Error("এই সপ্তাহের ৫টি ফ্রি কুইজ শেষ। প্রিমিয়াম নিন।");
+    }
+    throw new Error("আজকের কুইজ লিমিট শেষ। আগামীকাল আবার চেষ্টা করুন।");
+  }
 
-  // Premium check for ranked quizzes
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("is_premium,premium_expires_at,free_quizzes_today")
-    .eq("id", user.id)
-    .single();
-  const isPremium = !!profile?.is_premium && (!profile.premium_expires_at || new Date(profile.premium_expires_at) > new Date());
+  // Cap question count by tier
+  const cappedTotal = Math.min(cfg.totalQuestions, quota.max_questions);
 
+  const isPremium = quota.tier === "basic" || quota.tier === "pro";
   if (cfg.isRanked && !isPremium) {
     throw new Error("র‍্যাংকড কুইজের জন্য প্রিমিয়াম প্রয়োজন।");
   }
 
-  // Pick random questions from category
+  // Fetch all question ids in category
   const { data: qs, error: qErr } = await supabase
     .from("questions")
     .select("id")
     .eq("category_id", cfg.categoryId)
     .eq("is_active", true)
-    .limit(200);
+    .limit(2000);
   if (qErr) throw qErr;
   if (!qs || qs.length === 0) throw new Error("এই বিষয়ে এখনো প্রশ্ন যোগ হয়নি।");
 
-  const shuffled = [...qs].sort(() => Math.random() - 0.5).slice(0, Math.min(cfg.totalQuestions, qs.length));
+  // Fetch question ids this user has already answered in this category
+  const { data: prevSessions } = await supabase
+    .from("quiz_sessions")
+    .select("id")
+    .eq("user_id", user.id)
+    .eq("category_id", cfg.categoryId);
+  const sessionIds = (prevSessions ?? []).map((s) => s.id);
+  const seen = new Set<string>();
+  if (sessionIds.length > 0) {
+    const { data: prevAns } = await supabase
+      .from("quiz_answers")
+      .select("question_id")
+      .in("session_id", sessionIds);
+    (prevAns ?? []).forEach((a) => { if (a.question_id) seen.add(a.question_id); });
+  }
+
+  const fresh = qs.filter((q) => !seen.has(q.id));
+  // Prefer unseen; if pool too small, top up with seen ones so the quiz can still run
+  const pickFrom = fresh.length >= cappedTotal ? fresh : [
+    ...fresh,
+    ...qs.filter((q) => seen.has(q.id)).sort(() => Math.random() - 0.5),
+  ];
+
+  const shuffled = [...pickFrom].sort(() => Math.random() - 0.5).slice(0, Math.min(cappedTotal, pickFrom.length));
   const ids = shuffled.map((q) => q.id);
   const actualTotal = ids.length;
 
@@ -102,13 +145,8 @@ export async function createQuizSession(cfg: QuizConfig) {
     window.sessionStorage.setItem(`q4j:order:${session.id}`, JSON.stringify(ids));
   }
 
-  // Increment free_quizzes_today (best-effort, only for non-premium)
-  if (!isPremium) {
-    await supabase
-      .from("profiles")
-      .update({ free_quizzes_today: (profile?.free_quizzes_today ?? 0) + 1 })
-      .eq("id", user.id);
-  }
+  // Atomically bump the right quota counter (daily for premium, weekly for free)
+  await supabase.rpc("increment_quiz_quota", { user_uuid: user.id });
 
   return { session, questionIds: ids };
 }
