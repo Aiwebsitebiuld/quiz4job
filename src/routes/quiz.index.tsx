@@ -177,6 +177,11 @@ function QuizCategoriesPage() {
             navigate({ to: "/quiz/$sessionId", params: { sessionId: session.id } });
             quotaQ.refetch();
           } catch (e: any) {
+            if (e?.message === "EMAIL_VERIFY_REQUIRED") {
+              toast.error("কুইজ চালিয়ে যেতে ইমেইল ভেরিফাই করুন");
+              navigate({ to: "/verify-email" });
+              return;
+            }
             toast.error(e?.message ?? "কুইজ শুরু করা যায়নি");
           }
         }}
