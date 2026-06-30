@@ -16,6 +16,8 @@ import {
   ThumbsUp,
   Bookmark,
   ArrowRight,
+  Mail,
+  AlertTriangle,
 } from "lucide-react";
 
 export const Route = createFileRoute("/dashboard/")({
@@ -155,6 +157,7 @@ function DashboardPage() {
   return (
     <div className="min-h-screen bg-slate-50">
       <div className="max-w-7xl mx-auto px-4 py-8 space-y-6">
+        <EmailVerifyBanner createdAt={profile?.created_at ?? null} verified={!!profile?.email_verified} />
         {/* Welcome */}
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
