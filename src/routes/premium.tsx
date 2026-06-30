@@ -254,7 +254,7 @@ function PremiumPage() {
               <ol className="space-y-3 text-sm">
                 {[
                   `আপনার ${METHODS.find(m => m.id === method)!.label} অ্যাপ অথবা *247# ডায়াল করুন`,
-                  `Send Money → ${PAY_NUMBER_FMT} নম্বরে ${bnCurrency(10)} পাঠান`,
+                  `Send Money → ${PAY_NUMBER_FMT} নম্বরে ${bnCurrency(tier === "pro" ? 50 : 30)} পাঠান (${tier === "pro" ? "Pro" : "Basic"} প্ল্যান)`,
                   `Reference-এ আপনার ইমেইল বা ইউজারনেম লিখুন`,
                   `ট্রানজেকশন ID কপি করে নিচের ফর্মে দিন`,
                 ].map((s, i) => (
