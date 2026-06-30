@@ -424,7 +424,9 @@ export type Database = {
           email_notifications: boolean | null
           facebook_liked: boolean | null
           free_quizzes_today: number | null
+          free_quizzes_week: number
           free_quota_reset_date: string | null
+          free_week_reset_date: string
           full_name: string
           id: string
           is_active: boolean | null
@@ -433,6 +435,7 @@ export type Database = {
           preferred_language: string | null
           premium_expires_at: string | null
           premium_started_at: string | null
+          premium_tier: string
           profile_shared: boolean | null
           role: string | null
           total_correct_answers: number | null
@@ -454,7 +457,9 @@ export type Database = {
           email_notifications?: boolean | null
           facebook_liked?: boolean | null
           free_quizzes_today?: number | null
+          free_quizzes_week?: number
           free_quota_reset_date?: string | null
+          free_week_reset_date?: string
           full_name?: string
           id: string
           is_active?: boolean | null
@@ -463,6 +468,7 @@ export type Database = {
           preferred_language?: string | null
           premium_expires_at?: string | null
           premium_started_at?: string | null
+          premium_tier?: string
           profile_shared?: boolean | null
           role?: string | null
           total_correct_answers?: number | null
@@ -484,7 +490,9 @@ export type Database = {
           email_notifications?: boolean | null
           facebook_liked?: boolean | null
           free_quizzes_today?: number | null
+          free_quizzes_week?: number
           free_quota_reset_date?: string | null
+          free_week_reset_date?: string
           full_name?: string
           id?: string
           is_active?: boolean | null
@@ -493,6 +501,7 @@ export type Database = {
           preferred_language?: string | null
           premium_expires_at?: string | null
           premium_started_at?: string | null
+          premium_tier?: string
           profile_shared?: boolean | null
           role?: string | null
           total_correct_answers?: number | null
@@ -870,6 +879,7 @@ export type Database = {
           premium_expires: string | null
           premium_starts: string | null
           status: string | null
+          tier: string
           transaction_id: string
           user_id: string | null
           verified_at: string | null
@@ -888,6 +898,7 @@ export type Database = {
           premium_expires?: string | null
           premium_starts?: string | null
           status?: string | null
+          tier?: string
           transaction_id: string
           user_id?: string | null
           verified_at?: string | null
@@ -906,6 +917,7 @@ export type Database = {
           premium_expires?: string | null
           premium_starts?: string | null
           status?: string | null
+          tier?: string
           transaction_id?: string
           user_id?: string | null
           verified_at?: string | null
@@ -1010,8 +1022,10 @@ export type Database = {
     }
     Functions: {
       can_take_quiz: { Args: { user_uuid?: string }; Returns: boolean }
+      increment_quiz_quota: { Args: { user_uuid?: string }; Returns: undefined }
       is_admin: { Args: never; Returns: boolean }
       is_premium: { Args: { user_uuid?: string }; Returns: boolean }
+      quiz_quota: { Args: { user_uuid?: string }; Returns: Json }
       show_limit: { Args: never; Returns: number }
       show_trgm: { Args: { "": string }; Returns: string[] }
     }
