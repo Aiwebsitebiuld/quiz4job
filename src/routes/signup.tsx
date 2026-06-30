@@ -56,7 +56,8 @@ function SignupPage() {
     if (data.session) {
       window.location.href = "/dashboard";
     } else {
-      setDone(true);
+      // auto-confirm should yield a session; fall back to login if not
+      window.location.href = "/login";
     }
   };
 
