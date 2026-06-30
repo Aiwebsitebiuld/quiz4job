@@ -19,7 +19,7 @@ export const adminFetchUsers = createServerFn({ method: "POST" })
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     let query = supabaseAdmin
       .from("profiles")
-      .select("id,full_name,email,phone,is_premium,role,is_active,total_quizzes_taken,created_at")
+      .select("id,full_name,email,phone,is_premium,premium_tier,premium_expires_at,role,is_active,total_quizzes_taken,total_score,current_month_score,created_at")
       .order("created_at", { ascending: false })
       .limit(200);
     if (data.q) query = query.or(`full_name.ilike.%${data.q}%,email.ilike.%${data.q}%`);
