@@ -277,7 +277,7 @@ function HomePage() {
 
             <p className="mt-6 text-white/80 text-sm md:text-base">
               <span className="font-semibold text-gold-light">বিজয়ীদের সরাসরি bKash-এ পাঠানো হয়!</span>{" "}
-              মাত্র {bnCurrency(10)}/মাসে প্রিমিয়াম হলেই পুরস্কার পাওয়ার যোগ্য।
+              Basic {bnCurrency(30)} অথবা Pro {bnCurrency(50)} প্ল্যান নিলেই পুরস্কারের যোগ্য।
             </p>
 
             {/* Countdown */}
@@ -315,7 +315,7 @@ function HomePage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
             {[
               { n: 1, icon: UserPlus, emoji: "📝", title: "নিবন্ধন করুন", desc: "বিনামূল্যে অ্যাকাউন্ট তৈরি করুন" },
-              { n: 2, icon: Star,     emoji: "⭐", title: "প্রিমিয়াম হন", desc: `মাত্র ${bnCurrency(10)}/মাসে bKash করুন` },
+              { n: 2, icon: Star,     emoji: "⭐", title: "প্রিমিয়াম হন", desc: `${bnCurrency(30)} বা ${bnCurrency(50)} bKash/Nagad করুন` },
               { n: 3, icon: Brain,    emoji: "🧠", title: "কুইজ দিন", desc: "প্রতিদিন কুইজ দিয়ে পয়েন্ট জমান" },
               { n: 4, icon: Wallet,   emoji: "💰", title: "পুরস্কার নিন", desc: `মাস শেষে শীর্ষ ${toBn(3)} জন bKash-এ পাবেন` },
             ].map((s, i) => (
