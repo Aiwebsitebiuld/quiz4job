@@ -18,6 +18,8 @@ export type Profile = {
   free_week_reset_date: string | null;
   facebook_liked: boolean;
   role: "user" | "admin" | "moderator";
+  email_verified: boolean;
+  created_at: string | null;
 };
 
 export function useAuth() {
@@ -31,7 +33,7 @@ export function useAuth() {
     const loadProfile = async (uid: string, email: string | null) => {
       const { data, error } = await supabase
         .from("profiles")
-        .select("id, full_name, username, avatar_url, district, is_premium, premium_expires_at, premium_tier, free_quizzes_today, free_quota_reset_date, free_quizzes_week, free_week_reset_date, facebook_liked, role")
+        .select("id, full_name, username, avatar_url, district, is_premium, premium_expires_at, premium_tier, free_quizzes_today, free_quota_reset_date, free_quizzes_week, free_week_reset_date, facebook_liked, role, email_verified, created_at")
         .eq("id", uid)
         .maybeSingle();
       if (!active) return;
