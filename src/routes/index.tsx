@@ -216,6 +216,11 @@ const PRIZE_AMOUNTS = [1500, 1000, 500];
 
 function HomePage() {
   const { user } = useAuth();
+  const [hasAccount, setHasAccount] = useState(false);
+  useEffect(() => {
+    try { setHasAccount(localStorage.getItem("q4j_has_account") === "1"); } catch { /* ignore */ }
+  }, []);
+  const ctaTarget = user ? "/dashboard" : hasAccount ? "/login" : "/signup";
   const categories = useCategories();
   const leaderboard = useLeaderboard();
   const winners = useWinners();
@@ -291,10 +296,10 @@ function HomePage() {
             {/* CTAs */}
             <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-3">
               <Button asChild size="lg" className="h-14 px-8 text-base bg-bd-green hover:bg-bd-green-dark text-white shadow-lg shadow-bd-green/30">
-                <Link to="/signup">🚀 এখনই শুরু করুন</Link>
+                <Link to={ctaTarget}>🚀 এখনই শুরু করুন</Link>
               </Button>
               <Button asChild size="lg" variant="outline" className="h-14 px-8 text-base border-gold text-gold hover:bg-gold hover:text-black bg-transparent">
-                <Link to="/signup">📋 আজকের কুইজ দিন</Link>
+                <Link to={ctaTarget}>📋 আজকের কুইজ দিন</Link>
               </Button>
             </div>
 
