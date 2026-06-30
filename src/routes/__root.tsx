@@ -89,8 +89,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:card", content: "summary" },
       { name: "twitter:title", content: "Quiz4Job — কুইজ দিন, চাকরি পান, পুরস্কার জিতুন!" },
       { name: "twitter:description", content: "বাংলাদেশের #১ চাকরির কুইজ প্ল্যাটফর্ম। বিসিএস, ব্যাংক, প্রাইমারি প্রস্তুতি।" },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/a23672ce-651b-4d59-8115-e549ac9f8403/id-preview-caf561dc--d2314876-a3cf-46f3-a7b2-c7db8e355a57.lovable.app-1781467312665.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/a23672ce-651b-4d59-8115-e549ac9f8403/id-preview-caf561dc--d2314876-a3cf-46f3-a7b2-c7db8e355a57.lovable.app-1781467312665.png" },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/SdxJAxJQV7OrQl7h9E5CrDI0gup1/social-images/social-1782817172072-quiz4job_logo_v4.webp" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/SdxJAxJQV7OrQl7h9E5CrDI0gup1/social-images/social-1782817172072-quiz4job_logo_v4.webp" },
     ],
     links: [
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
