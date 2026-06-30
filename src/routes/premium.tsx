@@ -25,14 +25,35 @@ const METHODS = [
 const PAY_NUMBER = "01767091490";
 const PAY_NUMBER_FMT = "01767-091490";
 
-const FEATURES = [
-  "সীমাহীন কুইজ (ফ্রি ৫টি/দিন এর সীমা নেই)",
-  "র‍্যান্ক কুইজ অংশগ্রহণ",
-  "মাসিক ৳৩,০০০ পুরস্কারের সুযোগ",
-  "লিডারবোর্ডে স্থান",
-  "বিস্তারিত পারফরম্যান্স অ্যানালিটিক্স",
-  "বিজ্ঞাপন মুক্ত অভিজ্ঞতা",
-  "প্রিমিয়াম ব্যাজ",
+const TIERS = [
+  {
+    id: "basic" as const,
+    name: "Basic",
+    price: 30,
+    accent: "from-emerald-300 via-emerald-400 to-emerald-600",
+    features: [
+      "প্রতিদিন ৫টি কুইজ",
+      "প্রতি কুইজে সর্বোচ্চ ৪০ প্রশ্ন",
+      "র‍্যাংকড কুইজ অংশগ্রহণ",
+      "মাসিক ৳৩,০০০ পুরস্কারের সুযোগ",
+      "লিডারবোর্ডে স্থান",
+      "বিজ্ঞাপন মুক্ত অভিজ্ঞতা",
+    ],
+  },
+  {
+    id: "pro" as const,
+    name: "Pro",
+    price: 50,
+    accent: "from-amber-300 via-gold to-amber-600",
+    features: [
+      "প্রতিদিন ১০টি কুইজ",
+      "প্রতি কুইজে সর্বোচ্চ ৬০ প্রশ্ন",
+      "র‍্যাংকড কুইজ অংশগ্রহণ",
+      "মাসিক ৳৩,০০০ পুরস্কারের সুযোগ",
+      "প্রিমিয়াম ব্যাজ + অগ্রাধিকার সাপোর্ট",
+      "বিজ্ঞাপন মুক্ত অভিজ্ঞতা",
+    ],
+  },
 ];
 
 const BN_MONTHS = ["জানুয়ারি","ফেব্রুয়ারি","মার্চ","এপ্রিল","মে","জুন","জুলাই","আগস্ট","সেপ্টেম্বর","অক্টোবর","নভেম্বর","ডিসেম্বর"];
@@ -47,6 +68,7 @@ function PremiumPage() {
   const navigate = useNavigate();
 
   const [method, setMethod] = useState<typeof METHODS[number]["id"] | null>(null);
+  const [tier, setTier] = useState<"basic" | "pro">("basic");
   const [txn, setTxn] = useState("");
   const [payerNumber, setPayerNumber] = useState("");
   const [file, setFile] = useState<File | null>(null);
