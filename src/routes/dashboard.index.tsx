@@ -130,8 +130,18 @@ function DashboardPage() {
     return result;
   }, [sessions, categories]);
 
-  const freeUsed = profile?.free_quizzes_today ?? 0;
-  const freeLeft = Math.max(0, 5 - freeUsed);
+  // Quota: free=5/week, basic=5/day, pro=10/day
+  const tier = profile?.premium_tier ?? "free";
+  const isFree = !isPremium || tier === "free";
+  const dailyLimit = tier === "pro" ? 10 : 5;
+  const weeklyLimit = 5;
+  const usedWeek = profile?.free_quizzes_week ?? 0;
+  const usedDay = profile?.free_quizzes_today ?? 0;
+  const quotaLimit = isFree ? weeklyLimit : dailyLimit;
+  const quotaUsed = isFree ? usedWeek : usedDay;
+  const quotaLeft = Math.max(0, quotaLimit - quotaUsed);
+  const quotaPercent = Math.min(100, Math.round((quotaUsed / quotaLimit) * 100));
+  const periodLabel = isFree ? "এই সপ্তাহে" : "আজ";
 
   if (loading || !user) {
     return <div className="min-h-screen grid place-items-center text-muted-foreground">লোড হচ্ছে…</div>;
@@ -149,34 +159,82 @@ function DashboardPage() {
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <h1 className="text-2xl md:text-3xl font-bold">স্বাগতম, {firstName}! 👋</h1>
-            <div className="mt-2">
+            <div className="mt-2 flex flex-wrap gap-2">
               {isPremium ? (
                 <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100 text-amber-800 text-sm font-medium">
-                  <Crown className="w-4 h-4" /> প্রিমিয়াম সদস্য
+                  <Crown className="w-4 h-4" /> {tier === "pro" ? "Pro" : "Basic"} প্রিমিয়াম
                   {premiumExpiry && <span className="text-amber-700">· মেয়াদ {premiumExpiry}</span>}
                 </span>
               ) : (
                 <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-200 text-slate-700 text-sm font-medium">
-                  ফ্রি সদস্য · আজ {toBn(freeLeft)}/৫ কুইজ বাকি
+                  ফ্রি সদস্য
                 </span>
               )}
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-bd-green/10 text-bd-green text-sm font-medium">
+                {periodLabel} {toBn(quotaLeft)}/{toBn(quotaLimit)} কুইজ বাকি
+              </span>
             </div>
           </div>
           <Link to="/profile" className="text-sm text-bd-green hover:underline">প্রোফাইল সম্পাদনা →</Link>
         </div>
 
-        {/* Premium upsell */}
-        {!isPremium && (
-          <div className="rounded-xl p-5 bg-gradient-to-r from-amber-400 to-yellow-500 text-amber-950 flex flex-wrap items-center justify-between gap-3 shadow">
+        {/* Weekly/Daily quota tracker */}
+        <div className={`rounded-xl p-5 shadow border-2 ${
+          isFree
+            ? quotaLeft === 0
+              ? "bg-gradient-to-r from-red-50 to-amber-50 border-red-300"
+              : "bg-gradient-to-r from-amber-50 to-yellow-50 border-amber-300"
+            : "bg-gradient-to-r from-green-50 to-emerald-50 border-bd-green/40"
+        }`}>
+          <div className="flex flex-wrap items-center justify-between gap-3 mb-3">
             <div>
-              <p className="font-bold text-lg">আজ {toBn(freeLeft)} টি ফ্রি কুইজ বাকি!</p>
-              <p className="text-sm">প্রিমিয়াম হলে সীমাহীন কুইজ + ৳৩,০০০ পুরস্কারের সুযোগ।</p>
+              <p className="font-bold text-lg text-slate-800">
+                {isFree ? "🎯 আপনার সাপ্তাহিক ফ্রি কুইজ" : "📅 আপনার দৈনিক কুইজ কোটা"}
+              </p>
+              <p className="text-sm text-slate-600 mt-0.5">
+                {isFree
+                  ? <>সপ্তাহে মাত্র <strong>৫টি</strong> ফ্রি কুইজ · প্রতি কুইজে সর্বোচ্চ ২০ প্রশ্ন</>
+                  : tier === "pro"
+                    ? <>প্রতিদিন <strong>১০টি</strong> কুইজ · প্রতি কুইজে ৬০ প্রশ্ন</>
+                    : <>প্রতিদিন <strong>৫টি</strong> কুইজ · প্রতি কুইজে ৪০ প্রশ্ন</>}
+              </p>
             </div>
-            <Link to="/premium" className="px-5 py-2.5 rounded-lg bg-amber-950 text-amber-50 font-semibold hover:bg-amber-900">
-              প্রিমিয়াম হন — ৳৩০/মাস
-            </Link>
+            <div className="text-right">
+              <div className="text-3xl font-extrabold text-bd-green">{toBn(quotaLeft)}<span className="text-base text-slate-500">/{toBn(quotaLimit)}</span></div>
+              <div className="text-xs text-slate-500">বাকি আছে</div>
+            </div>
           </div>
-        )}
+          <div className="h-3 bg-white/70 rounded-full overflow-hidden border border-slate-200">
+            <div
+              className={`h-full transition-all ${
+                quotaPercent >= 100 ? "bg-red-500" : quotaPercent >= 80 ? "bg-orange-500" : "bg-bd-green"
+              }`}
+              style={{ width: `${quotaPercent}%` }}
+            />
+          </div>
+          {isFree && (
+            <div className="mt-4 rounded-lg bg-gradient-to-r from-amber-400 to-yellow-500 p-4 text-amber-950">
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <div>
+                  <p className="font-extrabold text-base flex items-center gap-1.5">
+                    <Crown className="w-5 h-5" />
+                    {quotaLeft === 0
+                      ? "সাপ্তাহিক কোটা শেষ! প্রিমিয়ামে আপগ্রেড করুন"
+                      : "প্রিমিয়াম হলে কী পাবেন?"}
+                  </p>
+                  <ul className="text-sm mt-1 space-y-0.5">
+                    <li>✓ প্রতিদিন ৫–১০টি কুইজ (৪০–৬০ প্রশ্ন)</li>
+                    <li>✓ ৳৩,০০০ মাসিক পুরস্কারের সুযোগ 🏆</li>
+                    <li>✓ লিডারবোর্ডে নাম তোলার সুযোগ</li>
+                  </ul>
+                </div>
+                <Link to="/premium" className="px-5 py-2.5 rounded-lg bg-amber-950 text-amber-50 font-bold hover:bg-amber-900 whitespace-nowrap">
+                  প্রিমিয়াম ৳৩০/মাস →
+                </Link>
+              </div>
+            </div>
+          )}
+        </div>
 
         {/* Stats */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">

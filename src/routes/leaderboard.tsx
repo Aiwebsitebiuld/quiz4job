@@ -5,7 +5,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/use-auth";
 import { bnCurrency, toBn } from "@/lib/bn";
 import { CountdownTimer } from "@/components/countdown-timer";
-import { Crown, Trophy, Medal, Check, X as XIcon, ThumbsUp, Star } from "lucide-react";
+import { Crown, Trophy, Medal, Check, X as XIcon, ThumbsUp, Star, MapPin } from "lucide-react";
+import { DISTRICTS_BD } from "@/lib/districts";
 
 export const Route = createFileRoute("/leaderboard")({
   head: () => ({
@@ -88,9 +89,36 @@ function LeaderboardPage() {
   const [year, setYear] = useState(now.getFullYear());
   const [page, setPage] = useState(1);
   const [showEligibility, setShowEligibility] = useState(false);
+  const [districtFilter, setDistrictFilter] = useState<string>("all");
 
   const { profile, user, isPremium } = useAuth();
-  const { data: rows = [], isLoading } = useLeaderboard(month, year);
+  const { data: allRows = [], isLoading } = useLeaderboard(month, year);
+
+  // Apply district filter
+  const rows = useMemo(() => {
+    if (districtFilter === "all") return allRows;
+    if (districtFilter === "mine") {
+      const myDist = profile?.district;
+      if (!myDist) return [];
+      return allRows.filter((r) => r.profile?.district === myDist);
+    }
+    return allRows.filter((r) => r.profile?.district === districtFilter);
+  }, [allRows, districtFilter, profile?.district]);
+
+  // District competition leaderboard (aggregate by district)
+  const districtRanking = useMemo(() => {
+    const map = new Map<string, { district: string; total: number; participants: number; topScore: number }>();
+    allRows.forEach((r) => {
+      const d = r.profile?.district;
+      if (!d) return;
+      const cur = map.get(d) ?? { district: d, total: 0, participants: 0, topScore: 0 };
+      cur.total += r.total_score;
+      cur.participants += 1;
+      cur.topScore = Math.max(cur.topScore, r.total_score);
+      map.set(d, cur);
+    });
+    return Array.from(map.values()).sort((a, b) => b.total - a.total).slice(0, 10);
+  }, [allRows]);
   const { data: hof = [] } = useHallOfFame();
 
   const myRank = useMemo(() => {
@@ -184,7 +212,61 @@ function LeaderboardPage() {
         >
           {yearOpts.map((y) => <option key={y} value={y}>{toBn(y)}</option>)}
         </select>
+        <span className="font-semibold ml-2 flex items-center gap-1"><MapPin className="w-4 h-4" /> জেলা:</span>
+        <select
+          value={districtFilter}
+          onChange={(e) => { setDistrictFilter(e.target.value); setPage(1); }}
+          className="px-3 py-2 rounded-lg border border-border bg-white"
+        >
+          <option value="all">সব জেলা</option>
+          {profile?.district && <option value="mine">📍 আমার জেলা ({profile.district})</option>}
+          {DISTRICTS_BD.map((d) => <option key={d} value={d}>{d}</option>)}
+        </select>
+        {!profile?.district && user && (
+          <Link to="/profile" className="text-xs text-bd-green underline ml-1">
+            প্রতিযোগিতায় অংশ নিতে আপনার জেলা যোগ করুন →
+          </Link>
+        )}
       </section>
+
+      {/* District competition */}
+      {districtRanking.length > 0 && (
+        <section className="max-w-6xl mx-auto px-4 mt-8">
+          <div className="rounded-2xl bg-gradient-to-br from-bd-green/10 to-emerald-50 border-2 border-bd-green/30 p-5">
+            <h2 className="text-xl sm:text-2xl font-extrabold flex items-center gap-2 text-bd-green-dark">
+              <MapPin className="w-6 h-6" /> জেলা ভিত্তিক প্রতিযোগিতা 🇧🇩
+            </h2>
+            <p className="text-sm text-muted-foreground mt-1">
+              আপনার জেলাকে শীর্ষে নিয়ে যান! মোট স্কোর অনুযায়ী জেলার র‍্যাংকিং।
+            </p>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 mt-4">
+              {districtRanking.map((d, i) => {
+                const mine = profile?.district === d.district;
+                return (
+                  <button
+                    key={d.district}
+                    onClick={() => { setDistrictFilter(d.district); setPage(1); }}
+                    className={`text-left rounded-xl p-3 border-2 transition hover:shadow-md ${
+                      mine ? "bg-bd-green text-white border-bd-green-dark" : "bg-white border-bd-green/20 hover:border-bd-green"
+                    }`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className={`text-lg font-extrabold ${mine ? "text-white" : "text-bd-green"}`}>
+                        {i === 0 ? "🏆" : i === 1 ? "🥈" : i === 2 ? "🥉" : `#${toBn(i + 1)}`}
+                      </span>
+                      {mine && <span className="text-[10px] bg-white text-bd-green px-1.5 py-0.5 rounded-full font-bold">আপনি</span>}
+                    </div>
+                    <div className={`font-bold mt-1 truncate ${mine ? "text-white" : ""}`}>{d.district}</div>
+                    <div className={`text-xs ${mine ? "text-white/85" : "text-muted-foreground"}`}>
+                      স্কোর {toBn(d.total)} · {toBn(d.participants)} জন
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Podium */}
       {top3.length > 0 && (
