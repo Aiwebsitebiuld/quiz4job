@@ -10,7 +10,7 @@ export const Route = createFileRoute("/premium")({
   head: () => ({
     meta: [
       { title: "প্রিমিয়াম সদস্যতা — Quiz4Job" },
-      { name: "description", content: "মাত্র ৳১০/মাসে প্রিমিয়াম হয়ে নগদ পুরস্কার জেতার সুযোগ পান।" },
+      { name: "description", content: "মাত্র ৳৩০/মাসে প্রিমিয়াম হয়ে নগদ পুরস্কার জেতার সুযোগ পান।" },
     ],
   }),
   component: PremiumPage,

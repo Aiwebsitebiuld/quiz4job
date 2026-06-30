@@ -41,7 +41,7 @@ export function AuthHero() {
             </li>
           </ul>
           <p className="mt-4 text-xs text-white/70 leading-relaxed">
-            মাত্র <span className="text-[color:var(--gold)] font-bold">৳১০/মাসে</span> প্রিমিয়াম হলেই পুরস্কারের যোগ্য!
+            মাত্র <span className="text-[color:var(--gold)] font-bold">৳৩০/মাসে</span> প্রিমিয়াম হলেই পুরস্কারের যোগ্য!
           </p>
         </div>
       </div>

@@ -96,7 +96,7 @@ function QuizCategoriesPage() {
               </div>
               {remaining === 0 && (
                 <Button asChild className="gold-shimmer text-black font-bold">
-                  <Link to="/subscribe"><Crown className="w-4 h-4 mr-1" /> প্রিমিয়াম হন → সীমাহীন কুইজ</Link>
+                  <Link to="/premium"><Crown className="w-4 h-4 mr-1" /> প্রিমিয়াম হন → সীমাহীন কুইজ</Link>
                 </Button>
               )}
             </div>
@@ -261,7 +261,7 @@ function ConfigDialog({
                   <div className="text-xs text-muted-foreground">
                     {isPremium
                       ? "🏆 লিডারবোর্ডে নাম + ৳৩,০০০ পুরস্কারের যোগ্য"
-                      : <>প্রিমিয়াম প্রয়োজন। <Link to="/subscribe" className="text-bd-green underline">এখনই হন</Link></>}
+                      : <>প্রিমিয়াম প্রয়োজন। <Link to="/premium" className="text-bd-green underline">এখনই হন</Link></>}
                   </div>
                 </div>
               </label>

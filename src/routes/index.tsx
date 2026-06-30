@@ -19,10 +19,10 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Quiz4Job — কুইজ দিন, ৳৩,০০০ পুরস্কার জিতুন! | BCS ও ব্যাংক জব MCQ" },
-      { name: "description", content: "বাংলাদেশের সেরা চাকরির কুইজ প্ল্যাটফর্ম। BCS, ব্যাংক, প্রাইমারি MCQ কুইজ দিন এবং প্রতিমাসে নগদ পুরস্কার জিতুন। মাত্র ৳১০/মাসে প্রিমিয়াম।" },
+      { name: "description", content: "বাংলাদেশের সেরা চাকরির কুইজ প্ল্যাটফর্ম। BCS, ব্যাংক, প্রাইমারি MCQ কুইজ দিন এবং প্রতিমাসে নগদ পুরস্কার জিতুন। Basic মাত্র ৳৩০/মাস, Pro ৳৫০/মাস।" },
       { name: "keywords", content: "চাকরির খবর, বিসিএস প্রস্তুতি, ব্যাংক জব সার্কুলার, সরকারি চাকরি, অনলাইন কুইজ প্রতিযোগিতা, BCS MCQ, online quiz Bangladesh, নগদ পুরস্কার কুইজ" },
       { property: "og:title", content: "Quiz4Job — কুইজ দিন, পুরস্কার জিতুন!" },
-      { property: "og:description", content: "মাত্র ৳১০/মাসে প্রিমিয়াম। আনলিমিটেড কুইজ + ৳৩,০০০ পর্যন্ত নগদ পুরস্কার।" },
+      { property: "og:description", content: "Basic ৳৩০/মাস বা Pro ৳৫০/মাস — প্রতিদিন কুইজ + ৳৩,০০০ পর্যন্ত নগদ পুরস্কার।" },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "/" },
     ],
@@ -277,7 +277,7 @@ function HomePage() {
 
             <p className="mt-6 text-white/80 text-sm md:text-base">
               <span className="font-semibold text-gold-light">বিজয়ীদের সরাসরি bKash-এ পাঠানো হয়!</span>{" "}
-              মাত্র {bnCurrency(10)}/মাসে প্রিমিয়াম হলেই পুরস্কার পাওয়ার যোগ্য।
+              Basic {bnCurrency(30)} অথবা Pro {bnCurrency(50)} প্ল্যান নিলেই পুরস্কারের যোগ্য।
             </p>
 
             {/* Countdown */}
@@ -315,7 +315,7 @@ function HomePage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
             {[
               { n: 1, icon: UserPlus, emoji: "📝", title: "নিবন্ধন করুন", desc: "বিনামূল্যে অ্যাকাউন্ট তৈরি করুন" },
-              { n: 2, icon: Star,     emoji: "⭐", title: "প্রিমিয়াম হন", desc: `মাত্র ${bnCurrency(10)}/মাসে bKash করুন` },
+              { n: 2, icon: Star,     emoji: "⭐", title: "প্রিমিয়াম হন", desc: `${bnCurrency(30)} বা ${bnCurrency(50)} bKash/Nagad করুন` },
               { n: 3, icon: Brain,    emoji: "🧠", title: "কুইজ দিন", desc: "প্রতিদিন কুইজ দিয়ে পয়েন্ট জমান" },
               { n: 4, icon: Wallet,   emoji: "💰", title: "পুরস্কার নিন", desc: `মাস শেষে শীর্ষ ${toBn(3)} জন bKash-এ পাবেন` },
             ].map((s, i) => (
@@ -339,13 +339,13 @@ function HomePage() {
         </div>
       </section>
 
-      {/* ───────────── 3. FREE vs PREMIUM ───────────── */}
+      {/* ───────────── 3. PRICING TIERS ───────────── */}
       <section className="py-20 px-4 bg-gradient-to-b from-background to-bd-green-light/30">
         <div className="max-w-6xl mx-auto">
-          <SectionHeader eyebrow="তুলনা" title="ফ্রি বনাম প্রিমিয়াম" />
-          <div className="grid md:grid-cols-2 gap-6 mt-12">
+          <SectionHeader eyebrow="তিনটি প্ল্যান" title="আপনার জন্য সঠিক প্ল্যান বেছে নিন" />
+          <div className="grid md:grid-cols-3 gap-6 mt-12">
             {/* Free */}
-            <div className="rounded-3xl border-2 border-border bg-card p-8">
+            <div className="rounded-3xl border-2 border-border bg-card p-8 flex flex-col">
               <div className="flex items-center justify-between">
                 <div>
                   <h3 className="text-2xl font-bold">ফ্রি</h3>
@@ -353,12 +353,11 @@ function HomePage() {
                 </div>
                 <div className="text-3xl font-extrabold">{bnCurrency(0)}</div>
               </div>
-              <ul className="mt-6 space-y-3 text-sm">
-                <FeatureLine ok>প্রতিদিন {toBn(5)}টি কুইজ</FeatureLine>
-                <FeatureLine ok>সব বিষয়ে প্রশ্ন</FeatureLine>
-                <FeatureLine ok>চাকরির বোর্ড</FeatureLine>
+              <ul className="mt-6 space-y-3 text-sm flex-1">
+                <FeatureLine ok>সপ্তাহে {toBn(5)}টি কুইজ</FeatureLine>
+                <FeatureLine ok>প্রতি কুইজে সর্বোচ্চ {toBn(20)} প্রশ্ন</FeatureLine>
+                <FeatureLine ok>সব বিষয়ে অ্যাক্সেস</FeatureLine>
                 <FeatureLine ok>লিডারবোর্ড দেখা</FeatureLine>
-                <FeatureLine>সীমাহীন কুইজ নয়</FeatureLine>
                 <FeatureLine>নগদ পুরস্কার নেই</FeatureLine>
                 <FeatureLine>Ranked কুইজ নয়</FeatureLine>
               </ul>
@@ -366,33 +365,60 @@ function HomePage() {
                 <Link to="/signup">বিনামূল্যে শুরু করুন</Link>
               </Button>
             </div>
-            {/* Premium */}
-            <div className="relative rounded-3xl border-2 border-gold bg-gradient-to-br from-gold-light via-card to-card p-8 shadow-[0_0_60px_-15px_rgba(245,158,11,0.5)]">
+
+            {/* Basic */}
+            <div className="relative rounded-3xl border-2 border-emerald-500 bg-gradient-to-br from-emerald-50 via-card to-card p-8 shadow-[0_0_60px_-15px_rgba(16,185,129,0.5)] flex flex-col">
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-emerald-600 text-white text-xs font-bold px-4 py-1 rounded-full">
+                জনপ্রিয়
+              </div>
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="text-2xl font-bold">Basic</h3>
+                  <p className="text-muted-foreground text-sm">দৈনিক প্রস্তুতি</p>
+                </div>
+                <div className="text-right">
+                  <div className="text-3xl font-extrabold text-emerald-700">{bnCurrency(30)}</div>
+                  <div className="text-xs text-muted-foreground">/মাস</div>
+                </div>
+              </div>
+              <ul className="mt-6 space-y-3 text-sm flex-1">
+                <FeatureLine ok>প্রতিদিন {toBn(5)}টি কুইজ</FeatureLine>
+                <FeatureLine ok>প্রতি কুইজে সর্বোচ্চ {toBn(40)} প্রশ্ন</FeatureLine>
+                <FeatureLine ok highlight>🏆 নগদ পুরস্কারের যোগ্য</FeatureLine>
+                <FeatureLine ok>Ranked লিডারবোর্ড</FeatureLine>
+                <FeatureLine ok>বিজ্ঞাপন মুক্ত</FeatureLine>
+              </ul>
+              <Button asChild className="w-full mt-8 h-12 bg-emerald-600 hover:bg-emerald-700 text-white font-bold">
+                <Link to="/premium">Basic নিন — {bnCurrency(30)}</Link>
+              </Button>
+            </div>
+
+            {/* Pro */}
+            <div className="relative rounded-3xl border-2 border-gold bg-gradient-to-br from-gold-light via-card to-card p-8 shadow-[0_0_60px_-15px_rgba(245,158,11,0.5)] flex flex-col">
               <div className="absolute -top-3 left-1/2 -translate-x-1/2 gold-shimmer text-black text-xs font-bold px-4 py-1 rounded-full">
-                ⭐ সবচেয়ে জনপ্রিয়
+                ⭐ সেরা ভ্যালু
               </div>
               <div className="flex items-center justify-between">
                 <div>
                   <h3 className="text-2xl font-bold flex items-center gap-2">
-                    প্রিমিয়াম <Crown className="w-6 h-6 text-gold" />
+                    Pro <Crown className="w-6 h-6 text-gold" />
                   </h3>
-                  <p className="text-muted-foreground text-sm">পুরস্কার পাওয়ার যোগ্য</p>
+                  <p className="text-muted-foreground text-sm">সিরিয়াস প্রস্তুতি</p>
                 </div>
                 <div className="text-right">
-                  <div className="text-3xl font-extrabold text-bd-green-dark">{bnCurrency(10)}</div>
+                  <div className="text-3xl font-extrabold text-bd-green-dark">{bnCurrency(50)}</div>
                   <div className="text-xs text-muted-foreground">/মাস</div>
                 </div>
               </div>
-              <ul className="mt-6 space-y-3 text-sm">
-                <FeatureLine ok>সীমাহীন কুইজ প্রতিদিন</FeatureLine>
+              <ul className="mt-6 space-y-3 text-sm flex-1">
+                <FeatureLine ok>প্রতিদিন {toBn(10)}টি কুইজ</FeatureLine>
+                <FeatureLine ok>প্রতি কুইজে সর্বোচ্চ {toBn(60)} প্রশ্ন</FeatureLine>
                 <FeatureLine ok highlight>🏆 নগদ পুরস্কারের যোগ্য</FeatureLine>
-                <FeatureLine ok>Ranked লিডারবোর্ডে নাম</FeatureLine>
-                <FeatureLine ok>বিস্তারিত বিশ্লেষণ</FeatureLine>
-                <FeatureLine ok>সব বিষয়ে এক্সক্লুসিভ প্রশ্ন</FeatureLine>
-                <FeatureLine ok>bKash/Nagad-এ পুরস্কার</FeatureLine>
+                <FeatureLine ok>Ranked লিডারবোর্ড</FeatureLine>
+                <FeatureLine ok>প্রিমিয়াম ব্যাজ + প্রায়োরিটি সাপোর্ট</FeatureLine>
               </ul>
               <Button asChild className="w-full mt-8 h-12 gold-shimmer text-black hover:opacity-90 font-bold">
-                <Link to="/subscribe">⭐ প্রিমিয়াম হন</Link>
+                <Link to="/premium">Pro নিন — {bnCurrency(50)}</Link>
               </Button>
             </div>
           </div>
@@ -593,23 +619,44 @@ function HomePage() {
         </div>
       </section>
 
-      {/* ───────────── 8. SUBSCRIPTION CTA ───────────── */}
+      {/* ───────────── 8. SUBSCRIPTION CTA + PAYMENT STEPS ───────────── */}
       <section className="py-20 px-4 gold-shimmer text-black">
         <div className="max-w-5xl mx-auto text-center">
           <Gift className="w-12 h-12 mx-auto" />
           <h2 className="mt-4 text-4xl md:text-6xl font-extrabold text-slate-900">
-            মাত্র {bnCurrency(10)}-এ পুরস্কার জিতুন!
+            ৩ ধাপে প্রিমিয়াম হোন
           </h2>
           <p className="mt-4 text-lg text-slate-900/85 max-w-2xl mx-auto">
-            প্রতিমাসে মাত্র একটি চা-এর দামে প্রিমিয়াম হন এবং {bnCurrency(1500)} পর্যন্ত নগদ পুরস্কার জিতুন!
+            Basic {bnCurrency(30)} / Pro {bnCurrency(50)} — bKash, Nagad বা Rocket-এ <b>Send Money</b> করুন।
           </p>
+
+          <div className="mt-8 grid sm:grid-cols-3 gap-4 text-left">
+            <div className="rounded-2xl bg-white/90 p-5 border border-slate-900/10">
+              <div className="text-xs font-bold text-bd-green-dark">ধাপ ১</div>
+              <div className="mt-1 font-bold text-slate-900">Send Money করুন</div>
+              <div className="mt-2 text-sm text-slate-700">নম্বর:</div>
+              <div className="text-2xl font-extrabold tabular-nums text-slate-900">01767-091490</div>
+              <div className="mt-1 text-xs text-slate-600">পরিমাণ: {bnCurrency(30)} বা {bnCurrency(50)}</div>
+            </div>
+            <div className="rounded-2xl bg-white/90 p-5 border border-slate-900/10">
+              <div className="text-xs font-bold text-bd-green-dark">ধাপ ২</div>
+              <div className="mt-1 font-bold text-slate-900">Transaction ID দিন</div>
+              <div className="mt-2 text-sm text-slate-700">পেমেন্ট পেজে গিয়ে আপনার TrxID, পেমেন্ট পদ্ধতি ও নম্বর জমা দিন।</div>
+            </div>
+            <div className="rounded-2xl bg-white/90 p-5 border border-slate-900/10">
+              <div className="text-xs font-bold text-bd-green-dark">ধাপ ৩</div>
+              <div className="mt-1 font-bold text-slate-900">আমরা যাচাই করব</div>
+              <div className="mt-2 text-sm text-slate-700">সাধারণত ২৪ ঘণ্টার মধ্যে প্রিমিয়াম সক্রিয় হয়ে যাবে।</div>
+            </div>
+          </div>
+
           <div className="mt-6 flex items-center justify-center gap-3 flex-wrap">
             <Badge className="bg-pink-500 hover:bg-pink-500 text-white border-0 text-sm px-3 py-1">bKash</Badge>
             <Badge className="bg-orange-500 hover:bg-orange-500 text-white border-0 text-sm px-3 py-1">Nagad</Badge>
             <Badge className="bg-purple-600 hover:bg-purple-600 text-white border-0 text-sm px-3 py-1">Rocket</Badge>
           </div>
           <Button asChild size="lg" className="mt-8 h-14 px-10 bg-slate-900 hover:bg-slate-800 text-white text-base font-bold">
-            <Link to="/subscribe">⭐ এখনই প্রিমিয়াম হন — মাত্র {bnCurrency(10)}/মাস</Link>
+            <Link to="/premium">⭐ পেমেন্ট পেজে যান</Link>
           </Button>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-4 text-sm text-slate-900/80">
             <Link to="/faq" className="hover:underline">কখন পুরস্কার পাবো?</Link>

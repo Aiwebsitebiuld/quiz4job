@@ -173,7 +173,7 @@ function DashboardPage() {
               <p className="text-sm">প্রিমিয়াম হলে সীমাহীন কুইজ + ৳৩,০০০ পুরস্কারের সুযোগ।</p>
             </div>
             <Link to="/premium" className="px-5 py-2.5 rounded-lg bg-amber-950 text-amber-50 font-semibold hover:bg-amber-900">
-              প্রিমিয়াম হন — ৳১০/মাস
+              প্রিমিয়াম হন — ৳৩০/মাস
             </Link>
           </div>
         )}

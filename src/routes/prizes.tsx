@@ -35,7 +35,7 @@ function PrizesPage() {
   const faqs = [
     { q: "পুরস্কার কখন দেওয়া হয়?", a: "প্রতি মাসের ৩-৫ তারিখের মধ্যে পূর্ববর্তী মাসের পুরস্কার বিতরণ করা হয়।" },
     { q: "পুরস্কার কীভাবে পাঠানো হয়?", a: "bKash বা Nagad-এর মাধ্যমে সরাসরি আপনার মোবাইল নম্বরে পাঠানো হয়।" },
-    { q: "পুরস্কার পেতে কী করতে হবে?", a: "প্রিমিয়াম সদস্য হতে হবে (৳১০/মাস) এবং আমাদের Facebook পেজ লাইক করতে হবে।" },
+    { q: "পুরস্কার পেতে কী করতে হবে?", a: "প্রিমিয়াম সদস্য হতে হবে (৳৩০/মাস) এবং আমাদের Facebook পেজ লাইক করতে হবে।" },
     { q: "ফ্রি ইউজাররা কি পুরস্কার পাবে?", a: "না, শুধু প্রিমিয়াম ব্যবহারকারীরা পুরস্কার পাওয়ার যোগ্য।" },
   ];
 
@@ -59,7 +59,7 @@ function PrizesPage() {
         <h2 className="text-3xl font-extrabold text-center mb-10">কীভাবে জিতবেন?</h2>
         <div className="grid md:grid-cols-3 gap-6">
           {[
-            { i: <Crown className="w-10 h-10" />, n: 1, title: "প্রিমিয়াম হন", desc: "মাত্র ৳১০/মাসে প্রিমিয়াম সদস্য হোন।", to: "/signup" },
+            { i: <Crown className="w-10 h-10" />, n: 1, title: "প্রিমিয়াম হন", desc: "মাত্র ৳৩০/মাসে প্রিমিয়াম সদস্য হোন।", to: "/signup" },
             { i: <Brain className="w-10 h-10" />, n: 2, title: "র‍্যান্ক কুইজ দিন", desc: "প্রতিদিন কুইজ দিয়ে পয়েন্ট সংগ্রহ করুন।", to: "/quiz" },
             { i: <Wallet className="w-10 h-10" />, n: 3, title: "পুরস্কার জিতুন", desc: "মাস শেষে শীর্ষ ৩ জন bKash-এ পাবেন।", to: "/leaderboard" },
           ].map((s) => (
@@ -158,7 +158,7 @@ function PrizesPage() {
           to="/signup"
           className="block text-center px-8 py-6 rounded-3xl bg-gradient-to-br from-gold via-amber-400 to-amber-600 text-amber-950 font-extrabold text-2xl shadow-2xl hover:scale-[1.02] transition border-2 border-amber-300"
         >
-          এখনই প্রিমিয়াম হন — মাত্র {bnCurrency(10)} 👑
+          এখনই প্রিমিয়াম হন — মাত্র {bnCurrency(30)} 👑
         </Link>
       </section>
     </div>
