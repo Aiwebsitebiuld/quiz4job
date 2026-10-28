@@ -82,7 +82,7 @@ function JobDetailPage() {
     queryFn: async () => {
       const { data } = await supabase
         .from("jobs").select("*")
-        .eq("is_active", true).eq("organization_type", job.organization_type)
+        .eq("is_active", true).eq("organization_type", job.organization_type ?? "other")
         .neq("id", job.id).limit(4);
       return data ?? [];
     },
