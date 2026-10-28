@@ -75,7 +75,7 @@ function BlogPost() {
         .from("blog_posts")
         .select("id,slug,title_bn,featured_image,published_at")
         .eq("is_published", true)
-        .eq("category", post.category)
+        .eq("category", post.category ?? "")
         .neq("id", post.id)
         .order("published_at", { ascending: false })
         .limit(3);
