@@ -60,8 +60,8 @@ function JobDetailPage() {
   const { job } = Route.useLoaderData();
   const { user } = useAuth();
   const dl = daysLeft(job.application_deadline);
-  const orgLabel = ORG_LABEL_BN[job.organization_type] ?? "অন্যান্য";
-  const quizSlug = ORG_QUIZ_SLUG[job.organization_type] ?? "general-knowledge";
+  const orgLabel = ORG_LABEL_BN[job.organization_type ?? ""] ?? "অন্যান্য";
+  const quizSlug = ORG_QUIZ_SLUG[job.organization_type ?? ""] ?? "general-knowledge";
 
   // Increment views once
   useEffect(() => {
